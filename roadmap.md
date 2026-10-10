@@ -30,4 +30,4 @@
 - [x] Seletor com busca, temas, cobertura; /dados com status; 7 novos presets em Explorar.
 - [x] Leitura usa tema/fonte/ano do indicador; modelo retido em colinearidade.
 - [x] Verificação no navegador 390/430px e desktop.
-- [ ] Atualizar `tests/e2e/explore_mobile.py` (ainda espera o antigo seletor de candidato, anterior ao modo comparar).
+- [x] Atualizar `tests/e2e/explore_mobile.py` para o seletor comparar/Bolsonaro/Lula.
