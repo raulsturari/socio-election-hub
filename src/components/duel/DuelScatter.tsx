@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { PointsCanvas } from "../motion/PointsCanvas";
+import { scatterDomain, transformScatterX, type ScatterDomain } from "@/lib/scatter-domain";
 
 export interface ScatterPt { code: string; name: string; uf: string; x: number; y: number }
 export interface ScatterSeries { id: "bolsonaro" | "pt"; label: string; points: ScatterPt[]; stat?: ReactNode }
@@ -10,20 +11,20 @@ const W = 320, H = 260, PAD = { l: 36, r: 8, t: 10, b: 28 };
  * One or two series over the SAME X/Y scales (blue Bolsonaro, red Lula). Each municipality appears once per series;
  * statistics are computed per series upstream, never pooled.
  */
-export function DuelScatter({ series, xLabel, yLabel, formatX, log = false, detail, replay = 0 }: {
+export function DuelScatter({ series, xLabel, yLabel, formatX, log = false, detail, replay = 0, domain }: {
   series: ScatterSeries[]; xLabel: string; yLabel: string; formatX: (v: number) => string; log?: boolean;
-  detail?: (code: string) => ReactNode; replay?: number;
+  detail?: (code: string) => ReactNode; replay?: number; domain?: ScatterDomain;
 }) {
   const [active, setActive] = useState<string | null>(null);
   const m = useMemo(() => {
-    const tx = (v: number) => (log ? Math.log10(v) : v);
+    const tx = (v: number) => transformScatterX(v, domain?.log ?? log);
     const all = series.flatMap((s) => s.points);
-    const xs = all.map((p) => tx(p.x)), ys = all.map((p) => p.y);
-    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(0, ...ys), y1 = Math.max(...ys, y0 + 1);
+    const d = domain ?? scatterDomain(all, log, true);
+    const [x0, x1] = d.x, [y0, y1] = d.y;
     const sx = (v: number) => PAD.l + ((tx(v) - x0) / (x1 - x0 || 1)) * (W - PAD.l - PAD.r);
     const sy = (v: number) => H - PAD.b - ((v - y0) / (y1 - y0 || 1)) * (H - PAD.t - PAD.b);
     return { sx, sy, x0, x1, y0, y1, untx: (v: number) => (log ? 10 ** v : v) };
-  }, [series, log]);
+  }, [series, log, domain]);
   const layers = useMemo(() => series.map((s) => ({ id: s.id, pts: s.points.map((p) => ({ key: p.code, x: m.sx(p.x), y: m.sy(p.y) })) })), [series, m]);
 
   const pick = (e: React.PointerEvent<SVGSVGElement>) => {

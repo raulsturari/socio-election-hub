@@ -2,20 +2,22 @@ import { useMemo, useState } from "react";
 import type { LabAnalysis } from "@/lib/lab-analysis";
 import type { XVariable } from "@/lib/lab-variables";
 import { fmtNum } from "@/lib/format";
+import { scatterDomain, type ScatterDomain } from "@/lib/scatter-domain";
 import { PointsCanvas } from "../motion/PointsCanvas";
 
 const W = 320, H = 260, PAD = { l: 36, r: 8, t: 10, b: 28 };
 
 /** Touch scatter over municipal points; nearest point within ~20px is selected. */
-export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points"]; xv: XVariable; yLabel: string }) {
+export function LabScatter({ points, xv, yLabel, domain }: { domain?: ScatterDomain; points: LabAnalysis["points"]; xv: XVariable; yLabel: string }) {
   const [active, setActive] = useState<number | null>(null);
   const m = useMemo(() => {
     const tx = points.x.map((v) => (xv.log ? Math.log10(v) : v));
-    const [x0, x1] = extent(tx), [y0, y1] = extent(points.y);
-    const sx = (i: number) => PAD.l + ((tx[i]! - x0) / (x1 - x0 || 1)) * (W - PAD.l - PAD.r);
+    const d = domain ?? scatterDomain(points.y.map((y, i) => ({ x: points.x[i] ?? NaN, y })), xv.log, false);
+    const [x0, x1] = d.x, [y0, y1] = d.y;
+    const sx = (i: number) => PAD.l + (((tx[i] ?? NaN) - x0) / (x1 - x0 || 1)) * (W - PAD.l - PAD.r);
     const sy = (v: number) => H - PAD.b - ((v - y0) / (y1 - y0 || 1)) * (H - PAD.t - PAD.b);
     return { sx, sy, x0, x1, y0, y1 };
-  }, [points, xv.log]);
+  }, [points, xv.log, domain]);
 
   const pts = useMemo(() => points.y.map((v, i) => ({ key: String(points.c[i]), x: m.sx(i), y: m.sy(v) })), [points, m]);
 
@@ -24,7 +26,7 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
     const px = ((e.clientX - rect.left) / rect.width) * W, py = ((e.clientY - rect.top) / rect.height) * H;
     let best = -1, bd = Infinity;
     for (let i = 0; i < points.y.length; i++) {
-      const d = (m.sx(i) - px) ** 2 + (m.sy(points.y[i]!) - py) ** 2;
+      const d = (m.sx(i) - px) ** 2 + (m.sy((points.y[i] ?? NaN)) - py) ** 2;
       if (d < bd) { bd = d; best = i; }
     }
     setActive(bd < 400 ? best : null);
@@ -44,7 +46,7 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
         {[m.x0, m.x1].map((v, i) => (
           <text key={i} x={i ? W - PAD.r : PAD.l} y={H - 10} textAnchor={i ? "end" : "start"} className="fill-muted-foreground text-[9px] tabular-nums">{xTick(v)}</text>
         ))}
-        {active != null && <circle cx={m.sx(active)} cy={m.sy(points.y[active]!)} r={4.5} className="fill-none stroke-foreground" strokeWidth={1.5} />}
+        {active != null && <circle cx={m.sx(active)} cy={m.sy((points.y[active] ?? NaN))} r={4.5} className="fill-none stroke-foreground" strokeWidth={1.5} />}
       </svg>
       </div>
       <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
@@ -53,15 +55,9 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
       </div>
       <p className="mt-2 min-h-10 rounded-lg bg-muted px-3 py-2 text-xs" aria-live="polite">
         {active != null
-          ? <><span className="font-medium">{points.n[active]}/{points.u[active]}</span> · {xv.label}: <span className="tabular-nums">{fmtNum(points.x[active]!)} {xv.unit}</span> · {yLabel}: <span className="tabular-nums">{fmtNum(points.y[active]!)}</span></>
+          ? <><span className="font-medium">{points.n[active]}/{points.u[active]}</span> · {xv.label}: <span className="tabular-nums">{fmtNum((points.x[active] ?? NaN))} {xv.unit}</span> · {yLabel}: <span className="tabular-nums">{fmtNum((points.y[active] ?? NaN))}</span></>
           : <span className="text-muted-foreground">Toque ou arraste sobre o gráfico para ver o município.</span>}
       </p>
     </div>
   );
-}
-
-function extent(v: readonly number[]): [number, number] {
-  let lo = Infinity, hi = -Infinity;
-  for (const x of v) { if (x < lo) lo = x; if (x > hi) hi = x; }
-  return [lo, hi];
 }

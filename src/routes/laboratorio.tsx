@@ -20,7 +20,9 @@ import { CorrelationGrid, ModelTable } from "@/components/lab/StatsPanel";
 import { AuditCard } from "@/components/lab/AuditCard";
 import { LabControls } from "@/components/lab/LabControls";
 import { fmtInt } from "@/lib/format";
-import { interpretGraph, type ReadingContext } from "@/lib/graph-reading";
+import { interpretGraph, readingPoints, type ReadingContext } from "@/lib/graph-reading";
+import { scatterDomain } from "@/lib/scatter-domain";
+import { GeometryDetails } from "@/components/lab/GeometryDetails";
 import { GraphReading } from "@/components/lab/GraphReading";
 import { StatisticalDetails } from "@/components/lab/StatisticalDetails";
 import { LabMethod } from "@/components/lab/LabMethod";
@@ -117,16 +119,19 @@ function Laboratorio() {
 
 function Results({ a, xv, yLabel, scope, fileName, context, name }: { context: ReadingContext; name: string; a: LabAnalysis; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
   const dropped = a.missing.x + a.missing.y;
+  const domain = scatterDomain(readingPoints(a), xv.log, false);
+  const reading = interpretGraph({ ...context, domain }, [{ name, analysis: a }]);
   return (
     <>
       <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022. ${scope}. Amostra: ${fmtInt(a.points.y.length)} de ${fmtInt(a.totalRows)} municípios${dropped ? ` (${fmtInt(dropped)} sem dado${a.missing.examples.length ? `: ${a.missing.examples.join(", ")}` : ""})` : ""}.`}>
-        <LabScatter points={a.points} xv={xv} yLabel={yLabel} />
+        <LabScatter domain={domain} points={a.points} xv={xv} yLabel={yLabel} />
         <Button variant="secondary" onClick={() => downloadCsv(a, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV
         </Button>
       </Card>
-      <GraphReading reading={interpretGraph(context, [{ name, analysis: a }])} />
+      <GraphReading reading={reading} />
       <StatisticalDetails>
+      <GeometryDetails geometry={reading.geometry} />
       <div><h3 className="mb-3 text-sm font-medium">Correlação bivariada</h3><CorrelationGrid a={a} /></div>
       <div><h3 className="mb-3 text-sm font-medium">Regressão OLS multivariada</h3><ModelTable a={a} /></div>
       <LabMethod x={xv} />
@@ -138,16 +143,19 @@ function Results({ a, xv, yLabel, scope, fileName, context, name }: { context: R
 function DuelLab({ b, l, bName, xv, yLabel, scope, fileName, context }: { context: ReadingContext; b: LabAnalysis; l: LabAnalysis; bName: string; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
   const toPts = (a: LabAnalysis) => a.points.y.map((y, i) => ({ code: String(a.points.c[i]), name: a.points.n[i] ?? "", uf: String(a.points.u[i] ?? ""), x: a.points.x[i] ?? 0, y }));
   const series: ScatterSeries[] = [{ id: "bolsonaro", label: bName, points: toPts(b) }, { id: "pt", label: "Lula", points: toPts(l) }];
+  const domain = scatterDomain(series.flatMap(s => s.points), xv.log, true);
+  const reading = interpretGraph({ ...context, domain }, [{ name: bName, id: "bolsonaro", analysis: b }, { name: "Lula", id: "pt", analysis: l }]);
   return (
     <>
       <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022 · ${scope}. ${bName}: ${fmtInt(b.points.y.length)} de ${fmtInt(b.totalRows)} municípios; Lula: ${fmtInt(l.points.y.length)} de ${fmtInt(l.totalRows)}.`}>
-        <DuelScatter series={series} xLabel={xv.label} yLabel={yLabel} formatX={fmtNum} log={xv.log} />
+        <DuelScatter domain={domain} series={series} xLabel={xv.label} yLabel={yLabel} formatX={fmtNum} log={xv.log} />
         <Button variant="secondary" onClick={() => downloadDuelCsv(b, l, bName, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV (os dois)
         </Button>
       </Card>
-      <GraphReading reading={interpretGraph(context, [{ name: bName, id: "bolsonaro", analysis: b }, { name: "Lula", id: "pt", analysis: l }])} />
+      <GraphReading reading={reading} />
       <StatisticalDetails>
+      <GeometryDetails geometry={reading.geometry} />
       {([[b, bName, "bolsonaro"], [l, "Lula", "pt"]] as const).map(([a, name, s]) => (
         <div key={s} data-series={s} className="space-y-4">
           <h3 className="text-sm font-medium text-series-label">{name}</h3>

@@ -6,6 +6,8 @@ import { pearsonTest, spearmanTest } from "@/lib/lab-stats";
 import type { LabAnalysis } from "@/lib/lab-analysis";
 import { X_VARIABLES } from "@/lib/lab-variables";
 import { interpretGraph, READING_CONVENTION } from "@/lib/graph-reading";
+import { scatterDomain } from "@/lib/scatter-domain";
+import { GeometryDetails } from "@/components/lab/GeometryDetails";
 import { GraphReading } from "@/components/lab/GraphReading";
 import { StatisticalDetails } from "@/components/lab/StatisticalDetails";
 import { CorrelationGrid } from "@/components/lab/StatsPanel";
@@ -68,6 +70,8 @@ function Correlacoes() {
     };
     return { name: s.label, id: s.id, analysis, hasModelAnalysis: false };
   });
+  const domain = scatterDomain(series.flatMap(s => s.points), true, true);
+  const reading = x ? interpretGraph({ x, metric: "share", year: f.ano, round: f.turno, scope: f.uf ?? "Brasil", domain }, readings) : null;
   const ready = !!election && !loading && !error && series.some((s) => s.points.length > 0);
 
   return (
@@ -84,15 +88,16 @@ function Correlacoes() {
         ) : series.every((s) => s.points.length === 0) ? (
           <EmptyState title="Dados não importados" description="Sem pares renda/votação para este recorte." />
         ) : (
-          <DuelScatter series={series} xLabel="renda domiciliar per capita" yLabel="% dos votos válidos" formatX={fmtBRL} log
+          <DuelScatter domain={domain} series={series} xLabel="renda domiciliar per capita" yLabel="% dos votos válidos" formatX={fmtBRL} log
             detail={(c) => <><p className="mb-1 text-muted-foreground">Renda: {fmtIncome(income.get(c))}</p><DuelDetail m={muni.get(c)} year={f.ano} /></>} />
         )}
       </Card>
 
-      {ready && x && <>
+      {ready && x && reading && <>
         <p className="text-xs text-muted-foreground">Amostra: apenas municípios com renda e votação disponíveis. O total de municípios sem esses dados não está disponível nesta consulta.</p>
-        <GraphReading reading={interpretGraph({ x, metric: "share", year: f.ano, round: f.turno, scope: f.uf ?? "Brasil" }, readings)} />
+        <GraphReading reading={reading} />
         <StatisticalDetails key={JSON.stringify([f, mode])}>
+          <GeometryDetails geometry={reading.geometry} />
           {readings.map((s) => <div key={s.id} data-series={s.id} className="space-y-3"><h3 className="text-sm font-medium text-series-label">{s.name}</h3><CorrelationGrid a={s.analysis} /></div>)}
           <h3 className="text-sm font-medium">Como calculamos</h3>
           <SourceNote>Renda: {x.source}, rendimento nominal médio mensal domiciliar per capita. Votação: TSE, percentual de todos os votos válidos municipais, sem renormalizar os dois candidatos. Junção por código IBGE. Pares disponíveis, sem imputação; a cobertura de ausências não é fornecida por esta consulta. Pearson sobre log10 da renda; Spearman sobre postos. Intervalos Fisher-z e Fieller; testes bilaterais aproximados. Cada série é calculada separadamente, sem regressão conjunta. Esta tela não estima modelo ajustado. Falácia ecológica: não inferir voto individual ou causalidade.</SourceNote>

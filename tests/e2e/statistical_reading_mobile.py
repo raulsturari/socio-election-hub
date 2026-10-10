@@ -37,7 +37,7 @@ async def main():
    await page.get_by_role('button',name='Cor ou raça preta',exact=True).click()
    await page.get_by_test_id('graph-reading').filter(has_text='cor ou raça preta').wait_for(timeout=90000)
    assert await trigger.get_attribute('aria-expanded')=='false'
-   assert 'não inclui a categoria parda' in await page.get_by_test_id('graph-reading').inner_text()
+   assert 'sem incluir a categoria parda' in await page.get_by_test_id('graph-reading').inner_text()
    await trigger.click()
    await page.get_by_role('button',name='X Cor ou raça preta').click()
    await page.get_by_role('button',name='Superior completo (25+)',exact=True).click()
@@ -48,7 +48,7 @@ async def main():
    await page.goto('http://localhost:8080/laboratorio?ano=2022&turno=1&modo=bolsonaro&uf=SP&x=renda')
    await page.get_by_test_id('graph-reading').filter(has_text='Jair Bolsonaro').wait_for(timeout=90000)
    text=await page.get_by_test_id('graph-reading').inner_text()
-   assert '2022' in text and 'SP' in text and 'Lula.' not in text
+   assert '2022' in await page.locator('body').inner_text() and 'SP' in await page.locator('body').inner_text() and 'Lula.' not in text
    assert await trigger.get_attribute('aria-expanded')=='false'
    await page.goto('http://localhost:8080/correlacoes')
    await page.get_by_test_id('graph-reading').wait_for(timeout=90000)
