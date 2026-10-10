@@ -16,7 +16,7 @@ const searchSchema = z.object({
 
 export const Route = createFileRoute("/")({
   validateSearch: (s: Record<string, unknown>) => searchSchema.parse(s),
-  loaderDeps: ({ search }) => ({ ano: search.ano, uf: search.uf }),
+  loaderDeps: ({ search }) => ({ ano: search.ano ?? 2022, uf: search.uf ?? null }),
   loader: ({ context, deps }) => context.queryClient.ensureQueryData(resultsQuery(deps.ano, deps.uf)),
   head: () => ({
     meta: [
