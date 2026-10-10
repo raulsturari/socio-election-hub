@@ -20,7 +20,7 @@ export const Route = createFileRoute("/dados")({
 });
 
 const STATUS: Record<string, string> = { succeeded: "Concluída", failed: "Falhou", running: "Em andamento", pending: "Pendente" };
-const PENDING = ["TSE 2018 (presidente)", "TSE 2026 (após publicação oficial)", "IPEA", "INEP", "DATASUS"];
+const PENDING = ["TSE 2018 (presidente)", "TSE 2026 — 2º turno (após publicação oficial)", "IPEA", "INEP", "DATASUS"];
 
 function Dados() {
   const { data } = useSuspenseQuery(provenanceQuery());
