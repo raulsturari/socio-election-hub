@@ -9,6 +9,8 @@ import { FilterBar } from "@/components/FilterBar";
 import { ResultsList } from "@/components/ResultsList";
 import { ChoroplethMap } from "@/components/ChoroplethMap";
 import { NoElection } from "@/components/NoElection";
+import { TurnoutCard } from "@/components/TurnoutCard";
+import { YearCompare } from "@/components/YearCompare";
 
 export const Route = createFileRoute("/")({
   validateSearch: filtersSchema,
@@ -28,7 +30,7 @@ export const Route = createFileRoute("/")({
 
 function Atlas() {
   const ctx = useFilters();
-  const { f, election, summary, candidate, set } = ctx;
+  const { f, election, elections, summary, candidate, set } = ctx;
   const shares = useQuery({
     ...sharesQuery(election?.id ?? 0, candidate?.candidate_id ?? 0, f.uf),
     enabled: !!election && !!candidate && !!f.uf,
@@ -53,6 +55,8 @@ function Atlas() {
             )}
           </Card>
 
+          <TurnoutCard electionId={election.id} uf={f.uf} ibge={f.mun} />
+
           <Card title={`Mapa · ${candidate?.ballot_name ?? "—"}`} footer="Malha municipal IBGE · use dois dedos para zoom · toque para selecionar">
             {!f.uf ? (
               <EmptyState title="Escolha uma UF" description="O mapa municipal é exibido por UF para manter o desempenho no celular." />
@@ -63,15 +67,17 @@ function Atlas() {
         </>
       )}
 
-      <Card title="Comparação histórica" footer="2018 e 2026 aparecerão quando importados e reconciliados.">
+      <YearCompare elections={elections} round={f.turno} uf={f.uf} ibge={f.mun} areaLabel={f.mun ?? f.uf ?? "Brasil"} />
+
+      <Card title="Comparação histórica" footer="Só aparecem eleições importadas e reconciliadas.">
         <Link to="/comparar" search={true} className="text-sm text-primary">Comparar municípios e anos</Link>
       </Card>
 
       <Card title="Fonte e metodologia">
         <SourceNote>
-          TSE, arquivo votacao_candidato_munzona_2022 (QT_VOTOS_NOMINAIS_VALIDOS), agregado de zona para município.
+          TSE, arquivo votacao_candidato_munzona_{f.ano} (QT_VOTOS_NOMINAIS_VALIDOS), agregado de zona para município.
           Código TSE convertido para código IBGE e validado contra a API de Localidades do IBGE. Percentual = votos do
-          candidato ÷ votos nominais válidos no município. Brancos e nulos não constam deste arquivo.
+          candidato ÷ votos nominais válidos no município. Comparecimento, abstenção, brancos e nulos vêm de detalhe_votacao_munzona.
         </SourceNote>
       </Card>
     </div>

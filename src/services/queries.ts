@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary } from "@/lib/data.functions";
+import { getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
 
 const LONG = 10 * 60_000;
 
@@ -40,3 +40,6 @@ export interface GeoFeature {
   geometry: { type: "Polygon"; coordinates: number[][][] } | { type: "MultiPolygon"; coordinates: number[][][][] };
 }
 export interface GeoCollection { features: GeoFeature[] }
+
+export const turnoutQuery = (electionId: number, uf: string | null, ibge: string | null) =>
+  queryOptions({ queryKey: ["turnout", electionId, uf, ibge], queryFn: () => getTurnout({ data: { electionId, uf, ibge } }), staleTime: LONG });

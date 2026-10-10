@@ -10,7 +10,8 @@ checks, and writes logs to import_job_logs. Re-running is idempotent
 
 Usage:
   python3 scripts/ingest/pipeline.py municipalities
-  python3 scripts/ingest/pipeline.py tse-munzona /path/votacao_candidato_munzona_2022.zip
+  python3 scripts/ingest/pipeline.py tse-munzona /path/votacao_candidato_munzona_2026.zip 2026
+  python3 scripts/ingest/pipeline.py tse-detalhe /path/detalhe_votacao_munzona_2026.zip 2026
   python3 scripts/ingest/pipeline.py sidra
 """
 from __future__ import annotations
@@ -28,11 +29,12 @@ import zipfile
 from collections import defaultdict
 from email.utils import parsedate_to_datetime
 
-PIPELINE_VERSION = "2026.10.1"
+PIPELINE_VERSION = "2026.10.2"
 UA = {"User-Agent": "BrasilDataLab-ingest/1.0"}
 IBGE_MUNICIPIOS_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
 TSE_IBGE_MAP_URL = "https://raw.githubusercontent.com/betafcc/Municipios-Brasileiros-TSE/master/municipios_brasileiros_tse.csv"
-TSE_MUNZONA_URL = "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip"
+TSE_MUNZONA_URL = "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_{year}.zip"
+TSE_DETALHE_URL = "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_{year}.zip"
 
 # SIDRA indicators: table / variable / period explicitly documented.
 SIDRA_INDICATORS = [
@@ -173,14 +175,19 @@ def import_municipalities() -> None:
 
 
 # ---------- TSE votacao_candidato_munzona ----------
-def import_tse_munzona(zip_path: str, year: int = 2022, office: str = "Presidente") -> None:
-    ensure_sources()
+def sha256_file(path: str) -> str:
     h = hashlib.sha256()
-    with open(zip_path, "rb") as f:
+    with open(path, "rb") as f:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
-    job = Job("TSE", f"votacao_candidato_munzona_{year}_{office.lower()}", TSE_MUNZONA_URL,
-              zip_path.rsplit("/", 1)[-1], h.hexdigest(), head_last_modified(TSE_MUNZONA_URL))
+    return h.hexdigest()
+
+
+def import_tse_munzona(zip_path: str, year: int = 2022, office: str = "Presidente") -> None:
+    ensure_sources()
+    url = TSE_MUNZONA_URL.format(year=year)
+    job = Job("TSE", f"votacao_candidato_munzona_{year}_{office.lower()}", url,
+              zip_path.rsplit("/", 1)[-1], sha256_file(zip_path), head_last_modified(url))
     try:
         _run_tse(job, zip_path, year, office)
     except Exception as exc:  # noqa: BLE001 — recorded on the job, then re-raised
@@ -188,7 +195,35 @@ def import_tse_munzona(zip_path: str, year: int = 2022, office: str = "President
         raise
 
 
+def _norm(name: str) -> str:
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFD", name.upper()) if unicodedata.category(c) != "Mn").strip()
+
+
+def _map_new_municipalities(job: Job, zf: zipfile.ZipFile, member: str) -> None:
+    """IBGE municipalities absent from the community mapping (e.g. created after it) are matched to TSE codes
+    by exact normalized name + UF. Only unique matches among still-unmapped codes are accepted; all logged."""
+    pending = select_all("municipalities?select=ibge_code,name,uf&tse_code=is.null&order=ibge_code")
+    if not pending:
+        return
+    known = {m["tse_code"] for m in select_all("municipalities?select=tse_code&tse_code=not.is.null&order=ibge_code")}
+    tse_names = {}
+    with zf.open(member) as fh:
+        for r in csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1"), delimiter=";"):
+            code = int(r["CD_MUNICIPIO"])
+            if r["SG_UF"] != "ZZ" and code not in known:
+                tse_names[code] = (_norm(r["NM_MUNICIPIO"]), r["SG_UF"])
+    for m in pending:
+        hits = [c for c, (n, uf) in tse_names.items() if n == _norm(m["name"]) and uf == m["uf"]]
+        if len(hits) == 1:
+            rest("PATCH", f"municipalities?ibge_code=eq.{m['ibge_code']}", {"tse_code": hits[0]})
+            job.log("warn", "TSE code mapped by exact name+UF (absent from mapping file)",
+                    {"ibge_code": m["ibge_code"], "name": m["name"], "uf": m["uf"], "tse_code": hits[0]})
+
+
 def _parse_tse(job: Job, zip_path: str, year: int, office: str):
+    zf0 = zipfile.ZipFile(zip_path)
+    _map_new_municipalities(job, zf0, next(n for n in zf0.namelist() if n.endswith(f"_{year}_BR.csv")))
     tse_to_ibge = {m["tse_code"]: m["ibge_code"]
                    for m in select_all("municipalities?select=tse_code,ibge_code&tse_code=not.is.null&order=ibge_code")}
     zf = zipfile.ZipFile(zip_path)
@@ -216,9 +251,23 @@ def _parse_tse(job: Job, zip_path: str, year: int, office: str):
                 continue
             p["zone"][(rnd, ibge, int(r["NR_ZONA"]), num)] += votes
     job.log("info", "file parsed", {"rows": p["rows"], "vote_column": vote_col, "exterior_excluded": dict(p["ext"])})
+    p["national"] = _national_totals(zf, year, office, vote_col)
     for code, v in p["unmapped"].items():
         job.log("warn", "TSE municipality without IBGE mapping", {"tse_code": code, "votes": v})
     return p
+
+
+def _national_totals(zf: zipfile.ZipFile, year: int, office: str, vote_col: str):
+    """Per-round, per-candidate totals from the TSE consolidated *_BRASIL.csv (independent member)."""
+    name = next((n for n in zf.namelist() if n.endswith(f"_{year}_BRASIL.csv")), None)
+    if name is None:
+        return None
+    tot = defaultdict(int)
+    with zf.open(name) as fh:
+        for r in csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1"), delimiter=";"):
+            if r["DS_CARGO"].strip().lower() == office.lower():
+                tot[(int(r["NR_TURNO"]), int(r["NR_CANDIDATO"]))] += int(r[vote_col])
+    return tot
 
 
 def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
@@ -260,10 +309,15 @@ def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
         msum = sum(x["votes"] for x in mrows)
         expected = p["file"][rnd] - p["ext"][rnd] - sum(p["unmapped"].values())
         rok = zsum == msum == expected
+        nat = p.get("national")
+        nat_total = None if nat is None else sum(v for (r, _), v in nat.items() if r == rnd)
+        if nat is not None:
+            rok &= nat_total == p["file"][rnd]
         ok &= rok
         checks[f"round_{rnd}"] = {"file_total_nominal": p["file"][rnd], "exterior_excluded": p["ext"][rnd],
                                   "expected_domestic": expected, "zone_sum": zsum, "municipal_sum": msum,
-                                  "municipalities": len({x["ibge_code"] for x in mrows}), "reconciled": rok}
+                                  "municipalities": len({x["ibge_code"] for x in mrows}),
+                                  "national_brasil_file_total": nat_total, "reconciled": rok}
     if ok:
         rest("PATCH", f"elections?year=eq.{year}&office=eq.{label}", {"validated": True})
     job.finish(ok, p["rows"], len(zone_rows),
@@ -272,6 +326,73 @@ def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
                 "excludes": "votos no exterior (UF ZZ); brancos e nulos não constam deste arquivo"},
                {**checks, "unmapped_tse_codes": len(p["unmapped"])},
                None if ok else "reconciliation failed — election left unvalidated")
+
+
+# ---------- TSE detalhe_votacao_munzona (turnout, abstention, blank, null) ----------
+def import_tse_detalhe(zip_path: str, year: int, office: str = "Presidente") -> None:
+    ensure_sources()
+    url = TSE_DETALHE_URL.format(year=year)
+    job = Job("TSE", f"detalhe_votacao_munzona_{year}_{office.lower()}", url,
+              zip_path.rsplit("/", 1)[-1], sha256_file(zip_path), head_last_modified(url))
+    try:
+        _run_detalhe(job, zip_path, year, office)
+    except Exception as exc:  # noqa: BLE001
+        job.finish(False, 0, 0, {}, {}, str(exc)[:2000])
+        raise
+
+
+DETALHE_FIELDS = {"eligible": "QT_APTOS", "turnout": "QT_COMPARECIMENTO", "abstentions": "QT_ABSTENCOES",
+                  "valid_votes": "QT_TOTAL_VOTOS_VALIDOS", "blank_votes": "QT_VOTOS_BRANCOS", "null_votes": "QT_TOTAL_VOTOS_NULOS",
+                  "not_installed_voters": "QT_ELEITORES_SECOES_NAO_INSTALADAS"}
+
+
+def _run_detalhe(job: Job, zip_path: str, year: int, office: str) -> None:
+    label = office.upper()
+    tse_to_ibge = {m["tse_code"]: m["ibge_code"]
+                   for m in select_all("municipalities?select=tse_code,ibge_code&tse_code=not.is.null&order=ibge_code")}
+    elections = {e["round"]: e["id"] for e in select_all(f"elections?select=id,round&year=eq.{year}&office=eq.{label}&order=round")}
+    if not elections:
+        raise RuntimeError("import tse-munzona for this year first (elections missing)")
+    zf = zipfile.ZipFile(zip_path)
+    member = next(n for n in zf.namelist() if n.endswith(f"_{year}_BR.csv"))
+    agg = defaultdict(lambda: defaultdict(int))
+    zones, unmapped, ext, rows = defaultdict(set), defaultdict(int), defaultdict(int), 0
+    with zf.open(member) as fh:
+        for r in csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1"), delimiter=";"):
+            if r["DS_CARGO"].strip().lower() != office.lower():
+                continue
+            rows += 1
+            rnd = int(r["NR_TURNO"])
+            if rnd not in elections:
+                continue
+            if r["SG_UF"] == "ZZ":
+                ext[rnd] += int(r["QT_COMPARECIMENTO"])
+                continue
+            ibge = tse_to_ibge.get(int(r["CD_MUNICIPIO"]))
+            if ibge is None:
+                unmapped[int(r["CD_MUNICIPIO"])] += 1
+                continue
+            for k, col in DETALHE_FIELDS.items():
+                agg[(rnd, ibge)][k] += int(r[col])
+            zones[(rnd, ibge)].add(int(r["NR_ZONA"]))
+    out = [{"election_id": elections[rnd], "ibge_code": m, **dict(v), "zones_count": len(zones[(rnd, m)]),
+            "import_job_id": job.id} for (rnd, m), v in agg.items()]
+    upsert("municipal_turnout", out, "election_id,ibge_code")
+    # Cross-check: valid votes here must equal Σ candidate votes already reconciled in municipal_results.
+    checks, ok = {}, not unmapped
+    for rnd, eid in elections.items():
+        valid_detalhe = sum(v["valid_votes"] for (r, _), v in agg.items() if r == rnd)
+        mres = select_all(f"municipal_results?select=votes&election_id=eq.{eid}&order=ibge_code,candidate_id")
+        valid_results = sum(x["votes"] for x in mres)
+        bad = sum(1 for (r, _), v in agg.items() if r == rnd and v["turnout"] + v["abstentions"] + v["not_installed_voters"] != v["eligible"])
+        rok = valid_detalhe == valid_results and bad == 0
+        ok &= rok
+        checks[f"round_{rnd}"] = {"municipalities": sum(1 for (r, _) in agg if r == rnd),
+                                  "valid_votes_detalhe": valid_detalhe, "valid_votes_candidate_results": valid_results,
+                                  "rows_turnout_abstention_not_installed_ne_eligible": bad, "exterior_turnout_excluded": ext[rnd],
+                                  "reconciled": rok}
+    job.finish(ok, rows, len(out), {"year": year, "office": label, "rounds": sorted(elections)},
+               {**checks, "unmapped_tse_codes": len(unmapped)}, None if ok else "turnout cross-check failed")
 
 
 # ---------- SIDRA ----------
@@ -312,7 +433,9 @@ if __name__ == "__main__":
     elif cmd == "sidra":
         import_sidra()
     elif cmd == "tse-munzona" and len(sys.argv) > 2:
-        import_tse_munzona(sys.argv[2])
+        import_tse_munzona(sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 2022)
+    elif cmd == "tse-detalhe" and len(sys.argv) > 3:
+        import_tse_detalhe(sys.argv[2], int(sys.argv[3]))
     else:
         print(__doc__)
         sys.exit(1)

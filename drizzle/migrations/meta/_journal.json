@@ -8,6 +8,20 @@
       "when": 1791633715048,
       "tag": "0000_core_data_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791636703004,
+      "tag": "0001_municipal_turnout",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791637289712,
+      "tag": "0002_turnout_not_installed",
+      "breakpoints": true
     }
   ]
 }

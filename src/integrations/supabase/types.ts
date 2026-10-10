@@ -391,6 +391,76 @@ export type Database = {
           },
         ]
       }
+      municipal_turnout: {
+        Row: {
+          abstentions: number
+          blank_votes: number
+          created_at: string
+          election_id: number
+          eligible: number
+          ibge_code: string
+          import_job_id: string
+          not_installed_voters: number
+          null_votes: number
+          turnout: number
+          updated_at: string
+          valid_votes: number
+          zones_count: number
+        }
+        Insert: {
+          abstentions: number
+          blank_votes: number
+          created_at?: string
+          election_id: number
+          eligible: number
+          ibge_code: string
+          import_job_id: string
+          not_installed_voters?: number
+          null_votes: number
+          turnout: number
+          updated_at?: string
+          valid_votes: number
+          zones_count: number
+        }
+        Update: {
+          abstentions?: number
+          blank_votes?: number
+          created_at?: string
+          election_id?: number
+          eligible?: number
+          ibge_code?: string
+          import_job_id?: string
+          not_installed_voters?: number
+          null_votes?: number
+          turnout?: number
+          updated_at?: string
+          valid_votes?: number
+          zones_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "municipal_turnout_election_id_fkey"
+            columns: ["election_id"]
+            isOneToOne: false
+            referencedRelation: "elections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "municipal_turnout_ibge_code_fkey"
+            columns: ["ibge_code"]
+            isOneToOne: false
+            referencedRelation: "municipalities"
+            referencedColumns: ["ibge_code"]
+          },
+          {
+            foreignKeyName: "municipal_turnout_import_job_id_fkey"
+            columns: ["import_job_id"]
+            isOneToOne: false
+            referencedRelation: "import_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       municipalities: {
         Row: {
           created_at: string
@@ -497,6 +567,18 @@ export type Database = {
           party: string
           share: number
           votes: number
+        }[]
+      }
+      turnout_summary: {
+        Args: { _election_id: number; _ibge?: string; _uf?: string }
+        Returns: {
+          abstentions: number
+          blank_votes: number
+          eligible: number
+          municipalities: number
+          null_votes: number
+          turnout: number
+          valid_votes: number
         }[]
       }
     }
