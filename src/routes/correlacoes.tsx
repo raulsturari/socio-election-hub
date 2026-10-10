@@ -18,6 +18,8 @@ export const Route = createFileRoute("/correlacoes")({
       { name: "description", content: "Dispersão municipal entre renda per capita (Censo 2022) e votação presidencial (TSE)." },
       { property: "og:title", content: "Correlações renda × votação — Brasil Data Lab" },
       { property: "og:description", content: "Relação entre renda e votação em nível municipal, com aviso de falácia ecológica." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,

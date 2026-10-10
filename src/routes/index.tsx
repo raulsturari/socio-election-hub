@@ -21,6 +21,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Resultados eleitorais oficiais do TSE por município, com mapa e proveniência." },
       { property: "og:title", content: "Atlas municipal — Brasil Data Lab" },
       { property: "og:description", content: "Resultados presidenciais por município, a partir dos dados abertos do TSE." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,
