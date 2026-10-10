@@ -400,6 +400,7 @@ export type Database = {
           eligible: number
           ibge_code: string
           import_job_id: string
+          not_installed_voters: number
           null_votes: number
           turnout: number
           updated_at: string
@@ -414,6 +415,7 @@ export type Database = {
           eligible: number
           ibge_code: string
           import_job_id: string
+          not_installed_voters?: number
           null_votes: number
           turnout: number
           updated_at?: string
@@ -428,6 +430,7 @@ export type Database = {
           eligible?: number
           ibge_code?: string
           import_job_id?: string
+          not_installed_voters?: number
           null_votes?: number
           turnout?: number
           updated_at?: string

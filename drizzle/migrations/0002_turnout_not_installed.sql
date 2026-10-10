@@ -1,0 +1,2 @@
+ALTER TABLE public.municipal_turnout ADD COLUMN not_installed_voters integer NOT NULL DEFAULT 0 CHECK (not_installed_voters >= 0);
+COMMENT ON COLUMN public.municipal_turnout.not_installed_voters IS 'TSE QT_ELEITORES_SECOES_NAO_INSTALADAS; eligible = turnout + abstentions + not_installed_voters';
