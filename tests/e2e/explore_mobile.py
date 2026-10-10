@@ -19,7 +19,8 @@ async def main():
   await page.screenshot(path=str(OUT/'01-default.png'))
   canvas=page.get_by_role('img',name='Mapa municipal interativo');await canvas.scroll_into_view_if_needed()
   before=await canvas.screenshot()
-  await canvas.click(position={'x':190,'y':250});assert ' · ' in await page.get_by_role('status').inner_text()
+  await canvas.click(position={'x':190,'y':250});await expect(page.get_by_role('status').locator('strong')).to_be_visible()
+  await page.get_by_role('status').scroll_into_view_if_needed()
   await page.screenshot(path=str(OUT/'02-map-tooltip.png'))
   await page.get_by_label('Candidato',exact=True).select_option('13');await ready(page)
   assert before!=await canvas.screenshot()
@@ -32,6 +33,8 @@ async def main():
   await page.get_by_role('button',name='Renda × percentual de votos',exact=False).click();await ready(page)
   await expect(page.get_by_role('heading',name='Renda e votação',exact=True)).to_be_visible()
   scatter=page.get_by_role('img',name='Dispersão municipal interativa');await scatter.scroll_into_view_if_needed();await scatter.click(position={'x':90,'y':180})
+  await expect(page.get_by_role('status').locator('strong')).to_be_visible()
+  await page.get_by_role('status').scroll_into_view_if_needed()
   await page.screenshot(path=str(OUT/'03-scatter.png'))
   await page.get_by_role('button',name='Iniciar tour').click();await page.wait_for_timeout(1700)
   assert int(await page.get_by_role('progressbar').get_attribute('aria-valuenow'))>0
