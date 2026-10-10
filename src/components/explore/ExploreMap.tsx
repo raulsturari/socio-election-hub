@@ -30,11 +30,13 @@ export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:Explo
   useEffect(() => {
     const cv=canvas.current, ctx=cv?.getContext('2d'); if(!cv || !ctx || !geometry.length) return;
     setDrawn(false);
+    // Snapshot BEFORE resizing: setting cv.width clears the canvas, so copying after
+    // would fade from black on every restart — the visible "piscando".
+    const previous=document.createElement('canvas');previous.width=cv.width;previous.height=cv.height;
+    if(lastReplay.current===replay&&cv.width>0)previous.getContext('2d')?.drawImage(cv,0,0);
+    lastReplay.current=replay;
     const dpr=Math.min(window.devicePixelRatio,2);cv.width=360*dpr;cv.height=420*dpr;
     const css=getComputedStyle(cv), primary=css.getPropertyValue('--series-color'), negative=css.getPropertyValue('--series-negative'), muted=css.getPropertyValue('--data-missing'), border=css.getPropertyValue('--background');
-    const previous=document.createElement('canvas');previous.width=cv.width;previous.height=cv.height;
-    if(lastReplay.current===replay)previous.getContext('2d')?.drawImage(cv,0,0);
-    lastReplay.current=replay;
     const target=document.createElement('canvas');target.width=cv.width;target.height=cv.height;
     const layer=target.getContext('2d');if(!layer)return;
     layer.setTransform(dpr,0,0,dpr,0,0);layer.lineWidth=0.18;layer.strokeStyle=border;
