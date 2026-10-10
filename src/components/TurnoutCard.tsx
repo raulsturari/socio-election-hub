@@ -11,7 +11,7 @@ export function TurnoutCard({ electionId, uf, ibge }: { electionId: number; uf: 
   const t = q.data;
   return (
     <Card title="Comparecimento e abstenção" footer="TSE detalhe_votacao_munzona · exclui eleitorado no exterior">
-      {q.isLoading ? <div className="h-24 animate-pulse rounded-lg bg-muted" /> : q.error ? (
+      {q.isLoading ? <div className="h-24 skeleton rounded-lg bg-muted" /> : q.error ? (
         <EmptyState title="Erro ao carregar" description={q.error.message} />
       ) : !t ? (
         <EmptyState title="Não importado" description="Comparecimento e abstenção ainda não foram importados para esta eleição." />

@@ -49,7 +49,7 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
       shown.current = next;
     };
 
-    if (prefersReducedMotion() || from.size === 0 && points.length > 3000) { draw(1); return; }
+    if (prefersReducedMotion()) { draw(1); return; }
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {

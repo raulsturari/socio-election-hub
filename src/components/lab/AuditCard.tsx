@@ -6,7 +6,7 @@ import { fmtDateTime, fmtInt } from "@/lib/format";
 /** Shows the "validado" seal only when the flag AND both recorded reconciliations are true. */
 export function AuditCard({ electionId, label }: { electionId: number; label: string }) {
   const q = useQuery(auditQuery(electionId));
-  if (q.isLoading) return <div className="h-20 animate-pulse rounded-xl bg-muted" />;
+  if (q.isLoading) return <div className="h-20 skeleton rounded-xl bg-muted" />;
   if (q.error) return <p role="alert" className="rounded-xl border p-3 text-xs text-muted-foreground">Auditoria indisponível: {q.error.message}</p>;
   const a = q.data;
   if (!a) return null;
