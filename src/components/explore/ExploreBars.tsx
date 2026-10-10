@@ -3,9 +3,11 @@ import { useState } from 'react';
 import type { ExploreBar } from '@/lib/explore';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { Button } from '@/components/ui/button';
+import { useReadyAfter } from './chart-ready';
 const format=(n:number|null)=>n==null?'—':n.toLocaleString('pt-BR',{maximumFractionDigits:2});
 export function ExploreBars({bars,unit,replay}:{bars:ExploreBar[];unit:string;replay:number}) {
   const [selected,setSelected]=useState<string|null>(null);const reduce=useReducedMotion();const max=Math.max(1,...bars.map(b=>Math.abs(b.value)));
+  useReadyAfter(reduce?0:1100,[bars,replay,reduce]);
   return <div className="min-h-[420px] space-y-3 py-4" role="img" aria-label="Ranking em barras animadas">{bars.map(b=><motion.div layout="position" key={b.key} transition={{duration:reduce?0:0.85}}>
     <Button variant="ghost" className="w-full min-h-12 h-auto flex-col items-stretch gap-1 px-0 hover:bg-transparent" onClick={()=>setSelected(selected===b.key?null:b.key)} aria-label={`${b.label}: ${format(b.value)} ${unit}`}>
       <span className="flex justify-between gap-3 text-xs"><span className="truncate">{b.label}</span><span className="shrink-0 tabular-nums"><AnimatedNumber value={b.value} format={format}/> {unit}</span></span>

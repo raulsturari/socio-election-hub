@@ -5,6 +5,7 @@ import type { GeoFeature } from '@/services/queries';
 import type { ExploreRow } from '@/lib/explore';
 import { prefersReducedMotion } from '@/lib/motion';
 import { Button } from '@/components/ui/button';
+import { useChartReady } from './chart-ready';
 
 const rings = (f:GeoFeature):number[][][] => f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
 export function mapPaths(features:GeoFeature[]) {
@@ -21,11 +22,14 @@ export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:Explo
   const canvas = useRef<HTMLCanvasElement>(null);
   const lastReplay = useRef(replay);
   const [selected,setSelected] = useState<ExploreRow | null>(null);
+  const [drawn,setDrawn] = useState(false);
+  useChartReady(drawn);
   const geometry = useMemo(() => mesh.data && typeof Path2D !== 'undefined' ? mapPaths(mesh.data.features) : [],[mesh.data]);
   const values = useMemo(() => new Map(rows.map(r => [r.ibge_code,r])),[rows]);
   const extent = useMemo(() => { const ys=rows.map(r=>r.y ?? 0);if(diverging){const m=Math.max(1,...ys.map(Math.abs));return [-m,m] as const;}return [Math.min(0,...ys),Math.max(1,...ys)] as const; },[rows,diverging]);
   useEffect(() => {
     const cv=canvas.current, ctx=cv?.getContext('2d'); if(!cv || !ctx || !geometry.length) return;
+    setDrawn(false);
     const dpr=Math.min(window.devicePixelRatio,2);cv.width=360*dpr;cv.height=420*dpr;
     const css=getComputedStyle(cv), primary=css.getPropertyValue('--series-color'), negative=css.getPropertyValue('--series-negative'), muted=css.getPropertyValue('--data-missing'), border=css.getPropertyValue('--background');
     const previous=document.createElement('canvas');previous.width=cv.width;previous.height=cv.height;
@@ -46,7 +50,7 @@ export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:Explo
       const t=prefersReducedMotion()?1:Math.min(1,(now-start)/1200), eased=1-(1-t)**3;
       ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
       ctx.globalAlpha=1-eased;ctx.drawImage(previous,0,0);ctx.globalAlpha=eased;ctx.drawImage(target,0,0);ctx.globalAlpha=1;
-      if(t<1)frame=requestAnimationFrame(draw);
+      if(t<1)frame=requestAnimationFrame(draw);else setDrawn(true);
     };frame=requestAnimationFrame(draw);return()=>cancelAnimationFrame(frame);
   },[geometry,values,extent,replay]);
   const selectAt=(clientX:number,clientY:number) => {

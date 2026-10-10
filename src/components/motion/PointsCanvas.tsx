@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useChartReady } from "@/components/explore/chart-ready";
 import { DUR, easeOutCubic, prefersReducedMotion } from "@/lib/motion";
 
 export interface CanvasPoint { key: string; x: number; y: number }
@@ -15,11 +16,14 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const shown = useRef(new Map<string, Drawn>());
+  const [drawn, setDrawn] = useState(false);
+  useChartReady(drawn);
 
   useEffect(() => {
     const cv = ref.current;
     const ctx = cv?.getContext("2d");
     if (!cv || !ctx) return;
+    setDrawn(false);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = width * dpr; cv.height = height * dpr;
     const color = getComputedStyle(cv).color;
@@ -49,13 +53,13 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
       shown.current = next;
     };
 
-    if (prefersReducedMotion()) { draw(1); return; }
+    if (prefersReducedMotion()) { draw(1); setDrawn(true); return; }
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / (duration * 1000));
       draw(easeOutCubic(t));
-      if (t < 1) raf = requestAnimationFrame(tick);
+      if (t < 1) raf = requestAnimationFrame(tick); else setDrawn(true);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
