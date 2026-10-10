@@ -37,11 +37,12 @@ async def main():
    await page.get_by_role('button',name='Cor ou raça preta',exact=True).click()
    await page.get_by_test_id('graph-reading').filter(has_text='cor ou raça preta').wait_for(timeout=90000)
    assert await trigger.get_attribute('aria-expanded')=='false'
-   assert 'sem incluir a categoria parda' in await page.get_by_test_id('graph-reading').inner_text()
+   assert 'parda' not in await page.get_by_test_id('graph-reading').inner_text()
+   assert await page.get_by_test_id('graph-reading').locator(':scope > p:not(.text-xs)').count()==2
    await trigger.click()
    await page.get_by_role('button',name='X Cor ou raça preta').click()
    await page.get_by_role('button',name='Superior completo (25+)',exact=True).click()
-   await page.get_by_test_id('graph-reading').filter(has_text='25 anos').wait_for(timeout=90000)
+   await page.get_by_test_id('graph-reading').filter(has_text='ensino superior').wait_for(timeout=90000)
    assert await trigger.get_attribute('aria-expanded')=='false'
    assert await page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
    print('LAB variable/accordion/keyboard/overflow passed',width)

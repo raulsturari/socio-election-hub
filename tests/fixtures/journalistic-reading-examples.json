@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-10-10T19:52:59.917939+00:00",
+  "source": "Rendered Lab with loaded official data; generated text, not handwritten examples.",
+  "filters": {
+    "round": 1,
+    "scope": "Brasil",
+    "metric": "share"
+  },
+  "residualTolerancePP": 1e-08,
+  "examples": [
+    {
+      "variable": "evangelica",
+      "year": 2026,
+      "mode": "comparar",
+      "title": "Flávio ganha força nas cidades com maior presença evangélica",
+      "paragraphs": [
+        "Flávio aparece à frente nas cidades com maior presença evangélica, enquanto Lula leva vantagem onde essa característica é menos presente. A disputa muda de lado entre perfis de cidade, dentro da mesma eleição.",
+        "Os pontos se juntam à esquerda porque a maioria das cidades está na faixa mais baixa; poucas chegam a valores muito altos. Os pontos espalhados mostram que cidades parecidas podem ter votações bem diferentes: esse fator não conta a história toda. Essa diferença também aparece entre cidades semelhantes em renda e escolaridade."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (linear): 1,3 a 88,7 · Y: 0 a 88,7. Municípios únicos: 5570; pares: 5570. Terço esquerdo: 77,6%; direito: 0,2%. X original: mín. 1,3, mediana 21,7, P90 36,6, máx. 88,7.",
+        "withinSeries": [
+          "Flávio Bolsonaro: base 5,5%, topo 5,9%; mediana Y 47,6; IQR intrafaixa mediano / altura 30,1%.",
+          "Lula: base 2,1%, topo 17,1%; mediana Y 44,8; IQR intrafaixa mediano / altura 33,5%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: sim. Composição percentual verificada nos pares; residual Outros: mínimo 1,2%, mediana 5,7%, máximo 33,2%. Tolerância de arredondamento: 1e-8 p.p., apenas no residual derivado; shares originais preservados."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    },
+    {
+      "variable": "renda",
+      "year": 2026,
+      "mode": "comparar",
+      "title": "Flávio ganha força nas cidades com renda mais alta",
+      "paragraphs": [
+        "Flávio aparece à frente nas cidades com renda mais alta, enquanto Lula leva vantagem onde essa característica é menos presente. A disputa muda de lado entre perfis de cidade, dentro da mesma eleição.",
+        "O cruzamento das cores mostra onde a vantagem muda de lado. Os pontos espalhados mostram que cidades parecidas podem ter votações bem diferentes: esse fator não conta a história toda. Essa diferença também aparece entre cidades semelhantes em escolaridade e porte municipal."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (log10): 2,5 a 3,6 · Y: 0 a 88,7. Municípios únicos: 5570; pares: 5570. Terço esquerdo: 16,9%; direito: 13,3%. X original: mín. 288,7, mediana 1.182,5, P90 1.841,9, máx. 4.299,9.",
+        "withinSeries": [
+          "Flávio Bolsonaro: base 5,5%, topo 5,9%; mediana Y 47,6; IQR intrafaixa mediano / altura 14,1%.",
+          "Lula: base 2,1%, topo 17,1%; mediana Y 44,8; IQR intrafaixa mediano / altura 13%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: sim. Composição percentual verificada nos pares; residual Outros: mínimo 1,2%, mediana 5,7%, máximo 33,2%. Tolerância de arredondamento: 1e-8 p.p., apenas no residual derivado; shares originais preservados."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    },
+    {
+      "variable": "preta",
+      "year": 2026,
+      "mode": "comparar",
+      "title": "Lula ganha força nas cidades com maior presença de moradores de cor ou raça preta",
+      "paragraphs": [
+        "Lula aparece à frente nas cidades com maior presença de moradores de cor ou raça preta, enquanto Flávio leva vantagem onde essa característica é menos presente. A disputa muda de lado entre perfis de cidade, dentro da mesma eleição.",
+        "Os pontos se juntam à esquerda porque a maioria das cidades está na faixa mais baixa; poucas chegam a valores muito altos. Os pontos espalhados mostram que cidades parecidas podem ter votações bem diferentes: esse fator não conta a história toda. Essa diferença também aparece entre cidades semelhantes em renda e escolaridade."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (linear): 0,3 a 58,5 · Y: 0 a 88,7. Municípios únicos: 5570; pares: 5570. Terço esquerdo: 95%; direito: 0,4%. X original: mín. 0,3, mediana 7,1, P90 15,8, máx. 58,5.",
+        "withinSeries": [
+          "Flávio Bolsonaro: base 5,5%, topo 5,9%; mediana Y 47,6; IQR intrafaixa mediano / altura 26,8%.",
+          "Lula: base 2,1%, topo 17,1%; mediana Y 44,8; IQR intrafaixa mediano / altura 30,7%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: sim. Composição percentual verificada nos pares; residual Outros: mínimo 1,2%, mediana 5,7%, máximo 33,2%. Tolerância de arredondamento: 1e-8 p.p., apenas no residual derivado; shares originais preservados."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    },
+    {
+      "variable": "renda",
+      "year": 2022,
+      "mode": "bolsonaro",
+      "title": "Jair Bolsonaro tem votação maior nas cidades com renda mais alta",
+      "paragraphs": [
+        "Jair Bolsonaro tende a receber uma parcela maior dos votos nas cidades com renda mais alta. O desempenho varia conforme o perfil da cidade, sem que isso determine o resultado em cada uma delas.",
+        "Os pontos espalhados mostram que cidades parecidas podem ter votações bem diferentes: esse fator não conta a história toda. Essa diferença também aparece entre cidades semelhantes em escolaridade e porte municipal."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (log10): 2,5 a 3,6 · Y: 5,6 a 84. Municípios únicos: 5570; pares: 0. Terço esquerdo: 16,9%; direito: 13,3%. X original: mín. 288,7, mediana 1.182,5, P90 1.841,9, máx. 4.299,9.",
+        "withinSeries": [
+          "Jair Bolsonaro: base 20,6%, topo 3,4%; mediana Y 40,9; IQR intrafaixa mediano / altura 17,3%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: não. Residual Outros não calculado: métrica não composicional ou pares insuficientes/inválidos."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    }
+  ]
+}
