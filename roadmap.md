@@ -17,7 +17,7 @@
 - [x] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
 
 # Conclusão integrada e geometria
-- [ ] Revisão editorial: reportagem em dois parágrafos, testes focados, exemplos reais e checagem mobile.
+- [x] Revisão editorial: reportagem em dois parágrafos, testes focados, exemplos reais e checagem mobile.
 - [x] Revisão pontual: residual zero/constante/variável, 52 testes focados aprovados, checagem automática de tipos limpa e exemplos reais agregados de QA salvos.
 - [x] Compartilhar escalas reais e diagnosticar concentração, caudas, cruzamento pareado e abertura por série.
 - [x] Substituir blocos por candidato por uma conclusão única; critérios auditáveis recolhidos.

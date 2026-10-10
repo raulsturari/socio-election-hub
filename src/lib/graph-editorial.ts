@@ -28,13 +28,13 @@ export function editorialNews(c: ReadingContext, input: readonly ReadingSeries[]
   if (c.metric === 'share_delta') return { title: `Mudança na votação de ${names.join(' e ')} difere por ${c.x.label.toLowerCase()}`, text: `A variação da votação de ${names[0]} entre 2022 e 2026 tende a ser ${da > 0 ? 'maior' : da < 0 ? 'menor' : 'menos definida'} ${high}${b ? `; para ${names[1]}, ${db > 0 ? 'maior' : db < 0 ? 'menor' : 'não aparece uma direção clara'}` : ''}. ${input.some(s => s.id === 'bolsonaro' || s.name.includes('Bolsonaro')) ? 'No campo Bolsonaro, a comparação é entre Jair em 2022 e Flávio em 2026.' : 'A comparação é entre eleições, não uma previsão.'} Isso não informa quem lidera hoje.` };
   if (b && g.crossing && da * db < 0) {
     const winner = shortName(g.highLeader ?? ''), other = shortName(g.lowLeader ?? '');
-    return { title: `${winner} ganha força ${high}`, text: `${winner} aparece à frente ${high}, enquanto ${other} leva vantagem ${low}. A disputa muda de lado entre esses perfis. Essa diferença compara cidades na mesma eleição, não anuncia uma tendência futura.` };
+    return { title: `${winner} ganha força ${high}`, text: `${winner} aparece à frente ${high}, enquanto ${other} leva vantagem onde essa característica é menos presente. A disputa muda de lado entre perfis de cidade, dentro da mesma eleição.` };
   }
   if (b && da && da === db) return { title: `${names.join(' e ')} têm votação ${da > 0 ? 'maior' : 'menor'} ${high}`, text: `${names.join(' e ')} tendem a ter votação ${da > 0 ? 'maior' : 'menor'} ${high}. Os dois caminham na mesma direção nesse recorte; melhorar o desempenho não significa, por si só, estar à frente do adversário.` };
   const growing = da > 0 ? a : db > 0 ? b : da ? a : b;
   if (!growing) return uncertain;
   const d = growing === a ? da : db, name = shortName(growing.name);
-  return { title: `${name} tem votação ${d > 0 ? 'maior' : 'menor'} ${high}`, text: `${name} tende a receber uma parcela ${d > 0 ? 'maior' : 'menor'} dos votos ${high}.${b && da * db < 0 ? ` ${shortName(growing === a ? b.name : a.name)} segue a direção contrária, mas as faixas disponíveis não mostram uma troca consistente de liderança.` : b ? ' Para o outro candidato, não aparece uma direção clara neste recorte.' : ''} Ter desempenho melhor em um perfil de cidade não significa necessariamente liderar a disputa.` };
+  return { title: `${name} tem votação ${d > 0 ? 'maior' : 'menor'} ${high}`, text: `${name} tende a receber uma parcela ${d > 0 ? 'maior' : 'menor'} dos votos ${high}.${b && da * db < 0 ? ` ${shortName(growing === a ? b.name : a.name)} segue a direção contrária, mas as faixas disponíveis não mostram uma troca consistente de liderança.` : b ? ' Para o outro candidato, não aparece uma direção clara neste recorte.' : ' O desempenho varia conforme o perfil da cidade, sem que isso determine o resultado em cada uma delas.'}` };
 }
 export function editorialShape(g: ScatterGeometry, metric: ReadingContext['metric'], crossingSupported: boolean): string {
   const phrases: string[] = [];
