@@ -30,7 +30,7 @@ export function IndicatorPicker({ value, onSelect }: { value: string; onSelect: 
     const c = v.indicatorId ? cov.get(v.indicatorId) : undefined;
     const ok = available(v);
     return (
-      <button type="button" onClick={() => pick(v)} disabled={!ok && !coverage.isPending} aria-pressed={v.id === value}
+      <button type="button" onClick={() => pick(v)} disabled={!ok} aria-pressed={v.id === value}
         className={`flex min-h-12 w-full flex-col items-start rounded-2xl px-3 py-2 text-left transition-colors duration-150 ${v.id === value ? "bg-secondary ring-1 ring-primary" : "hover:bg-secondary/70"} disabled:opacity-50`}>
         <span className="text-sm">{v.label}</span>
         <span className="text-[11px] text-muted-foreground">

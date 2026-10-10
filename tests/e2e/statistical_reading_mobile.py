@@ -34,6 +34,7 @@ async def main():
    print('CSV',width,download.suggested_filename)
    # Variable selection through the actual sheet
    await page.get_by_role('button',name='X Renda domiciliar per capita (média)').click()
+   await page.get_by_text(re.compile(r'indicadores disponíveis no app')).wait_for(timeout=30000)
    await page.get_by_label('Buscar indicador').fill('preta')
    await page.get_by_role('button',name=re.compile(r'^Cor ou raça preta')).click()
    await page.get_by_test_id('graph-reading').filter(has_text='cor ou raça preta').wait_for(timeout=90000)
@@ -42,6 +43,7 @@ async def main():
    assert await page.get_by_test_id('graph-reading').locator(':scope > p:not(.text-xs)').count()==2
    await trigger.click()
    await page.get_by_role('button',name='X Cor ou raça preta').click()
+   await page.get_by_text(re.compile(r'indicadores disponíveis no app')).wait_for(timeout=30000)
    await page.get_by_label('Buscar indicador').fill('superior')
    await page.get_by_role('button',name=re.compile(r'^Superior completo \(25\+\)')).click()
    await page.get_by_test_id('graph-reading').filter(has_text='ensino superior').wait_for(timeout=90000)
