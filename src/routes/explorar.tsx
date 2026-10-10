@@ -26,7 +26,10 @@ function ExplorePage(){
   const select=(id:string)=>{setDirection(PRESETS.findIndex(p=>p.id===id)>index?1:-1);setProgress(0);navigate({to:'/explorar',search:prev=>({...prev,preset:id}),replace:true});};
   const step=(dir:number)=>select(PRESETS[(index+dir+PRESETS.length)%PRESETS.length]?.id??PRESETS[0].id);
   const base=ctx.elections.find(e=>e.year===2022&&e.round===ctx.f.turno);
-  const input={preset:preset.id,electionId:ctx.election?.id??0,baseElectionId:base?.id??null,candidateNumber:ctx.candidate?.number??null,uf:ctx.f.uf,minimum:search.min??0};
+  const retainedCandidate=useRef<number|null>(null);
+  if(ctx.candidate)retainedCandidate.current=ctx.candidate.number;
+  const effectiveElection=preset.metric.endsWith('_delta')?ctx.elections.find(e=>e.year===2026&&e.round===ctx.f.turno):ctx.election;
+  const input={preset:preset.id,electionId:effectiveElection?.id??0,baseElectionId:base?.id??null,candidateNumber:ctx.f.cand??ctx.candidate?.number??retainedCandidate.current,uf:ctx.f.uf,minimum:search.min??0};
   const queryKey=exploreQuery(input).queryKey;
   // Tour clock advances only while the current real dataset is successfully loaded.
   useEffect(()=>{
@@ -58,7 +61,7 @@ function ExplorePage(){
       <motion.div key={preset.id} initial={{opacity:reduced?1:0,x:reduced?0:direction*70}} animate={{opacity:1,x:0}} transition={{duration:0.55,ease:[0.22,1,0.36,1]}}>
         <p className="text-xs text-muted-foreground mb-2">{preset.subtitle}</p><h2 className="text-2xl font-semibold leading-tight mb-4">{preset.title}</h2>
         {(preset.id==='vote-ranking'||preset.id==='turnout-ranking')&&<label className="block mb-4 text-xs text-muted-foreground">Mínimo de eleitores aptos<input aria-label="Mínimo de eleitores" type="number" min="0" max="10000000" value={search.min??0} onChange={e=>navigate({to:'/explorar',search:prev=>({...prev,min:Math.max(0,Math.min(10000000,Number(e.target.value)))}),replace:true})} className="block w-full h-11 rounded-full bg-secondary text-foreground px-4 mt-1"/></label>}
-        {!ctx.election?<div role="status" className="min-h-[510px] flex items-center text-center text-muted-foreground">Esta eleição não está disponível entre os dados validados. Selecione 2026 · 1º turno ou histórico de 2022.</div>:ctx.summary.isPending?<div className="h-[510px] skeleton"/>:ctx.summary.error?<div role="alert">Candidatos indisponíveis. <Button onClick={()=>ctx.summary.refetch()}>Tentar novamente</Button></div>:<ExploreViewer preset={preset} input={input} replay={replay}/>}
+        {!effectiveElection?<div role="status" className="min-h-[510px] flex items-center text-center text-muted-foreground">Esta eleição não está disponível entre os dados validados. Selecione 2026 · 1º turno ou histórico de 2022.</div>:ctx.summary.isPending&&!retainedCandidate.current?<div className="h-[510px] skeleton"/>:ctx.summary.error?<div role="alert">Candidatos indisponíveis. <Button onClick={()=>ctx.summary.refetch()}>Tentar novamente</Button></div>:<ExploreViewer preset={preset} input={input} replay={replay}/>}
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{preset.note}</p>
       </motion.div>
     </section>
