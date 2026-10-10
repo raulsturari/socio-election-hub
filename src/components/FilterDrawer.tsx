@@ -23,7 +23,7 @@ export function FilterDrawer({ open, onClose, ctx }: { open: boolean; onClose: (
         </Group>
         <Group label="Turno">
           <div className="grid grid-cols-2 gap-2">
-            {[1, 2].map((t) => (
+            {([1, 2] as const).map((t) => (
               <Chip key={t} active={f.turno === t} onClick={() => set({ turno: t, cand: undefined })}>
                 {t}º turno{available(f.ano, t) ? "" : " · sem dados"}
               </Chip>

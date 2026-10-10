@@ -18,7 +18,8 @@ function ringsOf(f: GeoFeature): number[][][] {
 /** Equirectangular projection corrected by cos(mid-latitude); adequate at UF scale. */
 function project(features: GeoFeature[]) {
   let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  for (const f of features) for (const ring of ringsOf(f)) for (const [x, y] of ring) {
+  for (const f of features) for (const ring of ringsOf(f)) for (const pt of ring) {
+    const x = pt[0] ?? 0, y = pt[1] ?? 0;
     minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y);
   }
   const k = Math.cos((((minY + maxY) / 2) * Math.PI) / 180);
@@ -27,7 +28,7 @@ function project(features: GeoFeature[]) {
   const paths = features.map((f) => ({
     code: f.properties.codarea,
     d: ringsOf(f).map((ring) =>
-      ring.map(([x, y], i) => `${i ? "L" : "M"}${((x - minX) * k * scale).toFixed(1)},${((maxY - y) * scale).toFixed(1)}`).join("") + "Z",
+      ring.map(([x = 0, y = 0], i) => `${i ? "L" : "M"}${((x - minX) * k * scale).toFixed(1)},${((maxY - y) * scale).toFixed(1)}`).join("") + "Z",
     ).join(""),
   }));
   return { paths, width: w * scale, height: h * scale };
@@ -83,8 +84,9 @@ function usePinchZoom() {
 
   const state = () => {
     const p = [...pts.current.values()];
-    if (p.length === 1) return { dist: 0, cx: p[0].x, cy: p[0].y };
-    const [a, b] = p;
+    const a = p[0], b = p[1];
+    if (!a) return { dist: 0, cx: 0, cy: 0 };
+    if (!b) return { dist: 0, cx: a.x, cy: a.y };
     return { dist: Math.hypot(a.x - b.x, a.y - b.y), cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2 };
   };
   const handlers = {

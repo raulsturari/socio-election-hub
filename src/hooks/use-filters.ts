@@ -15,7 +15,8 @@ export function useFilters() {
   const candidate = candidates.find((c) => c.number === f.cand) ?? candidates[0] ?? null;
 
   const set = (patch: Partial<FiltersSearch>) =>
-    navigate({ to: ".", search: (prev: FiltersSearch) => ({ ...prev, ...patch }), replace: true });
+    // Every content route validates the same filtersSchema, so a loose reducer is safe here.
+    navigate({ to: ".", search: ((prev: FiltersSearch) => ({ ...prev, ...patch })) as never, replace: true });
 
   return { f, elections, election, summary, candidates, candidate, set };
 }
