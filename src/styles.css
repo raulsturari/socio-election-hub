@@ -81,3 +81,4 @@
   animation: skeleton-shimmer 1.4s ease-in-out infinite;
 }
 .choro-path { transition: fill-opacity 350ms cubic-bezier(0.22, 1, 0.36, 1), fill 350ms cubic-bezier(0.22, 1, 0.36, 1); }
+.explore-legend { background: linear-gradient(90deg, var(--secondary), var(--primary)); }

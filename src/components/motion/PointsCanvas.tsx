@@ -10,8 +10,8 @@ interface Drawn { x: number; y: number; a: number }
  * exists before and after a change glide to the new position; new keys fade in in place and
  * removed keys fade out in place — no motion implies continuity between unrelated observations.
  */
-export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6 }: {
-  points: CanvasPoint[]; width: number; height: number; alpha?: number; radius?: number;
+export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6, duration = DUR.slow, replay = 0 }: {
+  points: CanvasPoint[]; width: number; height: number; alpha?: number; radius?: number; duration?: number; replay?: number;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const shown = useRef(new Map<string, Drawn>());
@@ -53,13 +53,13 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / (DUR.slow * 1000));
+      const t = Math.min(1, (now - start) / (duration * 1000));
       draw(easeOutCubic(t));
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [points, width, height, alpha, radius]);
+  }, [points, width, height, alpha, radius, duration, replay]);
 
   return <canvas ref={ref} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full text-primary" />;
 }

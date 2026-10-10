@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { PointsCanvas } from '@/components/motion/PointsCanvas';
 import type { ExploreRow } from '@/lib/explore';
-export function ExploreScatter({rows,unitX}:{rows:ExploreRow[];unitX:string}) {
+export function ExploreScatter({rows,unitX,replay}:{rows:ExploreRow[];unitX:string;replay:number}) {
   const [selected,setSelected]=useState<ExploreRow|null>(null);
   const scaled=useMemo(()=>{
     const maxX=Math.max(1,...rows.map(r=>r.x??0)),maxY=Math.max(100,...rows.map(r=>r.y??0));
@@ -11,7 +11,7 @@ export function ExploreScatter({rows,unitX}:{rows:ExploreRow[];unitX:string}) {
     const rect=e.currentTarget.getBoundingClientRect(),x=(e.clientX-rect.left)*360/rect.width,y=(e.clientY-rect.top);
     let closest=Infinity,index=-1;scaled.points.forEach((p,i)=>{const d=Math.hypot(p.x-x,p.y-y);if(d<closest){closest=d;index=i;}});setSelected(rows[index]??null);
   }}>
-    <PointsCanvas points={scaled.points} width={360} height={390} alpha={0.6} radius={2}/>
+    <PointsCanvas key={replay} points={scaled.points} width={360} height={390} alpha={0.6} radius={2} duration={1.2}/>
     <span className="absolute top-0 left-0 text-xs text-muted-foreground">Votos (%)</span><span className="absolute bottom-0 left-6 text-xs text-muted-foreground">0</span><span className="absolute bottom-0 right-4 text-xs text-muted-foreground">{scaled.maxX.toLocaleString('pt-BR',{maximumFractionDigits:0})} {unitX}</span>
   </div><div role="status" className="min-h-14 mt-2 text-center text-sm">{selected?<><strong>{selected.name} · {selected.uf}</strong><span className="block text-primary tabular-nums">{selected.x?.toLocaleString('pt-BR',{maximumFractionDigits:2})} {unitX} · {selected.y?.toFixed(2)}% dos votos</span></>:<span className="text-muted-foreground">Um ponto por município · sem ponderação</span>}</div></div>;
 }

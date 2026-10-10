@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 const rings = (f:GeoFeature):number[][][] => f.geometry.type === 'Polygon' ? f.geometry.coordinates : f.geometry.coordinates.flat();
 function paths(features:GeoFeature[]) {
   const coords = features.flatMap(f => rings(f).flat());
-  const xs = coords.map(p => p[0] ?? 0), ys = coords.map(p => p[1] ?? 0);
-  const left = Math.min(...xs), right = Math.max(...xs), bottom = Math.min(...ys), top = Math.max(...ys);
+  let left=Infinity,right=-Infinity,bottom=Infinity,top=-Infinity;
+  for(const [x=0,y=0] of coords){left=Math.min(left,x);right=Math.max(right,x);bottom=Math.min(bottom,y);top=Math.max(top,y);}
   const scale = Math.min(330/((right-left)*0.92),380/(top-bottom));
   const offset = (360-(right-left)*0.92*scale)/2;
   return features.map(f => ({ code:f.properties.codarea, path:new Path2D(rings(f).map(r => r.map(([x=0,y=0],i) => `${i?'L':'M'}${offset+(x-left)*0.92*scale},${20+(top-y)*scale}`).join('')+'Z').join('')) }));
