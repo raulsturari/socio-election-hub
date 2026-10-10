@@ -16,6 +16,7 @@ Usage:
 from __future__ import annotations
 
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -107,7 +108,10 @@ class Job:
 def fetch(url: str) -> tuple[bytes, str | None]:
     with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=300) as r:
         lm = r.headers.get("Last-Modified")
-        return r.read(), (parsedate_to_datetime(lm).isoformat() if lm else None)
+        body = r.read()
+        if body[:2] == b"\x1f\x8b":  # IBGE APIs may gzip regardless of Accept-Encoding
+            body = gzip.decompress(body)
+        return body, (parsedate_to_datetime(lm).isoformat() if lm else None)
 
 
 def head_last_modified(url: str) -> str | None:
