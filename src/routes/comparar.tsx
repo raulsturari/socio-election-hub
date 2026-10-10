@@ -20,6 +20,8 @@ export const Route = createFileRoute("/comparar")({
       { name: "description", content: "Compare resultados oficiais entre municípios e anos eleitorais." },
       { property: "og:title", content: "Comparar municípios — Brasil Data Lab" },
       { property: "og:description", content: "Comparação lado a lado de resultados municipais do TSE." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,

@@ -12,6 +12,8 @@ export const Route = createFileRoute("/dados")({
       { name: "description", content: "Proveniência, cobertura e checagens de integridade de cada importação oficial." },
       { property: "og:title", content: "Fontes e importações — Brasil Data Lab" },
       { property: "og:description", content: "Transparência sobre TSE, IBGE e demais bases utilizadas." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,

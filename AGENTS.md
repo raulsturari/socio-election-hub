@@ -18,3 +18,6 @@
 - TSE codes missing from the community mapping are filled only by a unique exact normalized name+UF match, logged as a warning on the import job — keeps new municipalities (e.g. created after the mapping) reconcilable without guessing.
 - Lab statistics (Pearson/Spearman/OLS) are pure functions in `src/lib/lab-stats.ts` + `lab-analysis.ts`, run server-side in `lab.functions.ts` over the `lab_dataset` RPC — the phone gets only points and results, and tests pin values to scipy/numpy references.
 - Lab predictors come from `X_VARIABLES`; an entry with `indicatorId: null` is shown as unavailable, never simulated — add a SIDRA entry (table/variable/classifications) to the pipeline before enabling one.
+- Explore presets live in a typed catalog; read-only server functions reuse lab_dataset and exact vote counts for weighted bars — keeps every visualization traceable without writing electoral data.
+- Explore national maps and scatterplots use Canvas; keyed IBGE transitions animate only visual properties and tour waits for successful queries — avoids thousands of animated DOM nodes and advancing past unloaded charts.
+- Explore map transitions composite prerendered rasters and gallery thumbnails fetch near the viewport — bounds animation work and avoids loading every municipal dataset at once.
