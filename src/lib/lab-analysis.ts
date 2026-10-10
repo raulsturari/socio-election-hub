@@ -23,6 +23,8 @@ export interface LabAnalysis {
 }
 
 const log10 = (v: number) => (v > 0 ? Math.log10(v) : null);
+/** Conventional variance-inflation threshold above which X is treated as redundant with the controls. */
+export const VIF_LIMIT = 10;
 
 /**
  * Listwise deletion, bivariate correlations (Pearson on the displayed scale, Spearman on ranks)
@@ -65,12 +67,17 @@ export function analyze(rows: readonly LabRow[], xv: XVariable, useFixedEffects:
   const X = design.map((row, i) => [...row, ...dummies.map((u) => (ufs[i] === u ? 1 : 0))]);
   const xName = xv.log ? `log10 ${xv.label.toLowerCase()}` : xv.label;
   const names = ["intercepto", xName, ...covs.map((c) => c.name), ...dummies.map((u) => `UF=${u}`)];
-  const fit = ys.length > names.length + 10 ? ols(ys, X, names) : null;
+  const rawFit = ys.length > names.length + 10 ? ols(ys, X, names) : null;
 
   let modelNote: string | null = null;
-  if (!fit) modelNote = ys.length <= names.length + 10 ? "Amostra insuficiente para o modelo multivariado." : "Colinearidade perfeita: modelo não estimável.";
+  if (!rawFit) modelNote = ys.length <= names.length + 10 ? "Amostra insuficiente para o modelo multivariado." : "Colinearidade perfeita: modelo não estimável.";
   const continuous = design.length ? design[0]!.slice(1).map((_, j) => design.map((r) => r[j + 1]!)) : [];
-  const v = fit ? vif(continuous) : null;
+  const v = rawFit ? vif(continuous) : null;
+  // X almost reproduced by the controls (e.g. median vs mean income): the adjusted coefficient
+  // is unstable, so the model is withheld instead of being presented as evidence.
+  const xVif = v?.[0];
+  const fit = rawFit && !(xVif != null && Number.isFinite(xVif) && xVif > VIF_LIMIT) ? rawFit : null;
+  if (rawFit && !fit) modelNote = `Colinearidade: ${xName} é quase redundante com os controles (VIF ${xVif!.toFixed(1)} > ${VIF_LIMIT}); o modelo ajustado não é exibido.`;
 
   return {
     totalRows: rows.length, missing, points: pts,
