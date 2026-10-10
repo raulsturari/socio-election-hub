@@ -45,8 +45,8 @@ export function IndicatorPicker({ value, onSelect }: { value: string; onSelect: 
     <div className="space-y-3 pb-4">
       <label className="flex h-12 items-center gap-2 rounded-full bg-secondary px-4">
         <Search className="size-4 text-muted-foreground" aria-hidden />
-        <input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar: idosos, esgoto, internet…" aria-label="Buscar indicador"
-          className="min-w-0 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground" />
+        <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Buscar: idosos, esgoto, internet…" aria-label="Buscar indicador"
+          className="min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground" />
       </label>
       <p className="text-xs text-muted-foreground" role="status">
         {coverage.isPending ? "Carregando cobertura…" : coverage.error ? "Cobertura indisponível; tente novamente." : `${nAvailable} indicadores disponíveis no app${query ? ` · ${results.length} encontrados` : ""}`}

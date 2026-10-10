@@ -52,7 +52,7 @@ export function DuelScatter({ series, xLabel, yLabel, formatX, log = false, deta
       )}
       <div className="relative">
         {layers.map((l) => <div key={l.id} data-series={l.id} className="absolute inset-0"><PointsCanvas points={l.pts} width={W} height={H} alpha={series.length > 1 ? 0.35 : 0.45} replay={replay} /></div>)}
-        <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-none select-none" onPointerDown={pick} onPointerMove={(e) => e.buttons && pick(e)} role="img" aria-label={`Dispersão ${xLabel} por ${yLabel}`}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-pan-y select-none" onPointerDown={pick} onPointerMove={(e) => e.pointerType === "mouse" && e.buttons && pick(e)} role="img" aria-label={`Dispersão ${xLabel} por ${yLabel}`}>
           {[m.y0, (m.y0 + m.y1) / 2, m.y1].map((v, i) => <text key={i} x={PAD.l - 4} y={m.sy(v) + 3} textAnchor="end" className="fill-muted-foreground text-[9px]">{v.toLocaleString("pt-BR", { maximumFractionDigits: 0 })}</text>)}
           {[m.x0, m.x1].map((v, i) => <text key={i} x={i ? W - PAD.r : PAD.l} y={H - 8} textAnchor={i ? "end" : "start"} className="fill-muted-foreground text-[9px]">{formatX(m.untx(v))}</text>)}
           {hits.map(({ s, p }) => p && <circle key={s.id} data-series={s.id} cx={m.sx(p.x)} cy={m.sy(p.y)} r={4.5} className="fill-none stroke-foreground" strokeWidth={1.5} />)}

@@ -1,7 +1,9 @@
-import { useEffect, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { Button } from "./ui/button";
 import { Database, X } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { DUR, EASE_IN, EASE_OUT } from "@/lib/motion";
+import { motion } from "motion/react";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
@@ -53,34 +55,36 @@ export function Chip({ children, onClick, active }: { children: ReactNode; onCli
 }
 
 export function BottomSheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  const returnFocus = useRef<HTMLElement | null>(null);
   return (
-    <AnimatePresence>
-      {open && (
-    <div className="fixed inset-0 z-50 flex items-end" role="dialog" aria-modal aria-label={title}>
-      <motion.button aria-label="Fechar" className="absolute inset-0 bg-background/70 backdrop-blur-sm" onClick={onClose}
-        initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: DUR.base } }} exit={{ opacity: 0, transition: { duration: DUR.fast } }} />
-      <motion.div className="pb-safe relative max-h-[85vh] w-full overflow-y-auto rounded-t-xl border-t bg-card px-4 pt-3"
-        initial={{ y: "100%" }} animate={{ y: 0, transition: { duration: DUR.slow, ease: EASE_OUT } }} exit={{ y: "100%", transition: { duration: DUR.base, ease: EASE_IN } }}
-        drag="y" dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0, bottom: 0.6 }}
-        onDragEnd={(_, i) => { if (i.offset.y > 120 || i.velocity.y > 600) onClose(); }}>
-        <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-secondary" />
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-base font-semibold">{title}</h2>
-          <button onClick={onClose} aria-label="Fechar" className="grid size-11 place-items-center rounded-full bg-secondary">
-            <X className="size-4" />
-          </button>
-        </div>
-        {children}
-      </motion.div>
-    </div>
-      )}
-    </AnimatePresence>
+    <Dialog.Root open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
+      <Dialog.Portal>
+        <Dialog.Overlay asChild>
+          <motion.div className="fixed inset-0 z-50 bg-background/70 backdrop-blur-sm"
+            initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: DUR.base } }} />
+        </Dialog.Overlay>
+        {/* Portal avoids page transforms; native content scrolling must not compete with dragging. */}
+        <Dialog.Content asChild aria-describedby={undefined}
+          onOpenAutoFocus={() => { if (document.activeElement instanceof HTMLElement) returnFocus.current = document.activeElement; }}
+          onCloseAutoFocus={(event) => { event.preventDefault(); returnFocus.current?.focus({ preventScroll: true }); }}>
+          <motion.div className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[85dvh] w-full max-w-md flex-col overflow-hidden rounded-t-xl border-t bg-card outline-none"
+            initial={{ y: "100%" }} animate={{ y: 0, transition: { duration: DUR.slow, ease: EASE_OUT } }}>
+            <div className="shrink-0 px-4 pt-3">
+              <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-secondary" />
+              <div className="mb-4 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+                <Dialog.Title className="min-w-0 text-base font-semibold">{title}</Dialog.Title>
+                <Dialog.Close asChild>
+                  <Button variant="secondary" size="icon" aria-label="Fechar" className="size-11 shrink-0 rounded-full"><X /></Button>
+                </Dialog.Close>
+              </div>
+            </div>
+            <div data-testid="sheet-scroll" className="min-h-0 overflow-y-auto overscroll-y-contain touch-pan-y px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)]">
+              {children}
+            </div>
+          </motion.div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 

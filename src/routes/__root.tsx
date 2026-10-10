@@ -124,7 +124,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <MotionConfig reducedMotion="user">
-        <main className="mx-auto min-h-screen max-w-md pb-32">
+        <main className="mx-auto min-h-[100dvh] max-w-md pb-[calc(8rem+env(safe-area-inset-bottom))]">
           <PageFade />
         </main>
         <BottomNav />
