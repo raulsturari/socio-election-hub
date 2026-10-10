@@ -16,7 +16,7 @@ export function mapPaths(features:GeoFeature[]) {
   return features.map(f => ({ code:f.properties.codarea, path:new Path2D(rings(f).map(r => r.map(([x=0,y=0],i) => `${i?'L':'M'}${offset+(x-left)*0.92*scale},${20+(top-y)*scale}`).join('')+'Z').join('')) }));
 }
 /** `diverging`: signed Bolsonaro − Lula advantage, blue/red, symmetric scale. */
-export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:ExploreRow[];unit:string;replay:number;diverging?:boolean;detail?:(code:string)=>ReactNode}) {
+export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:ExploreRow[];unit:string;replay:number;diverging?:boolean;detail?:((code:string)=>ReactNode)|undefined}) {
   const mesh = useQuery(brazilMeshQuery());
   const canvas = useRef<HTMLCanvasElement>(null);
   const lastReplay = useRef(replay);

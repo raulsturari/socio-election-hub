@@ -106,7 +106,7 @@ function Atlas() {
       <YearCompare elections={elections} round={f.turno} uf={f.uf} ibge={f.mun} areaLabel={f.mun ?? f.uf ?? "Brasil"} />
 
       <Card title="Comparação histórica" footer="Só aparecem eleições importadas e reconciliadas.">
-        <Link to="/comparar" search={true} className="text-sm text-primary">Comparar municípios e anos</Link>
+        <Link to="/comparar" search={true}  className="text-sm text-primary">Comparar municípios e anos</Link>
       </Card>
 
       <Card title="Fonte e metodologia">

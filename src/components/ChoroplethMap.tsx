@@ -13,7 +13,7 @@ interface Props {
   diverging?: boolean;
   /** Shared scale maximum for synchronized small multiples. */
   max?: number;
-  detail?: (ibge: string) => ReactNode;
+  detail?: ((ibge: string) => ReactNode) | undefined;
   label?: string;
 }
 

@@ -96,7 +96,7 @@ function Laboratorio() {
       ) : compare ? (
         labL.isLoading ? <Skeleton /> : labL.error || !labL.data || "unavailable" in labL.data ? (
           <EmptyState title="Série de Lula indisponível" description={labL.error?.message ?? "Sem dados para Lula neste recorte."} />
-        ) : <DuelLab b={lab.data} l={labL.data} bName={focusName(duel.bolsonaro)} xv={xv} yLabel={metric.label} scope={scope}
+        ) : !lab.data || "unavailable" in lab.data ? null : <DuelLab b={lab.data} l={labL.data} bName={focusName(duel.bolsonaro)} xv={xv} yLabel={metric.label} scope={scope}
             fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}_bolsonaro_x_lula.csv`} />
       ) : lab.data ? (
         <SeriesScope candidate={candidate} electoral={metric.needsCandidate}><Results a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} /></SeriesScope>

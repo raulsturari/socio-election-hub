@@ -42,7 +42,7 @@ export function ExploreViewer({preset,input,replay,duel}:{preset:Preset;input:In
   </div>;
 }
 
-function CompareBody({preset,data,dataL,duel,replay,muni,duelRows,detail}:{preset:Preset;data:ExploreData;dataL:ExploreData|undefined;duel:DuelContext;replay:number;muni:Map<string,ReturnType<typeof duelMunicipality>>;duelRows:Parameters<typeof aggregateDuel>[0];detail?:(c:string)=>React.ReactNode}){
+function CompareBody({preset,data,dataL,duel,replay,muni,duelRows,detail}:{preset:Preset;data:ExploreData;dataL:ExploreData|undefined;duel:DuelContext;replay:number;muni:Map<string,ReturnType<typeof duelMunicipality>>;duelRows:Parameters<typeof aggregateDuel>[0];detail?:((c:string)=>React.ReactNode)|undefined}){
   if(preset.id==='vote-map'){
     const rows=[...muni.values()].map(m=>({ibge_code:m.ibge_code,name:m.name,uf:m.uf,x:null,y:m.advantage,eligible:null,votes:null,valid:m.valid}));
     return <ExploreMap rows={rows} unit="p.p." replay={replay} diverging detail={detail}/>;
