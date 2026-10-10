@@ -113,12 +113,12 @@ export function readBands(bands: readonly Band[], bName: string, topic: string):
   let headline: string, lead: string;
   if (lf !== 'empate' && ll !== 'empate' && lf !== ll) {
     headline = `${name(ll)} lidera nas cidades com maior ${topic}; ${name(lf)}, nas de menor`;
-    lead = `Somando os votos das cidades em cada faixa, ${name(lf)} fica à frente onde a ${topic} é menor, por ${pp(first.diffPp)}, e ${name(ll)} passa à frente nas cidades com maior ${topic}, por ${pp(last.diffPp)}.`;
+    lead = `Somando os votos das cidades em cada faixa, ${name(lf)} fica à frente nas cidades com menor ${topic}, por ${pp(first.diffPp)}, e ${name(ll)} passa à frente nas cidades com maior ${topic}, por ${pp(last.diffPp)}.`;
   } else if (same && leaders[0] !== 'empate') {
     const s = leaders[0] as 'bolsonaro' | 'pt';
     const grows = s === 'bolsonaro' ? up : down, shrinks = s === 'bolsonaro' ? down : up;
     headline = `${name(s)} lidera em todas as faixas de ${topic}`;
-    lead = `${name(s)} tem mais votos que ${name(s === 'bolsonaro' ? 'pt' : 'bolsonaro')} em todos os grupos de cidades${grows && !shrinks ? `, e a diferença cresce conforme aumenta a ${topic}: de ${pp(first.diffPp)} para ${pp(last.diffPp)}` : shrinks && !grows ? `, mas a diferença diminui conforme aumenta a ${topic}: de ${pp(first.diffPp)} para ${pp(last.diffPp)}` : `; a diferença varia entre ${pp(Math.min(...diffs.map(Math.abs)))} e ${pp(Math.max(...diffs.map(Math.abs)))}, sem uma direção única`}.`;
+    lead = `${name(s)} tem mais votos que ${name(s === 'bolsonaro' ? 'pt' : 'bolsonaro')} em todos os grupos de cidades${grows && !shrinks ? `, e a diferença cresce nas cidades com maior ${topic}: de ${pp(first.diffPp)} para ${pp(last.diffPp)}` : shrinks && !grows ? `, mas a diferença diminui nas cidades com maior ${topic}: de ${pp(first.diffPp)} para ${pp(last.diffPp)}` : `; a diferença varia entre ${pp(Math.min(...diffs.map(Math.abs)))} e ${pp(Math.max(...diffs.map(Math.abs)))}, sem uma direção única`}.`;
   } else {
     headline = `Disputa equilibrada entre as faixas de ${topic}`;
     lead = `Neste recorte, não aparece um padrão claro de vantagem: em pelo menos um grupo de cidades a diferença entre os dois fica abaixo de meio ponto.`;
