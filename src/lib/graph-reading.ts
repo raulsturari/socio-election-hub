@@ -57,13 +57,14 @@ function adjustedReading(a: LabAnalysis, x: XVariable, target: string): string {
   if (coefficient.ci[0] <= 0 && coefficient.ci[1] >= 0) return `${prefix} a direção não fica clara. Isso não prova ausência de relação.`;
   const r = a.pearson?.r;
   const reversed = r != null && Math.abs(r) >= 0.1 && Math.sign(r) !== Math.sign(coefficient.estimate);
-  return `${prefix} ${reversed ? "o padrão geral muda de direção quando essas diferenças são levadas em conta" : "a leitura ajustada aponta"}: onde ${xDescription(x)}, o ${target} tende a ser ${coefficient.estimate > 0 ? "maior" : "menor"}.`;
+  const direction = reversed ? "o padrão geral muda de direção quando essas diferenças são levadas em conta" : r != null && Math.abs(r) >= 0.1 ? "a direção permanece na leitura ajustada" : "a leitura ajustada aponta uma direção que não era clara no padrão geral";
+  return `${prefix} ${direction}: onde ${xDescription(x)}, o ${target} tende a ser ${coefficient.estimate > 0 ? "maior" : "menor"}.`;
 }
 
 function limitations(s: ReadingSeries): string[] {
   const a = s.analysis, notes: string[] = [];
   const dropped = a.missing.x + a.missing.y;
-  if (dropped) notes.push(`${s.name}: ${dropped.toLocaleString("pt-BR")} municípios sem uma das informações não entram no gráfico; ausência não é zero.`);
+  if (dropped) notes.push(`${s.name}: ${dropped.toLocaleString("pt-BR")} ${dropped === 1 ? "município sem uma das informações não entra" : "municípios sem uma das informações não entram"} no gráfico; ausência não é zero.`);
   if (a.missing.covariates) notes.push(`${s.name}: ${a.missing.covariates.toLocaleString("pt-BR")} municípios ficam fora da comparação ajustada por falta de informações adicionais.`);
   if (!a.model && s.hasModelAnalysis !== false) notes.push(`${s.name}: ${a.modelNote?.includes("Colinearidade") ? "algumas características se sobrepõem, impedindo uma comparação ajustada confiável" : "a comparação ajustada está indisponível; os dados podem ser insuficientes"}.`);
   return notes;

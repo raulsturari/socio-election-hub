@@ -90,6 +90,7 @@ function Correlacoes() {
       </Card>
 
       {ready && x && <>
+        <p className="text-xs text-muted-foreground">Amostra: apenas municípios com renda e votação disponíveis. O total de municípios sem esses dados não está disponível nesta consulta.</p>
         <GraphReading reading={interpretGraph({ x, metric: "share", year: f.ano, round: f.turno, scope: f.uf ?? "Brasil" }, readings)} />
         <StatisticalDetails key={JSON.stringify([f, mode])}>
           {readings.map((s) => <div key={s.id} data-series={s.id} className="space-y-3"><h3 className="text-sm font-medium text-series-label">{s.name}</h3><CorrelationGrid a={s.analysis} /></div>)}
