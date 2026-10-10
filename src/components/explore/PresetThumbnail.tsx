@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect,useRef,useMemo } from 'react';
+import { useEffect,useRef,useMemo,useState } from 'react';
 import { exploreQuery,brazilMeshQuery } from '@/services/explore-queries';
 import { mapPaths } from './ExploreMap';
 import type { z } from 'zod';
 import { exploreInputSchema,type Preset } from '@/lib/explore';
 export function PresetThumbnail({preset,input}:{preset:Preset;input:z.infer<typeof exploreInputSchema>}){
- const data=useQuery(exploreQuery({...input,preset:preset.id}));const mesh=useQuery({...brazilMeshQuery(),enabled:preset.kind==='map'});const canvas=useRef<HTMLCanvasElement>(null);
+ const [visible,setVisible]=useState(false);const holder=useRef<HTMLDivElement>(null);
+ useEffect(()=>{const node=holder.current;if(!node)return;const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){setVisible(true);observer.disconnect();}},{rootMargin:'120px'});observer.observe(node);return()=>observer.disconnect();},[]);
+ const data=useQuery({...exploreQuery({...input,preset:preset.id}),enabled:visible&&input.electionId>0});const mesh=useQuery({...brazilMeshQuery(),enabled:visible&&preset.kind==='map'});const canvas=useRef<HTMLCanvasElement>(null);
  const geometry=useMemo(()=>mesh.data&&typeof Path2D!=='undefined'?mapPaths(mesh.data.features):[],[mesh.data]);
  useEffect(()=>{
   const cv=canvas.current,ctx=cv?.getContext('2d');if(!cv||!ctx||!data.data)return;
@@ -18,5 +20,5 @@ export function PresetThumbnail({preset,input}:{preset:Preset;input:z.infer<type
    for(const r of d.rows){ctx.beginPath();ctx.arc(5+(r.x??0)/maxX*150,68-(r.y??0)/100*60,0.65,0,Math.PI*2);ctx.fill();}
   }else{const max=Math.max(1,...d.bars.map(b=>Math.abs(b.value)));d.bars.slice(0,8).forEach((b,i)=>ctx.fillRect(0,i*9,Math.abs(b.value)/max*155,5));}
  },[data.data,geometry,preset.kind]);
- return data.error?<span className="text-xs text-muted-foreground">Indisponível</span>:<canvas ref={canvas} width={160} height={72} className={`w-full h-[72px] ${data.isPending?'skeleton':''}`} aria-hidden/>;
+ return <div ref={holder} className="h-[72px]">{data.error?<span className="text-xs text-muted-foreground">Indisponível</span>:<canvas ref={canvas} width={160} height={72} className={`w-full h-[72px] ${data.isPending?'skeleton':''}`} aria-hidden/>}</div>;
 }
