@@ -154,3 +154,22 @@ export const getTurnout = createServerFn({ method: "GET" })
       municipalities: Number(r.municipalities),
     };
   });
+
+const duelInput = z.object({ electionId: z.number().int(), uf: z.string().length(2).nullable() });
+
+/** Bolsonaro/Lula votes and the municipal valid-vote denominator; candidacies resolved by identity within the election. */
+export const getDuel = createServerFn({ method: "GET" })
+  .inputValidator((d: unknown) => duelInput.parse(d))
+  .handler(async ({ data }) => {
+    const { publicClient, selectAllPages } = await import("./supabase-public.server");
+    const { resolveDuel, duelRowSchema } = await import("./duel");
+    const sb = publicClient();
+    const { data: cands, error } = await sb.rpc("election_summary", { _election_id: data.electionId });
+    if (error) throw new Error(error.message);
+    const pair = resolveDuel((cands ?? []).map((c) => ({ ...c, votes: Number(c.votes) })));
+    if (!pair.bolsonaro || !pair.lula) return { rows: [], bolsonaro: pair.bolsonaro, lula: pair.lula };
+    const raw = await selectAllPages((from, to) =>
+      sb.rpc("duel_dataset", { _election_id: data.electionId, _b_id: pair.bolsonaro!.candidate_id, _l_id: pair.lula!.candidate_id, ...(data.uf ? { _uf: data.uf } : {}) }).range(from, to),
+    );
+    return { rows: raw.map((r) => duelRowSchema.parse(r)), bolsonaro: pair.bolsonaro, lula: pair.lula };
+  });
