@@ -40,7 +40,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect }: Props) {
   const { view, handlers, reset } = usePinchZoom();
   const max = Math.max(1, ...[...shares.values()].map((v) => v ?? 0));
 
-  if (mesh.isLoading) return <div className="aspect-square animate-pulse rounded-lg bg-muted" />;
+  if (mesh.isLoading) return <div className="aspect-square skeleton rounded-lg bg-muted" />;
   if (mesh.error || !geo) return <EmptyState title="Malha indisponível" description="Não foi possível carregar a malha municipal do IBGE." />;
 
   const sel = selected ? shares.get(selected) : undefined;
@@ -56,7 +56,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect }: Props) {
                   key={p.code}
                   d={p.d}
                   onClick={() => onSelect(p.code)}
-                  className={v == null ? "fill-secondary stroke-background" : "fill-primary stroke-background"}
+                  className={`choro-path ${v == null ? "fill-secondary stroke-background" : "fill-primary stroke-background"}`}
                   style={{ fillOpacity: v == null ? 1 : 0.12 + 0.88 * (v / max), strokeWidth: p.code === selected ? 3 / view.k : 0.4 / view.k }}
                 />
               );

@@ -1,5 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { Database, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { DUR, EASE_IN, EASE_OUT } from "@/lib/motion";
 
 export function PageHeader({ title, subtitle, action }: { title: string; subtitle?: string; action?: ReactNode }) {
   return (
@@ -16,11 +18,12 @@ export function PageHeader({ title, subtitle, action }: { title: string; subtitl
 
 export function Card({ title, children, footer }: { title: string; children: ReactNode; footer?: ReactNode }) {
   return (
-    <section className="rounded-xl border bg-card p-4">
+    <motion.section layout="position" transition={{ duration: DUR.base, ease: EASE_OUT }}
+      initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border bg-card p-4">
       <h2 className="label-caps">{title}</h2>
       <div className="mt-3">{children}</div>
       {footer && <div className="mt-3 border-t pt-3 text-xs text-muted-foreground">{footer}</div>}
-    </section>
+    </motion.section>
   );
 }
 
@@ -40,7 +43,7 @@ export function Chip({ children, onClick, active }: { children: ReactNode; onCli
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-11 shrink-0 rounded-full border px-4 text-sm transition-colors ${
+      className={`min-h-11 shrink-0 rounded-full border px-4 text-sm transition-[color,border-color,transform] duration-150 active:scale-95 ${
         active ? "border-primary text-primary" : "bg-secondary text-foreground/90"
       }`}
     >
@@ -56,11 +59,16 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
-  if (!open) return null;
   return (
+    <AnimatePresence>
+      {open && (
     <div className="fixed inset-0 z-50 flex items-end" role="dialog" aria-modal aria-label={title}>
-      <button aria-label="Fechar" className="absolute inset-0 bg-background/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="pb-safe animate-in slide-in-from-bottom relative max-h-[85vh] w-full overflow-y-auto rounded-t-xl border-t bg-card px-4 pt-3 duration-200">
+      <motion.button aria-label="Fechar" className="absolute inset-0 bg-background/70 backdrop-blur-sm" onClick={onClose}
+        initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: DUR.base } }} exit={{ opacity: 0, transition: { duration: DUR.fast } }} />
+      <motion.div className="pb-safe relative max-h-[85vh] w-full overflow-y-auto rounded-t-xl border-t bg-card px-4 pt-3"
+        initial={{ y: "100%" }} animate={{ y: 0, transition: { duration: DUR.slow, ease: EASE_OUT } }} exit={{ y: "100%", transition: { duration: DUR.base, ease: EASE_IN } }}
+        drag="y" dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0, bottom: 0.6 }}
+        onDragEnd={(_, i) => { if (i.offset.y > 120 || i.velocity.y > 600) onClose(); }}>
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-secondary" />
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-base font-semibold">{title}</h2>
@@ -69,8 +77,10 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
           </button>
         </div>
         {children}
-      </div>
+      </motion.div>
     </div>
+      )}
+    </AnimatePresence>
   );
 }
 

@@ -29,7 +29,7 @@ function Column({ year, id, uf, ibge }: { year: number; id: number; uf: string |
   return (
     <div className="min-w-0">
       <p className="label-caps mb-2">{year}</p>
-      {q.isLoading ? <div className="h-32 animate-pulse rounded-lg bg-muted" /> : q.error ? (
+      {q.isLoading ? <div className="h-32 skeleton rounded-lg bg-muted" /> : q.error ? (
         <p className="text-xs text-muted-foreground">{q.error.message}</p>
       ) : (
         <ul className="space-y-2">

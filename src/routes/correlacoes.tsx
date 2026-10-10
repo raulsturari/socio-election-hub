@@ -48,7 +48,7 @@ function Correlacoes() {
 
       <Card title={`${candidate?.ballot_name ?? "—"} · ${f.uf ?? "Brasil"}`} footer="Eixo X em escala logarítmica.">
         {!election ? <NoElection year={f.ano} round={f.turno} /> : scatter.isLoading || !candidate ? (
-          <div className="aspect-[4/3] animate-pulse rounded-lg bg-muted" />
+          <div className="aspect-[4/3] skeleton rounded-lg bg-muted" />
         ) : scatter.error ? (
           <EmptyState title="Erro ao carregar" description={scatter.error.message} />
         ) : (scatter.data ?? []).length === 0 ? (

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import type { LabAnalysis } from "@/lib/lab-analysis";
 import type { XVariable } from "@/lib/lab-variables";
 import { fmtNum } from "@/lib/format";
+import { PointsCanvas } from "../motion/PointsCanvas";
 
 const W = 320, H = 260, PAD = { l: 36, r: 8, t: 10, b: 28 };
 
@@ -15,6 +16,8 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
     const sy = (v: number) => H - PAD.b - ((v - y0) / (y1 - y0 || 1)) * (H - PAD.t - PAD.b);
     return { sx, sy, x0, x1, y0, y1 };
   }, [points, xv.log]);
+
+  const pts = useMemo(() => points.y.map((v, i) => ({ key: String(points.c[i]), x: m.sx(i), y: m.sy(v) })), [points, m]);
 
   const pick = (e: React.PointerEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -30,7 +33,9 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
 
   return (
     <div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full touch-none select-none" onPointerDown={pick}
+      <div className="relative">
+      <PointsCanvas points={pts} width={W} height={H} alpha={0.4} />
+      <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-none select-none" onPointerDown={pick}
         onPointerMove={(e) => e.buttons && pick(e)} role="img" aria-label={`Dispersão ${xv.label} por ${yLabel}`}>
         {m.y0 < 0 && m.y1 > 0 && <line x1={PAD.l} x2={W - PAD.r} y1={m.sy(0)} y2={m.sy(0)} className="stroke-border" />}
         {[m.y0, (m.y0 + m.y1) / 2, m.y1].map((v, i) => (
@@ -39,11 +44,9 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
         {[m.x0, m.x1].map((v, i) => (
           <text key={i} x={i ? W - PAD.r : PAD.l} y={H - 10} textAnchor={i ? "end" : "start"} className="fill-muted-foreground text-[9px] tabular-nums">{xTick(v)}</text>
         ))}
-        {points.y.map((v, i) => (
-          <circle key={points.c[i]} cx={m.sx(i)} cy={m.sy(v)} r={1.6} className="fill-primary" fillOpacity={0.4} />
-        ))}
         {active != null && <circle cx={m.sx(active)} cy={m.sy(points.y[active]!)} r={4.5} className="fill-none stroke-foreground" strokeWidth={1.5} />}
       </svg>
+      </div>
       <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
         <span className="inline-block size-2 rounded-full bg-primary/60" aria-hidden /> 1 ponto = 1 município
         {xv.log && <span>· eixo X em escala log</span>}

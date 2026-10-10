@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
+  useLocation,
   Outlet,
   Link,
   createRootRouteWithContext,
@@ -13,6 +14,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/BottomNav";
+import { MotionConfig, motion } from "motion/react";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 function NotFoundComponent() {
   return (
@@ -120,10 +123,22 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="mx-auto min-h-screen max-w-md pb-32">
-        <Outlet />
-      </main>
-      <BottomNav />
+      <MotionConfig reducedMotion="user">
+        <main className="mx-auto min-h-screen max-w-md pb-32">
+          <PageFade />
+        </main>
+        <BottomNav />
+      </MotionConfig>
     </QueryClientProvider>
+  );
+}
+
+/** Enter-only fade per route: no exit wait, so navigation never blocks; search changes don't re-trigger it. */
+function PageFade() {
+  const path = useLocation({ select: (l) => l.pathname });
+  return (
+    <motion.div key={path} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.base, ease: EASE_OUT }}>
+      <Outlet />
+    </motion.div>
   );
 }
