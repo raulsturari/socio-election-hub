@@ -5,7 +5,7 @@ import { bolsonaroName, type DuelMode } from "@/lib/duel";
 export function ModeSelector({ ctx, showOutrosToggle = false }: { ctx: FiltersCtx; showOutrosToggle?: boolean }) {
   const options: { id: DuelMode; label: string; series: string }[] = [
     { id: "comparar", label: "Comparar os dois", series: "indicator" },
-    { id: "bolsonaro", label: bolsonaroName(ctx.f.ano).split(" ")[0] === "Flávio" ? "Flávio B." : "Jair B.", series: "bolsonaro" },
+    { id: "bolsonaro", label: bolsonaroName(ctx.f.ano), series: "bolsonaro" },
     { id: "lula", label: "Lula", series: "pt" },
   ];
   return (
