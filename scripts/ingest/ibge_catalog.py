@@ -80,21 +80,24 @@ def url_for(table: str, variables: str, period: str, classes: str | None, extra:
     for part in (classes, extra):
         if part:
             u += "/" + part
-    return u + "/f/c"
+    return u
 
 
-def cells(rows: list, cls_dim: str | None) -> dict:
-    """Map (ibge, variable, category) -> raw V. Header row describes dimension names."""
-    header, out = rows[0], {}
-    cat_key = None
-    if cls_dim:
-        for k, v in header.items():
-            if k.endswith("C") and k.startswith("D") and v.startswith(cls_dim):
-                cat_key = k
+def cells(rows: list, cat_key: str | None) -> dict:
+    """Map (ibge, variable, category) -> raw V."""
+    header = rows[0]
     var_key = next(k for k, v in header.items() if k.startswith("D") and k.endswith("C") and v.startswith("Variável"))
-    for r in rows[1:]:
-        out[(r["D1C"], r[var_key], r[cat_key] if cat_key else None)] = r["V"]
-    return out
+    return {(r["D1C"], r[var_key], r[cat_key] if cat_key else None): r["V"] for r in rows[1:]}
+
+
+def class_key(rows: list, wanted: set[str]) -> str:
+    """The dimension column of the varying classification: several distinct codes, containing the wanted ones."""
+    keys = [k for k in rows[0] if k.startswith("D") and k.endswith("C") and k not in ("D1C",)]
+    for k in keys:
+        vals = {r.get(k) for r in rows[1:2000]}
+        if len(vals) > 1 and wanted & vals and not rows[0][k].startswith(("Variável", "Ano")):
+            return k
+    raise RuntimeError("classificação variável não encontrada na resposta")
 
 
 def compute(ind: dict, uf_of: dict[str, str]) -> tuple[dict[str, tuple[float | None, str]], list[str], dict]:
@@ -110,10 +113,8 @@ def compute(ind: dict, uf_of: dict[str, str]) -> tuple[dict[str, tuple[float | N
         cats = "all" if kind == "other_uf" else ",".join(str(x) for x in sorted(set(s["num"] + s["den"] + s.get("partition", []))))
         u = url_for(s["table"], s["variable"], period, s.get("classes"), f"{cls}/{cats}")
         rows, sha = fetch_json(u)
-        name = rows[0]
-        dim = next(v for k, v in name.items() if k.startswith("D") and k.endswith("C") and v.split(" (")[0] not in ("Município", "Variável", "Ano")
-                   and any(str(c) == rows[1].get(k) for c in [rows[1].get(k)]) and k not in ("D1C", "D2C", "D3C") and _is_cls(rows, k, s))
-        c = cells(rows, dim)
+        wanted = {str(x) for x in s.get("num", []) + s.get("den", [])} or {str(s["total"]), str(s["nodecl"])}
+        c = cells(rows, class_key(rows, wanted))
         by = defaultdict(dict)
         for (code, _var, cat), v in c.items():
             by[code][int(cat)] = v
@@ -165,11 +166,6 @@ def compute(ind: dict, uf_of: dict[str, str]) -> tuple[dict[str, tuple[float | N
             out[code] = (None, "den_zero") if d[0] == 0 else (s.get("scale", 100) * n[0] / d[0], "ok")
         return out, [un, ud], {"sha256": [shn, shd], "num_rows": len(nmap)}
     raise ValueError(kind)
-
-
-def _is_cls(rows, key, s) -> bool:
-    wanted = {str(x) for x in s.get("num", []) + s.get("den", [])} or {str(s.get("total"))}
-    return any(r.get(key) in wanted for r in rows[1:50])
 
 
 def run(only: set[str] | None) -> list[dict]:
