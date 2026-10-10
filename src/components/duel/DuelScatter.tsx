@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { PointsCanvas } from "../motion/PointsCanvas";
+import { scatterDomain, transformScatterX, type ScatterDomain } from "@/lib/scatter-domain";
 
 export interface ScatterPt { code: string; name: string; uf: string; x: number; y: number }
 export interface ScatterSeries { id: "bolsonaro" | "pt"; label: string; points: ScatterPt[]; stat?: ReactNode }
@@ -12,7 +13,7 @@ const W = 320, H = 260, PAD = { l: 36, r: 8, t: 10, b: 28 };
  */
 export function DuelScatter({ series, xLabel, yLabel, formatX, log = false, detail, replay = 0 }: {
   series: ScatterSeries[]; xLabel: string; yLabel: string; formatX: (v: number) => string; log?: boolean;
-  detail?: (code: string) => ReactNode; replay?: number;
+  detail?: (code: string) => ReactNode; replay?: number; domain?: ScatterDomain;
 }) {
   const [active, setActive] = useState<string | null>(null);
   const m = useMemo(() => {
