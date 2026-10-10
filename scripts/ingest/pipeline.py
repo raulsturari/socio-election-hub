@@ -113,9 +113,12 @@ def rest(method: str, path: str, body=None, prefer: str = "return=minimal"):
         headers={"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json",
                  "Prefer": prefer},
     )
-    with urllib.request.urlopen(req, timeout=300) as r:
-        raw = r.read()
-        return json.loads(raw) if raw else None
+    try:
+        with urllib.request.urlopen(req, timeout=300) as r:
+            raw = r.read()
+            return json.loads(raw) if raw else None
+    except urllib.error.HTTPError as e:  # surface PostgREST's message instead of a bare status
+        raise RuntimeError(f"{method} {path.split('?')[0]}: {e.code} {e.read()[:400].decode(errors='replace')}") from e
 
 
 def select_all(path: str) -> list[dict]:
