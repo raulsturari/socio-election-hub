@@ -1,4 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
+import { getAudit, getLab } from "@/lib/lab.functions";
+import type { LabInput } from "@/lib/lab-variables";
 import { getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
 
 const LONG = 10 * 60_000;
@@ -43,3 +45,9 @@ export interface GeoCollection { features: GeoFeature[] }
 
 export const turnoutQuery = (electionId: number, uf: string | null, ibge: string | null) =>
   queryOptions({ queryKey: ["turnout", electionId, uf, ibge], queryFn: () => getTurnout({ data: { electionId, uf, ibge } }), staleTime: LONG });
+
+export const labQuery = (input: LabInput) =>
+  queryOptions({ queryKey: ["lab", input], queryFn: () => getLab({ data: input }), staleTime: LONG });
+
+export const auditQuery = (electionId: number) =>
+  queryOptions({ queryKey: ["audit", electionId], queryFn: () => getAudit({ data: { electionId } }), staleTime: LONG });
