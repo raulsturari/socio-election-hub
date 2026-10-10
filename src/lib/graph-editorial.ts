@@ -21,14 +21,14 @@ export function editorialNews(c: ReadingContext, input: readonly ReadingSeries[]
   const uncertain = { title: `Sem padrão claro de ${c.metric.startsWith('share') ? 'votação' : 'participação'} por ${c.x.label.toLowerCase()}`, text: `Neste recorte, não aparece um padrão claro ${c.metric.startsWith('share') ? `no desempenho de ${names.join(' e ')}` : 'na participação eleitoral'} entre cidades de diferentes perfis. Os resultados não sustentam apontar um lado favorecido por essa característica.` };
   if (!a || input.some(s => s.analysis.points.y.length < 20)) return { title: `Poucas cidades para avaliar ${c.x.label.toLowerCase()}`, text: 'Faltam cidades com informações suficientes neste recorte. Não é possível contar uma história confiável sobre a disputa a partir dos resultados disponíveis.' };
   if (!da && !db) return uncertain;
-  if (!c.metric.startsWith('share')) {
+  if (c.metric !== 'share' && c.metric !== 'share_delta') {
     const noun = { turnout: 'Comparecimento', abstention: 'Abstenção', blank_null: 'Votos brancos e nulos', turnout_delta: 'Mudança no comparecimento de 2022 a 2026' }[c.metric];
     return { title: `${noun} ${da > 0 ? 'maior' : 'menor'} ${high}`, text: `${noun} tende a ser ${da > 0 ? 'maior' : 'menor'} ${high} do que ${low}. Essa diferença descreve os resultados das cidades, não a decisão de cada morador.${c.metric === 'turnout_delta' ? ' O que está em comparação é a mudança entre eleições, não o nível atual de participação.' : ''}` };
   }
   if (c.metric === 'share_delta') return { title: `Mudança na votação de ${names.join(' e ')} difere por ${c.x.label.toLowerCase()}`, text: `A variação da votação de ${names[0]} entre 2022 e 2026 tende a ser ${da > 0 ? 'maior' : da < 0 ? 'menor' : 'menos definida'} ${high}${b ? `; para ${names[1]}, ${db > 0 ? 'maior' : db < 0 ? 'menor' : 'não aparece uma direção clara'}` : ''}. ${input.some(s => s.id === 'bolsonaro' || s.name.includes('Bolsonaro')) ? 'No campo Bolsonaro, a comparação é entre Jair em 2022 e Flávio em 2026.' : 'A comparação é entre eleições, não uma previsão.'} Isso não informa quem lidera hoje.` };
   if (b && g.crossing && da * db < 0) {
     const winner = shortName(g.highLeader ?? ''), other = shortName(g.lowLeader ?? '');
-    return { title: `${winner} ganha força ${high}`, text: `${winner} aparece à frente ${high}, enquanto ${other} leva vantagem ${low}. A disputa muda de lado entre esses perfis de cidade: onde essa característica é mais presente, o desempenho relativo favorece ${winner}. É uma comparação entre cidades na mesma eleição, não uma tendência futura.` };
+    return { title: `${winner} ganha força ${high}`, text: `${winner} aparece à frente ${high}, enquanto ${other} leva vantagem ${low}. A disputa muda de lado entre esses perfis. Essa diferença compara cidades na mesma eleição, não anuncia uma tendência futura.` };
   }
   if (b && da && da === db) return { title: `${names.join(' e ')} têm votação ${da > 0 ? 'maior' : 'menor'} ${high}`, text: `${names.join(' e ')} tendem a ter votação ${da > 0 ? 'maior' : 'menor'} ${high}. Os dois caminham na mesma direção nesse recorte; melhorar o desempenho não significa, por si só, estar à frente do adversário.` };
   const growing = da > 0 ? a : db > 0 ? b : da ? a : b;
@@ -36,12 +36,12 @@ export function editorialNews(c: ReadingContext, input: readonly ReadingSeries[]
   const d = growing === a ? da : db, name = shortName(growing.name);
   return { title: `${name} tem votação ${d > 0 ? 'maior' : 'menor'} ${high}`, text: `${name} tende a receber uma parcela ${d > 0 ? 'maior' : 'menor'} dos votos ${high}.${b && da * db < 0 ? ` ${shortName(growing === a ? b.name : a.name)} segue a direção contrária, mas as faixas disponíveis não mostram uma troca consistente de liderança.` : b ? ' Para o outro candidato, não aparece uma direção clara neste recorte.' : ''} Ter desempenho melhor em um perfil de cidade não significa necessariamente liderar a disputa.` };
 }
-export function editorialShape(g: ScatterGeometry): string {
+export function editorialShape(g: ScatterGeometry, metric: ReadingContext['metric'], crossingSupported: boolean): string {
   const phrases: string[] = [];
   if (g.horizontal.concentration === 'left' && g.horizontal.tail === 'right') phrases.push('Os pontos se juntam à esquerda porque a maioria das cidades está na faixa mais baixa; poucas chegam a valores muito altos.');
-  else if (g.crossing) phrases.push('O cruzamento das cores mostra onde a vantagem muda de lado.');
+  else if (crossingSupported && metric === 'share') phrases.push('O cruzamento das cores mostra onde a vantagem muda de lado.');
   else if (g.horizontal.concentration === 'right' && g.horizontal.tail === 'left') phrases.push('Os pontos se juntam à direita porque a maioria das cidades está na faixa mais alta; poucas ficam no extremo oposto.');
-  if (g.vertical.some(v => v.width === 'wide' || v.width === 'moderate')) phrases.push('Os pontos espalhados mostram que cidades parecidas podem votar de maneiras bem diferentes: esse fator não conta a história toda.');
+  if (g.vertical.some(v => v.width === 'wide' || v.width === 'moderate')) phrases.push(`Os pontos espalhados mostram que cidades parecidas podem ter ${metric === 'share' ? 'votações' : metric === 'share_delta' || metric === 'turnout_delta' ? 'mudanças' : 'participação eleitoral'} bem diferentes: esse fator não conta a história toda.`);
   else if (g.vertical.some(v => v.width === 'thin')) phrases.push('Os pontos mais próximos mostram um padrão relativamente regular, embora ele não determine o resultado de cada cidade.');
   return phrases.slice(0, 2).join(' ');
 }

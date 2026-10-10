@@ -56,7 +56,9 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const missingCovariates = Math.max(0, ...input.map(s => s.analysis.missing.covariates));
   if (missingCovariates) limitations.push('A comparação entre cidades semelhantes abrange menos municípios por falta de informações.');
   if (input.some(s => s.analysis.pearson && s.analysis.spearman && Math.sign(s.analysis.pearson.r) !== Math.sign(s.analysis.spearman.r))) limitations.push('O padrão muda conforme a maneira de comparar as cidades; não há uma direção segura.');
-  const detail = [editorialShape(geometry), adjusted].filter(Boolean).join(' ');
+  const a = input[0], b = input[1];
+  const crossingSupported = !!a && !!b && geometry.crossing && direction(a.analysis) * direction(b.analysis) < 0;
+  const detail = [editorialShape(geometry, context.metric, crossingSupported), adjusted].filter(Boolean).join(' ');
   const reversal = adjusted.startsWith('Mas o sentido');
   return { title: reversal ? `Diferença na votação por ${context.x.label.toLowerCase()} muda entre cidades semelhantes` : news.title, paragraphs: [news.text, detail || 'As informações deste recorte não permitem descrever um desenho consistente entre as cidades.'], limitations, geometry };
 }
