@@ -1,0 +1,25 @@
+import { describe, expect, it } from 'vitest';
+import { analyzeScatterGeometry } from './scatter-geometry';
+import { scatterDomain } from './scatter-domain';
+const pts = (f: (i: number) => number, x = (i: number) => i + 1, n = 120) => Array.from({length:n},(_,i)=>({code:String(i),x:x(i),y:f(i)}));
+const run = (a=pts(i=>i/2), b=pts(i=>80-i/2), log=false, zero=true, share=true) => analyzeScatterGeometry([{name:'B',points:a},{name:'L',points:b}],scatterDomain([...a,...b],log,zero),share);
+describe('displayed scatter geometry',()=>{
+ it('true crossing inside observed range',()=>expect(run(pts(i=>90-i*.6),pts(i=>10+i*.6)).crossing).toBe(true));
+ it('opposite slopes without crossing',()=>expect(run(pts(i=>90-i*.1),pts(i=>10+i*.1)).crossing).toBe(false));
+ it('same sign does not cross',()=>expect(run(pts(i=>30+i*.2),pts(i=>10+i*.1)).crossing).toBe(false));
+ it('left concentration from tail',()=>{const a=pts(i=>30,i=>i===119?10000:i+1);expect(run(a,a).horizontal.concentration).toBe('left');expect(run(a,a).horizontal.tail).toBe('right');});
+ it('right concentration',()=>{const a=pts(i=>30,i=>i===0?0:1000+i);expect(run(a,a).horizontal.concentration).toBe('right');});
+ it('log is not linear geometry',()=>{const a=pts(i=>30,i=>i===119?10000:i+1);expect(run(a,a,true).horizontal.left).toBeLessThan(run(a,a).horizontal.left);});
+ it('base measured on exact axis',()=>{const a=pts(i=>i===119?100:3);expect(run(a,a).vertical[0]?.concentration).toBe('base');});
+ it('truncated Y is not zero',()=>{const a=pts(i=>i===119?90:70);const g=run(a,a,false,false);expect(g.domain.y[0]).toBe(70);expect(g.vertical[0]?.median).toBe(70);});
+ it('wide inside each series',()=>{const a=pts(i=>i%2?85:15);expect(run(a,a).vertical[0]?.width).toBe('wide');});
+ it('between-series distance not artificial spread',()=>expect(run(pts(()=>80),pts(()=>20)).vertical.every(v=>v.width==='thin')).toBe(true));
+ it('empty',()=>expect(run([],[]).horizontal.n).toBe(0));
+ it('small sample no crossing',()=>expect(run(pts(i=>90-i,undefined,8),pts(i=>10+i,undefined,8)).crossing).toBe(false));
+ it('constant X no shape',()=>expect(run(pts(()=>20,()=>2),pts(()=>80,()=>2)).horizontal.concentration).toBe('none'));
+ it('ties not split into artificial bins',()=>expect(run(pts(i=>i,()=>2)).bands.length).toBeLessThan(3));
+ it('partial pairs and deduplicated count',()=>{const a=pts(i=>i/2),b=pts(i=>80-i/2).slice(30);const g=run(a,b);expect(g.horizontal.n).toBe(120);expect(g.pairedN).toBe(90);});
+ it('deltas never compute Others',()=>expect(run(undefined,undefined,false,true,false).composition).toBeNull());
+ it('invalid composition no residual',()=>expect(run(pts(()=>80),pts(()=>60)).composition).toBeNull());
+ it('outlier extends X without changing votes',()=>{const a=pts(()=>50),b=a.map((p,i)=>({...p,x:i===119?100000:p.x}));expect(run(b,b).vertical[0]?.median).toBe(run(a,a).vertical[0]?.median);});
+});
