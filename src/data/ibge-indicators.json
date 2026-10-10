@@ -1,0 +1,2905 @@
+{
+ "version": "2026.10.4",
+ "inventory": "https://servicodados.ibge.gov.br/api/v3/agregados?periodo=2022&nivel=N6",
+ "indicators": [
+  {
+   "id": "renda_domiciliar_pc_media_2022",
+   "alias": "renda",
+   "label": "Renda domiciliar per capita (média)",
+   "name": "Rendimento nominal médio mensal domiciliar per capita",
+   "theme": "Renda e desigualdade",
+   "unit": "R$",
+   "topic": "renda",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Moradores em domicílios particulares permanentes ocupados",
+   "definition": "Valores nominais de 2022; exclui pensionistas, empregados domésticos e parentes destes.",
+   "synonyms": [
+    "renda media",
+    "rendimento"
+   ],
+   "percentBounded": false,
+   "formula": "t10295/v13431",
+   "spec": {
+    "table": "10295",
+    "variable": "13431"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10295"
+  },
+  {
+   "id": "populacao_residente_2022",
+   "alias": "populacao",
+   "label": "População (porte)",
+   "name": "População (porte)",
+   "theme": "Estrutura populacional",
+   "unit": "pessoas",
+   "topic": "população",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "porte",
+    "habitantes",
+    "tamanho"
+   ],
+   "percentBounded": false,
+   "formula": "t4709/v93",
+   "spec": {
+    "table": "4709",
+    "variable": "93"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/4709"
+  },
+  {
+   "id": "alfabetizacao_15mais_2022",
+   "alias": "alfabetizacao",
+   "label": "Alfabetização (15+)",
+   "name": "Alfabetização (15+)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "presença de moradores alfabetizados",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 15 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "leitura",
+    "analfabetismo"
+   ],
+   "percentBounded": true,
+   "formula": "t9543/v2513/c2/6794/c86/95251/c287/100362",
+   "spec": {
+    "table": "9543",
+    "variable": "2513",
+    "classes": "c2/6794/c86/95251/c287/100362"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9543"
+  },
+  {
+   "id": "superior_completo_25mais_2022",
+   "alias": "superior",
+   "label": "Superior completo (25+)",
+   "name": "Superior completo (25+)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "presença de moradores com ensino superior",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 25 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "faculdade",
+    "universidade",
+    "escolaridade"
+   ],
+   "percentBounded": true,
+   "formula": "t10199/v1001643/c1568/99713/c2/6794/c133/95278",
+   "spec": {
+    "table": "10199",
+    "variable": "1001643",
+    "classes": "c1568/99713/c2/6794/c133/95278"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10199"
+  },
+  {
+   "id": "cor_branca_pct_2022",
+   "alias": "branca",
+   "label": "Cor ou raça branca",
+   "name": "Cor ou raça branca",
+   "theme": "Raça/cor",
+   "unit": "%",
+   "topic": "presença de moradores de cor ou raça branca",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9605/v1000093/c86/2776",
+   "spec": {
+    "table": "9605",
+    "variable": "1000093",
+    "classes": "c86/2776"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9605"
+  },
+  {
+   "id": "cor_preta_pct_2022",
+   "alias": "preta",
+   "label": "Cor ou raça preta",
+   "name": "Cor ou raça preta",
+   "theme": "Raça/cor",
+   "unit": "%",
+   "topic": "presença de moradores de cor ou raça preta",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "Somente a categoria preta; não inclui parda.",
+   "synonyms": [
+    "negra"
+   ],
+   "percentBounded": true,
+   "formula": "t9605/v1000093/c86/2777",
+   "spec": {
+    "table": "9605",
+    "variable": "1000093",
+    "classes": "c86/2777"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9605"
+  },
+  {
+   "id": "cor_parda_pct_2022",
+   "alias": "parda",
+   "label": "Cor ou raça parda",
+   "name": "Cor ou raça parda",
+   "theme": "Raça/cor",
+   "unit": "%",
+   "topic": "presença de moradores de cor ou raça parda",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9605/v1000093/c86/2779",
+   "spec": {
+    "table": "9605",
+    "variable": "1000093",
+    "classes": "c86/2779"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9605"
+  },
+  {
+   "id": "religiao_catolica_pct_2022",
+   "alias": "catolica",
+   "label": "Católicos (10+)",
+   "name": "Católicos (10+)",
+   "theme": "Religião",
+   "unit": "%",
+   "topic": "presença católica",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 10 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9537/v1000140/c133/95263/c2/6794/c58/95253",
+   "spec": {
+    "table": "9537",
+    "variable": "1000140",
+    "classes": "c133/95263/c2/6794/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9537"
+  },
+  {
+   "id": "religiao_evangelica_pct_2022",
+   "alias": "evangelica",
+   "label": "Evangélicos (10+)",
+   "name": "Evangélicos (10+)",
+   "theme": "Religião",
+   "unit": "%",
+   "topic": "presença evangélica",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 10 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "igreja",
+    "protestante"
+   ],
+   "percentBounded": true,
+   "formula": "t9537/v1000140/c133/95277/c2/6794/c58/95253",
+   "spec": {
+    "table": "9537",
+    "variable": "1000140",
+    "classes": "c133/95277/c2/6794/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9537"
+  },
+  {
+   "id": "sem_religiao_pct_2022",
+   "alias": "semreligiao",
+   "label": "Sem religião (10+)",
+   "name": "Sem religião (10+)",
+   "theme": "Religião",
+   "unit": "%",
+   "topic": "presença de moradores sem religião",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 10 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9537/v1000140/c133/2836/c2/6794/c58/95253",
+   "spec": {
+    "table": "9537",
+    "variable": "1000140",
+    "classes": "c133/2836/c2/6794/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9537"
+  },
+  {
+   "id": "idade_mediana_2022",
+   "alias": "idade",
+   "label": "Idade mediana",
+   "name": "Idade mediana",
+   "theme": "Estrutura populacional",
+   "unit": "anos",
+   "topic": "idade mediana",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "envelhecimento"
+   ],
+   "percentBounded": false,
+   "formula": "t9756/v10613/c86/95251",
+   "spec": {
+    "table": "9756",
+    "variable": "10613",
+    "classes": "c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9756"
+  },
+  {
+   "id": "urbanizacao_pct_2022",
+   "alias": "urbanizacao",
+   "label": "População urbana",
+   "name": "População urbana",
+   "theme": "Território",
+   "unit": "%",
+   "topic": "presença de moradores em áreas urbanas",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "cidade",
+    "rural"
+   ],
+   "percentBounded": true,
+   "formula": "t9923/v1000093/c1/1",
+   "spec": {
+    "table": "9923",
+    "variable": "1000093",
+    "classes": "c1/1"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9923"
+  },
+  {
+   "id": "pop_0_14_pct_2022",
+   "alias": "jovens014",
+   "label": "Crianças e adolescentes (0–14)",
+   "name": "Crianças e adolescentes (0–14)",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de crianças e adolescentes",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "criancas",
+    "infancia"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[93070, 93084, 93085] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93070,
+     93084,
+     93085
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "pop_15_29_pct_2022",
+   "alias": "jovens1529",
+   "label": "Jovens (15–29)",
+   "name": "Jovens (15–29)",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de jovens de 15 a 29 anos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "juventude"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[93086, 93087, 93088] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93086,
+     93087,
+     93088
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "pop_30_59_pct_2022",
+   "alias": "adultos3059",
+   "label": "Adultos (30–59)",
+   "name": "Adultos (30–59)",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de adultos de 30 a 59 anos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[93089, 93090, 93091, 93092, 93093, 93094] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "pop_60mais_pct_2022",
+   "alias": "idosos60",
+   "label": "Idosos (60+)",
+   "name": "Idosos (60+)",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de idosos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "terceira idade",
+    "velhice",
+    "aposentados"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[93095, 93096, 93097, 93098, 49108, 49109, 60040, 60041, 6653] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "pop_65mais_pct_2022",
+   "alias": "idosos65",
+   "label": "Pessoas de 65+",
+   "name": "Pessoas de 65+",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de moradores de 65 anos ou mais",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[93096, 93097, 93098, 49108, 49109, 60040, 60041, 6653] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "pop_80mais_pct_2022",
+   "alias": "idosos80",
+   "label": "Pessoas de 80+",
+   "name": "Pessoas de 80+",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de moradores de 80 anos ou mais",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "longevos"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c287[49108, 49109, 60040, 60041, 6653] ÷ Σ c287[100362] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     100362
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "razao_dependencia_2022",
+   "alias": "dependencia",
+   "label": "Razão de dependência",
+   "name": "Razão de dependência",
+   "theme": "Estrutura populacional",
+   "unit": "por 100",
+   "topic": "razão de dependência",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "(0–14 + 65+) por 100 pessoas de 15–64 anos; pode passar de 100.",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "100 × (0–14 + 65+) ÷ (15–64), t9514/v93/c287 grupos quinquenais",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c2/6794/c286/113635",
+    "cls": "c287",
+    "den": [
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095
+    ],
+    "partition": [
+     93070,
+     93084,
+     93085,
+     93086,
+     93087,
+     93088,
+     93089,
+     93090,
+     93091,
+     93092,
+     93093,
+     93094,
+     93095,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ],
+    "num": [
+     93070,
+     93084,
+     93085,
+     93096,
+     93097,
+     93098,
+     49108,
+     49109,
+     60040,
+     60041,
+     6653
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "mulheres_pct_2022",
+   "alias": "mulheres",
+   "label": "Mulheres na população",
+   "name": "Mulheres na população",
+   "theme": "Estrutura populacional",
+   "unit": "%",
+   "topic": "presença de mulheres",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "sexo",
+    "genero",
+    "homens"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c2[5] ÷ Σ c2[6794] (t9514/v93)",
+   "spec": {
+    "table": "9514",
+    "variable": "93",
+    "classes": "c287/100362/c286/113635",
+    "cls": "c2",
+    "num": [
+     5
+    ],
+    "den": [
+     6794
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9514"
+  },
+  {
+   "id": "indice_envelhecimento_2022",
+   "alias": "envelhecimento",
+   "label": "Índice de envelhecimento",
+   "name": "Índice de envelhecimento",
+   "theme": "Estrutura populacional",
+   "unit": "por 100",
+   "topic": "índice de envelhecimento",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "Pessoas de 60+ por 100 de 0–14 anos (IBGE); pode passar de 100.",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t9515/v10612",
+   "spec": {
+    "table": "9515",
+    "variable": "10612"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9515"
+  },
+  {
+   "id": "razao_sexo_2022",
+   "alias": "razaosexo",
+   "label": "Razão de sexo",
+   "name": "Razão de sexo",
+   "theme": "Estrutura populacional",
+   "unit": "por 100",
+   "topic": "razão de sexo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "Homens por 100 mulheres.",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t9515/v8845",
+   "spec": {
+    "table": "9515",
+    "variable": "8845"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9515"
+  },
+  {
+   "id": "densidade_2022",
+   "alias": "densidade",
+   "label": "Densidade demográfica",
+   "name": "Densidade demográfica",
+   "theme": "Território",
+   "unit": "hab/km²",
+   "topic": "densidade demográfica",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente / área",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t4714/v614",
+   "spec": {
+    "table": "4714",
+    "variable": "614"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/4714"
+  },
+  {
+   "id": "crescimento_pop_2010_2022",
+   "alias": "crescimento",
+   "label": "Crescimento populacional 2010–2022",
+   "name": "Crescimento populacional 2010–2022",
+   "theme": "Estrutura populacional",
+   "unit": "% a.a.",
+   "topic": "crescimento populacional",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente (2010 compatibilizada)",
+   "definition": "Taxa geométrica anual entre 2010 (geografia compatibilizada pelo IBGE) e 2022; pode ser negativa.",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t4709/v10605",
+   "spec": {
+    "table": "4709",
+    "variable": "10605"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/4709"
+  },
+  {
+   "id": "renda_domiciliar_pc_mediana_2022",
+   "alias": "rendamediana",
+   "label": "Renda domiciliar per capita (mediana)",
+   "name": "Renda domiciliar per capita (mediana)",
+   "theme": "Renda e desigualdade",
+   "unit": "R$",
+   "topic": "renda mediana",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Moradores em domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "renda tipica"
+   ],
+   "percentBounded": false,
+   "formula": "t10295/v13534",
+   "spec": {
+    "table": "10295",
+    "variable": "13534"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10295"
+  },
+  {
+   "id": "renda_sem_rendimento_pct_2022",
+   "alias": "semrenda",
+   "label": "Moradores sem rendimento domiciliar",
+   "name": "Moradores sem rendimento domiciliar",
+   "theme": "Renda e desigualdade",
+   "unit": "%",
+   "topic": "presença de moradores em domicílios sem rendimento",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Moradores em domicílios particulares permanentes ocupados",
+   "definition": "Classe 'sem rendimento' da renda domiciliar per capita.",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c386[9692] ÷ Σ c386[9680] (t10296/v13604)",
+   "spec": {
+    "table": "10296",
+    "variable": "13604",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c386",
+    "den": [
+     9680
+    ],
+    "partition": [
+     9681,
+     9682,
+     9683,
+     9684,
+     9685,
+     9686,
+     9687,
+     9688,
+     9689,
+     9690,
+     9692
+    ],
+    "num": [
+     9692
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10296"
+  },
+  {
+   "id": "renda_ate_meio_sm_pct_2022",
+   "alias": "rendabaixa",
+   "label": "Renda per capita de até ½ salário mínimo",
+   "name": "Renda per capita de até ½ salário mínimo",
+   "theme": "Renda e desigualdade",
+   "unit": "%",
+   "topic": "presença de moradores com renda de até meio salário mínimo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Moradores em domicílios particulares permanentes ocupados",
+   "definition": "Classes 'até 1/4' e 'mais de 1/4 a 1/2 salário mínimo' per capita; exclui 'sem rendimento'. Faixa de salário mínimo, não linha oficial de pobreza.",
+   "synonyms": [
+    "pobreza",
+    "baixa renda"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c386[9681, 9682] ÷ Σ c386[9680] (t10296/v13604)",
+   "spec": {
+    "table": "10296",
+    "variable": "13604",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c386",
+    "den": [
+     9680
+    ],
+    "partition": [
+     9681,
+     9682,
+     9683,
+     9684,
+     9685,
+     9686,
+     9687,
+     9688,
+     9689,
+     9690,
+     9692
+    ],
+    "num": [
+     9681,
+     9682
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10296"
+  },
+  {
+   "id": "renda_mais_5sm_pct_2022",
+   "alias": "rendaalta",
+   "label": "Renda per capita acima de 5 salários mínimos",
+   "name": "Renda per capita acima de 5 salários mínimos",
+   "theme": "Renda e desigualdade",
+   "unit": "%",
+   "topic": "presença de moradores com renda acima de 5 salários mínimos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Moradores em domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "ricos",
+    "alta renda"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c386[9687, 9688, 9689, 9690] ÷ Σ c386[9680] (t10296/v13604)",
+   "spec": {
+    "table": "10296",
+    "variable": "13604",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c386",
+    "den": [
+     9680
+    ],
+    "partition": [
+     9681,
+     9682,
+     9683,
+     9684,
+     9685,
+     9686,
+     9687,
+     9688,
+     9689,
+     9690,
+     9692
+    ],
+    "num": [
+     9687,
+     9688,
+     9689,
+     9690
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10296"
+  },
+  {
+   "id": "renda_trabalho_participacao_2022",
+   "alias": "rendatrabalho",
+   "label": "Peso do trabalho na renda domiciliar",
+   "name": "Peso do trabalho na renda domiciliar",
+   "theme": "Renda e desigualdade",
+   "unit": "%",
+   "topic": "participação do trabalho na renda",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Rendimento domiciliar dos moradores",
+   "definition": "Participação do rendimento de todos os trabalhos no rendimento domiciliar total; o restante vem de outras fontes (aposentadorias, programas sociais, aluguéis etc.).",
+   "synonyms": [
+    "aposentadoria",
+    "transferencias"
+   ],
+   "percentBounded": true,
+   "formula": "t10297/v13504/c11308/79451",
+   "spec": {
+    "table": "10297",
+    "variable": "13504",
+    "classes": "c11308/79451"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10297"
+  },
+  {
+   "id": "rendimento_trabalho_medio_2022",
+   "alias": "salariomedio",
+   "label": "Rendimento médio do trabalho",
+   "name": "Rendimento médio do trabalho",
+   "theme": "Trabalho",
+   "unit": "R$",
+   "topic": "rendimento médio do trabalho",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Ocupados de 14+ com rendimento de trabalho",
+   "definition": "",
+   "synonyms": [
+    "salario"
+   ],
+   "percentBounded": false,
+   "formula": "t10289/v13536/c2/6794/c86/95251",
+   "spec": {
+    "table": "10289",
+    "variable": "13536",
+    "classes": "c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10289"
+  },
+  {
+   "id": "rendimento_trabalho_mediano_2022",
+   "alias": "salariomediano",
+   "label": "Rendimento mediano do trabalho",
+   "name": "Rendimento mediano do trabalho",
+   "theme": "Trabalho",
+   "unit": "R$",
+   "topic": "rendimento mediano do trabalho",
+   "log": true,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Ocupados de 14+ com rendimento de trabalho",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t10289/v13537/c2/6794/c86/95251",
+   "spec": {
+    "table": "10289",
+    "variable": "13537",
+    "classes": "c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10289"
+  },
+  {
+   "id": "nivel_ocupacao_10mais_2022",
+   "alias": "ocupacao",
+   "label": "Nível de ocupação (10+)",
+   "name": "Nível de ocupação (10+)",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "nível de ocupação",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 10 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "emprego"
+   ],
+   "percentBounded": true,
+   "formula": "t10268/v675/c2/6794/c86/95251/c58/95253",
+   "spec": {
+    "table": "10268",
+    "variable": "675",
+    "classes": "c2/6794/c86/95251/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10268"
+  },
+  {
+   "id": "taxa_desocupacao_14mais_2022",
+   "alias": "desocupacao",
+   "label": "Taxa de desocupação (14+)",
+   "name": "Taxa de desocupação (14+)",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "desocupação",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Força de trabalho de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "desemprego"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c629[32446] ÷ Σ c629[32386] (t9517/v1641)",
+   "spec": {
+    "table": "9517",
+    "variable": "1641",
+    "classes": "c2/6794/c86/95251/c1568/120704",
+    "cls": "c629",
+    "num": [
+     32446
+    ],
+    "den": [
+     32386
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9517"
+  },
+  {
+   "id": "taxa_participacao_14mais_2022",
+   "alias": "participacao",
+   "label": "Participação na força de trabalho (14+)",
+   "name": "Participação na força de trabalho (14+)",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "participação na força de trabalho",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Pessoas de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c629[32386] ÷ Σ c629[32385] (t9517/v1641)",
+   "spec": {
+    "table": "9517",
+    "variable": "1641",
+    "classes": "c2/6794/c86/95251/c1568/120704",
+    "cls": "c629",
+    "num": [
+     32386
+    ],
+    "den": [
+     32385
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9517"
+  },
+  {
+   "id": "ocupados_com_carteira_pct_2022",
+   "alias": "carteira",
+   "label": "Empregados com carteira",
+   "name": "Empregados com carteira",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de empregados com carteira",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "Setor privado, doméstico, público não estatutário e estatais com carteira assinada.",
+   "synonyms": [
+    "formal",
+    "clt"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11913[31722, 79367, 79372, 79375] ÷ Σ c11913[96165] (t10261/v4090)",
+   "spec": {
+    "table": "10261",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c11913",
+    "den": [
+     96165
+    ],
+    "num": [
+     31722,
+     79367,
+     79372,
+     79375
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10261"
+  },
+  {
+   "id": "ocupados_sem_carteira_pct_2022",
+   "alias": "semcarteira",
+   "label": "Empregados sem carteira",
+   "name": "Empregados sem carteira",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de empregados sem carteira",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "informal"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11913[31723, 79368, 79373, 79376] ÷ Σ c11913[96165] (t10261/v4090)",
+   "spec": {
+    "table": "10261",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c11913",
+    "den": [
+     96165
+    ],
+    "num": [
+     31723,
+     79368,
+     79373,
+     79376
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10261"
+  },
+  {
+   "id": "conta_propria_pct_2022",
+   "alias": "contapropria",
+   "label": "Trabalhadores por conta própria",
+   "name": "Trabalhadores por conta própria",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de trabalhadores por conta própria",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "autonomo",
+    "mei"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11913[79378] ÷ Σ c11913[96165] (t10261/v4090)",
+   "spec": {
+    "table": "10261",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c11913",
+    "den": [
+     96165
+    ],
+    "num": [
+     79378
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10261"
+  },
+  {
+   "id": "empregadores_pct_2022",
+   "alias": "empregadores",
+   "label": "Empregadores",
+   "name": "Empregadores",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de empregadores",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "empresarios"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11913[79377] ÷ Σ c11913[96165] (t10261/v4090)",
+   "spec": {
+    "table": "10261",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c11913",
+    "den": [
+     96165
+    ],
+    "num": [
+     79377
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10261"
+  },
+  {
+   "id": "servidores_estatutarios_pct_2022",
+   "alias": "estatutarios",
+   "label": "Servidores públicos estatutários",
+   "name": "Servidores públicos estatutários",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de servidores estatutários",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "funcionalismo"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11913[79370] ÷ Σ c11913[96165] (t10261/v4090)",
+   "spec": {
+    "table": "10261",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251",
+    "cls": "c11913",
+    "den": [
+     96165
+    ],
+    "num": [
+     79370
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10261"
+  },
+  {
+   "id": "contribui_previdencia_pct_2022",
+   "alias": "previdencia",
+   "label": "Ocupados que contribuem à previdência",
+   "name": "Ocupados que contribuem à previdência",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "contribuição previdenciária",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "inss"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c526[15350] ÷ Σ c526[15349] (t10264/v4090)",
+   "spec": {
+    "table": "10264",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251/c12064/100971",
+    "cls": "c526",
+    "num": [
+     15350
+    ],
+    "den": [
+     15349
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10264"
+  },
+  {
+   "id": "ocup_agropecuaria_pct_2022",
+   "alias": "agro",
+   "label": "Ocupados qualificados da agropecuária",
+   "name": "Ocupados qualificados da agropecuária",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de trabalhadores da agropecuária",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "Grande grupo de ocupação 6 (CBO-Domiciliar); não inclui ocupações elementares agrícolas.",
+   "synonyms": [
+    "campo",
+    "rural",
+    "agricultura"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c12064[12635] ÷ Σ c12064[100971] (t10264/v4090)",
+   "spec": {
+    "table": "10264",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251/c526/15349",
+    "cls": "c12064",
+    "num": [
+     12635
+    ],
+    "den": [
+     100971
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10264"
+  },
+  {
+   "id": "ocup_elementares_pct_2022",
+   "alias": "elementares",
+   "label": "Ocupações elementares",
+   "name": "Ocupações elementares",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de ocupações elementares",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c12064[12638] ÷ Σ c12064[100971] (t10264/v4090)",
+   "spec": {
+    "table": "10264",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251/c526/15349",
+    "cls": "c12064",
+    "num": [
+     12638
+    ],
+    "den": [
+     100971
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10264"
+  },
+  {
+   "id": "ocup_dirigentes_profissionais_pct_2022",
+   "alias": "profissionais",
+   "label": "Dirigentes e profissionais das ciências",
+   "name": "Dirigentes e profissionais das ciências",
+   "theme": "Trabalho",
+   "unit": "%",
+   "topic": "presença de dirigentes e profissionais de nível superior",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 14 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c12064[12630, 12631] ÷ Σ c12064[100971] (t10264/v4090)",
+   "spec": {
+    "table": "10264",
+    "variable": "4090",
+    "classes": "c2/6794/c86/95251/c526/15349",
+    "cls": "c12064",
+    "num": [
+     12630,
+     12631
+    ],
+    "den": [
+     100971
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10264"
+  },
+  {
+   "id": "trabalha_outro_municipio_pct_2022",
+   "alias": "deslocamento",
+   "label": "Trabalha em outro município",
+   "name": "Trabalha em outro município",
+   "theme": "Mobilidade",
+   "unit": "%",
+   "topic": "presença de moradores que trabalham em outro município",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Ocupados de 10+ em domicílios particulares",
+   "definition": "",
+   "synonyms": [
+    "pendular",
+    "commuting"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c469[12188] ÷ Σ c469[79176] (t10329/v13373)",
+   "spec": {
+    "table": "10329",
+    "variable": "13373",
+    "classes": "c2/6794/c386/9680/c2087/79177",
+    "cls": "c469",
+    "num": [
+     12188
+    ],
+    "den": [
+     79176
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10329"
+  },
+  {
+   "id": "anos_estudo_medio_2022",
+   "alias": "anosestudo",
+   "label": "Média de anos de estudo (11+)",
+   "name": "Média de anos de estudo (11+)",
+   "theme": "Educação",
+   "unit": "anos",
+   "topic": "média de anos de estudo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 11 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "escolaridade"
+   ],
+   "percentBounded": false,
+   "formula": "t10062/v13285/c58/95253/c2/6794/c86/95251",
+   "spec": {
+    "table": "10062",
+    "variable": "13285",
+    "classes": "c58/95253/c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10062"
+  },
+  {
+   "id": "sem_instrucao_fund_incompleto_18mais_2022",
+   "alias": "fundincompleto",
+   "label": "Sem instrução ou fundamental incompleto (18+)",
+   "name": "Sem instrução ou fundamental incompleto (18+)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "presença de adultos sem o fundamental completo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Pessoas de 18 anos ou mais",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c1568[9493] ÷ Σ c1568[120704] (t10061/v2667)",
+   "spec": {
+    "table": "10061",
+    "variable": "2667",
+    "classes": "c58/95253/c2/6794/c86/95251",
+    "cls": "c1568",
+    "den": [
+     120704
+    ],
+    "num": [
+     9493
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10061"
+  },
+  {
+   "id": "medio_completo_ou_mais_18mais_2022",
+   "alias": "mediocompleto",
+   "label": "Médio completo ou mais (18+)",
+   "name": "Médio completo ou mais (18+)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "presença de adultos com ensino médio completo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Pessoas de 18 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "ensino medio"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c1568[9495, 99713] ÷ Σ c1568[120704] (t10061/v2667)",
+   "spec": {
+    "table": "10061",
+    "variable": "2667",
+    "classes": "c58/95253/c2/6794/c86/95251",
+    "cls": "c1568",
+    "den": [
+     120704
+    ],
+    "num": [
+     9495,
+     99713
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10061"
+  },
+  {
+   "id": "freq_escolar_0_3_2022",
+   "alias": "creche",
+   "label": "Frequência à creche (0–3)",
+   "name": "Frequência à creche (0–3)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "frequência à creche",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Crianças de 0 a 3 anos",
+   "definition": "Taxa de frequência escolar bruta.",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t10056/v3795/c58/99749/c2/6794/c86/95251",
+   "spec": {
+    "table": "10056",
+    "variable": "3795",
+    "classes": "c58/99749/c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10056"
+  },
+  {
+   "id": "freq_escolar_4_5_2022",
+   "alias": "preescola",
+   "label": "Frequência à escola (4–5)",
+   "name": "Frequência à escola (4–5)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "frequência à pré-escola",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Crianças de 4 e 5 anos",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t10056/v3795/c58/47813/c2/6794/c86/95251",
+   "spec": {
+    "table": "10056",
+    "variable": "3795",
+    "classes": "c58/47813/c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10056"
+  },
+  {
+   "id": "freq_escolar_15_17_2022",
+   "alias": "freq1517",
+   "label": "Frequência à escola (15–17)",
+   "name": "Frequência à escola (15–17)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "frequência escolar de 15 a 17 anos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 15 a 17 anos",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t10056/v3795/c58/2792/c2/6794/c86/95251",
+   "spec": {
+    "table": "10056",
+    "variable": "3795",
+    "classes": "c58/2792/c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10056"
+  },
+  {
+   "id": "freq_escolar_18_24_2022",
+   "alias": "freq1824",
+   "label": "Frequência à escola (18–24)",
+   "name": "Frequência à escola (18–24)",
+   "theme": "Educação",
+   "unit": "%",
+   "topic": "frequência escolar de 18 a 24 anos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 18 a 24 anos",
+   "definition": "",
+   "synonyms": [
+    "universitarios"
+   ],
+   "percentBounded": true,
+   "formula": "t10056/v3795/c58/100052/c2/6794/c86/95251",
+   "spec": {
+    "table": "10056",
+    "variable": "3795",
+    "classes": "c58/100052/c2/6794/c86/95251"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10056"
+  },
+  {
+   "id": "domicilio_proprio_pct_2022",
+   "alias": "proprio",
+   "label": "Domicílios próprios",
+   "name": "Domicílios próprios",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de domicílios próprios",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "casa propria"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c63[73554] ÷ Σ c63[95826] (t9929/v381)",
+   "spec": {
+    "table": "9929",
+    "variable": "381",
+    "classes": "c1986/73103/c1988/73108",
+    "cls": "c63",
+    "den": [
+     95826
+    ],
+    "num": [
+     73554
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9929"
+  },
+  {
+   "id": "domicilio_alugado_pct_2022",
+   "alias": "aluguel",
+   "label": "Domicílios alugados",
+   "name": "Domicílios alugados",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de domicílios alugados",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "aluguel",
+    "inquilinos"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c63[1055] ÷ Σ c63[95826] (t9929/v381)",
+   "spec": {
+    "table": "9929",
+    "variable": "381",
+    "classes": "c1986/73103/c1988/73108",
+    "cls": "c63",
+    "den": [
+     95826
+    ],
+    "num": [
+     1055
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9929"
+  },
+  {
+   "id": "domicilio_cedido_pct_2022",
+   "alias": "cedido",
+   "label": "Domicílios cedidos ou emprestados",
+   "name": "Domicílios cedidos ou emprestados",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de domicílios cedidos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c63[73553] ÷ Σ c63[95826] (t9929/v381)",
+   "spec": {
+    "table": "9929",
+    "variable": "381",
+    "classes": "c1986/73103/c1988/73108",
+    "cls": "c63",
+    "den": [
+     95826
+    ],
+    "num": [
+     73553
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9929"
+  },
+  {
+   "id": "domicilio_apartamento_pct_2022",
+   "alias": "apartamento",
+   "label": "Domicílios em apartamento",
+   "name": "Domicílios em apartamento",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de apartamentos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "predio",
+    "verticalizacao"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c125[3247] ÷ Σ c125[2932] (t6326/v381)",
+   "spec": {
+    "table": "6326",
+    "variable": "381",
+    "cls": "c125",
+    "num": [
+     3247
+    ],
+    "den": [
+     2932
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6326"
+  },
+  {
+   "id": "moradores_por_domicilio_2022",
+   "alias": "moradores",
+   "label": "Média de moradores por domicílio",
+   "name": "Média de moradores por domicílio",
+   "theme": "Moradia",
+   "unit": "pessoas",
+   "topic": "média de moradores por domicílio",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": false,
+   "formula": "t4712/v5930",
+   "spec": {
+    "table": "4712",
+    "variable": "5930"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/4712"
+  },
+  {
+   "id": "domicilio_unipessoal_pct_2022",
+   "alias": "unipessoal",
+   "label": "Domicílios com um só morador",
+   "name": "Domicílios com um só morador",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de domicílios com um só morador",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares (inclui improvisados)",
+   "definition": "",
+   "synonyms": [
+    "mora sozinho",
+    "solteiros"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c68[1092] ÷ Σ c68[9902] (t9880/v800)",
+   "spec": {
+    "table": "9880",
+    "variable": "800",
+    "classes": "c125/2932/c11561/100679/c12237/104570/c11562/72593",
+    "cls": "c68",
+    "num": [
+     1092
+    ],
+    "den": [
+     9902
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9880"
+  },
+  {
+   "id": "adensamento_3mais_dormitorio_pct_2022",
+   "alias": "adensamento",
+   "label": "Mais de 3 moradores por dormitório",
+   "name": "Mais de 3 moradores por dormitório",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de domicílios com mais de três moradores por dormitório",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "superlotacao"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c1975[73090] ÷ Σ c1975[73086] (t9933/v381)",
+   "spec": {
+    "table": "9933",
+    "variable": "381",
+    "classes": "c63/95826/c125/2932",
+    "cls": "c1975",
+    "num": [
+     73090
+    ],
+    "den": [
+     73086
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9933"
+  },
+  {
+   "id": "paredes_alvenaria_revestida_pct_2022",
+   "alias": "alvenaria",
+   "label": "Paredes de alvenaria com revestimento",
+   "name": "Paredes de alvenaria com revestimento",
+   "theme": "Moradia",
+   "unit": "%",
+   "topic": "presença de casas de alvenaria com revestimento",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c137[73073] ÷ Σ c137[13233] (t9928/v381)",
+   "spec": {
+    "table": "9928",
+    "variable": "381",
+    "classes": "c63/95826/c125/2932",
+    "cls": "c137",
+    "num": [
+     73073
+    ],
+    "den": [
+     13233
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9928"
+  },
+  {
+   "id": "agua_rede_geral_pct_2022",
+   "alias": "agua",
+   "label": "Água da rede geral como principal",
+   "name": "Água da rede geral como principal",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios abastecidos pela rede geral",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "abastecimento"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c1821[72144] ÷ Σ c1821[72129] (t6803/v381)",
+   "spec": {
+    "table": "6803",
+    "variable": "381",
+    "cls": "c1821",
+    "num": [
+     72144
+    ],
+    "den": [
+     72129
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6803"
+  },
+  {
+   "id": "agua_canalizada_dentro_pct_2022",
+   "alias": "aguacanalizada",
+   "label": "Água canalizada dentro de casa",
+   "name": "Água canalizada dentro de casa",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios com água canalizada dentro de casa",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c1817[72126] ÷ Σ c1817[72125] (t6804/v381)",
+   "spec": {
+    "table": "6804",
+    "variable": "381",
+    "classes": "c301/72053",
+    "cls": "c1817",
+    "num": [
+     72126
+    ],
+    "den": [
+     72125
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6804"
+  },
+  {
+   "id": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "alias": "esgoto",
+   "label": "Esgoto por rede geral, pluvial ou fossa ligada",
+   "name": "Esgoto por rede geral, pluvial ou fossa ligada",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios ligados à rede de esgoto",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "saneamento basico"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11558[46290] ÷ Σ c11558[46292] (t6805/v381)",
+   "spec": {
+    "table": "6805",
+    "variable": "381",
+    "cls": "c11558",
+    "num": [
+     46290
+    ],
+    "den": [
+     46292
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6805"
+  },
+  {
+   "id": "fossa_rudimentar_pct_2022",
+   "alias": "fossa",
+   "label": "Fossa rudimentar ou buraco",
+   "name": "Fossa rudimentar ou buraco",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios com fossa rudimentar",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c11558[72113] ÷ Σ c11558[46292] (t6805/v381)",
+   "spec": {
+    "table": "6805",
+    "variable": "381",
+    "cls": "c11558",
+    "num": [
+     72113
+    ],
+    "den": [
+     46292
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6805"
+  },
+  {
+   "id": "sem_banheiro_pct_2022",
+   "alias": "sembanheiro",
+   "label": "Sem banheiro nem sanitário",
+   "name": "Sem banheiro nem sanitário",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios sem banheiro",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c458[12046] ÷ Σ c458[72117] (t6806/v381)",
+   "spec": {
+    "table": "6806",
+    "variable": "381",
+    "classes": "c11558/46292",
+    "cls": "c458",
+    "num": [
+     12046
+    ],
+    "den": [
+     72117
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6806"
+  },
+  {
+   "id": "banheiro_exclusivo_pct_2022",
+   "alias": "banheiro",
+   "label": "Com banheiro de uso exclusivo",
+   "name": "Com banheiro de uso exclusivo",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios com banheiro próprio",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c458[12032] ÷ Σ c458[72117] (t6806/v381)",
+   "spec": {
+    "table": "6806",
+    "variable": "381",
+    "classes": "c11558/46292",
+    "cls": "c458",
+    "num": [
+     12032
+    ],
+    "den": [
+     72117
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6806"
+  },
+  {
+   "id": "lixo_coletado_pct_2022",
+   "alias": "lixo",
+   "label": "Lixo coletado",
+   "name": "Lixo coletado",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios com coleta de lixo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "coleta"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c67[2520] ÷ Σ c67[10972] (t6892/v381)",
+   "spec": {
+    "table": "6892",
+    "variable": "381",
+    "cls": "c67",
+    "num": [
+     2520
+    ],
+    "den": [
+     10972
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6892"
+  },
+  {
+   "id": "lixo_queimado_pct_2022",
+   "alias": "lixoqueimado",
+   "label": "Lixo queimado na propriedade",
+   "name": "Lixo queimado na propriedade",
+   "theme": "Saneamento",
+   "unit": "%",
+   "topic": "presença de domicílios que queimam o lixo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c67[72122] ÷ Σ c67[10972] (t6892/v381)",
+   "spec": {
+    "table": "6892",
+    "variable": "381",
+    "cls": "c67",
+    "num": [
+     72122
+    ],
+    "den": [
+     10972
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/6892"
+  },
+  {
+   "id": "responsavel_mulher_pct_2022",
+   "alias": "chefiafeminina",
+   "label": "Domicílios com mulher responsável",
+   "name": "Domicílios com mulher responsável",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de domicílios chefiados por mulheres",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares",
+   "definition": "",
+   "synonyms": [
+    "chefia feminina",
+    "mulheres responsaveis"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c11561[100681] ÷ Σ c11561[100679] (t9880/v800)",
+   "spec": {
+    "table": "9880",
+    "variable": "800",
+    "classes": "c125/2932/c68/9902/c12237/104570/c11562/72593",
+    "cls": "c11561",
+    "num": [
+     100681
+    ],
+    "den": [
+     100679
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9880"
+  },
+  {
+   "id": "domicilio_sem_conjuge_pct_2022",
+   "alias": "semconjuge",
+   "label": "Domicílios sem cônjuge do responsável",
+   "name": "Domicílios sem cônjuge do responsável",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de domicílios sem cônjuge",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c1885[72602] ÷ Σ c1885[72599] (t9881/v800)",
+   "spec": {
+    "table": "9881",
+    "variable": "800",
+    "cls": "c1885",
+    "num": [
+     72602
+    ],
+    "den": [
+     72599
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9881"
+  },
+  {
+   "id": "monoparental_pct_2022",
+   "alias": "monoparental",
+   "label": "Responsável sem cônjuge, com filhos",
+   "name": "Responsável sem cônjuge, com filhos",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de domicílios monoparentais",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares",
+   "definition": "",
+   "synonyms": [
+    "mae solo",
+    "pai solo"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c1887[72607] ÷ Σ c1887[72603] (t9882/v800)",
+   "spec": {
+    "table": "9882",
+    "variable": "800",
+    "classes": "c11561/100679",
+    "cls": "c1887",
+    "num": [
+     72607
+    ],
+    "den": [
+     72603
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9882"
+  },
+  {
+   "id": "casal_sem_filhos_pct_2022",
+   "alias": "casalsemfilhos",
+   "label": "Casal sem filhos",
+   "name": "Casal sem filhos",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de casais sem filhos",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c1887[72604] ÷ Σ c1887[72603] (t9882/v800)",
+   "spec": {
+    "table": "9882",
+    "variable": "800",
+    "classes": "c11561/100679",
+    "cls": "c1887",
+    "num": [
+     72604
+    ],
+    "den": [
+     72603
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9882"
+  },
+  {
+   "id": "vive_em_uniao_10mais_pct_2022",
+   "alias": "uniao",
+   "label": "Vivem em união conjugal (10+)",
+   "name": "Vivem em união conjugal (10+)",
+   "theme": "Famílias",
+   "unit": "%",
+   "topic": "presença de moradores que vivem em união",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Pessoas de 10 anos ou mais",
+   "definition": "",
+   "synonyms": [
+    "casados"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c464[12108] ÷ Σ c464[50292] (t10183/v140)",
+   "spec": {
+    "table": "10183",
+    "variable": "140",
+    "classes": "c2/6794/c58/95253/c133/95278",
+    "cls": "c464",
+    "num": [
+     12108
+    ],
+    "den": [
+     50292
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10183"
+  },
+  {
+   "id": "filhos_por_mulher_12mais_2022",
+   "alias": "filhos",
+   "label": "Média de filhos tidos por mulher (12+)",
+   "name": "Média de filhos tidos por mulher (12+)",
+   "theme": "Fecundidade",
+   "unit": "filhos",
+   "topic": "média de filhos por mulher",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "varratio",
+   "universe": "Mulheres de 12 anos ou mais",
+   "definition": "Filhos nascidos vivos ÷ mulheres de 12+; não é taxa de fecundidade total.",
+   "synonyms": [
+    "fecundidade",
+    "natalidade"
+   ],
+   "percentBounded": false,
+   "formula": "1 × v13316 ÷ v13315 (t10078)",
+   "spec": {
+    "table": "10078",
+    "classes": "c12232/58896/c1568/120704/c12293/58898",
+    "numVar": "13316",
+    "denVar": "13315",
+    "scale": 1
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10078"
+  },
+  {
+   "id": "nascidos_outra_uf_pct_2022",
+   "alias": "migrantes",
+   "label": "Nascidos fora da UF de residência",
+   "name": "Nascidos fora da UF de residência",
+   "theme": "Migração",
+   "unit": "%",
+   "topic": "presença de moradores nascidos em outro estado",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "other_uf",
+   "universe": "População residente",
+   "definition": "Inclui nascidos em outro estado e no exterior; exclui sem declaração do numerador.",
+   "synonyms": [
+    "migracao",
+    "nordestinos"
+   ],
+   "percentBounded": true,
+   "formula": "100 × (Total − nascidos na própria UF − sem declaração) ÷ Total (t631/v93)",
+   "spec": {
+    "table": "631",
+    "variable": "93",
+    "classes": "c2/0",
+    "cls": "c183",
+    "total": 0,
+    "nodecl": 3283,
+    "ufCategory": {
+     "RO": 3256,
+     "AC": 3257,
+     "AM": 3258,
+     "RR": 3259,
+     "PA": 3260,
+     "AP": 3261,
+     "TO": 3262,
+     "MA": 3263,
+     "PI": 3264,
+     "CE": 3265,
+     "RN": 3266,
+     "PB": 3267,
+     "PE": 3268,
+     "AL": 3269,
+     "SE": 3270,
+     "BA": 3271,
+     "MG": 3272,
+     "ES": 3273,
+     "RJ": 3284,
+     "SP": 3274,
+     "PR": 3275,
+     "SC": 3276,
+     "RS": 3277,
+     "MS": 3278,
+     "MT": 3279,
+     "GO": 3280,
+     "DF": 3281
+    }
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/631"
+  },
+  {
+   "id": "estrangeiros_naturalizados_pct_2022",
+   "alias": "estrangeiros",
+   "label": "Estrangeiros e naturalizados",
+   "name": "Estrangeiros e naturalizados",
+   "theme": "Migração",
+   "unit": "%",
+   "topic": "presença de estrangeiros e naturalizados",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [
+    "imigrantes"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c302[6832, 6833] ÷ Σ c302[77794] (t10157/v93)",
+   "spec": {
+    "table": "10157",
+    "variable": "93",
+    "classes": "c2/6794/c58/95253",
+    "cls": "c302",
+    "num": [
+     6832,
+     6833
+    ],
+    "den": [
+     77794
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10157"
+  },
+  {
+   "id": "favela_pct_2022",
+   "alias": "favela",
+   "label": "Moradores em favelas e comunidades urbanas",
+   "name": "Moradores em favelas e comunidades urbanas",
+   "theme": "Território",
+   "unit": "%",
+   "topic": "presença de moradores em favelas",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "xratio",
+   "universe": "População residente (universo)",
+   "definition": "Municípios sem favela publicada aparecem como ausentes, não como zero, a menos que o IBGE publique '-'.",
+   "synonyms": [
+    "comunidades",
+    "periferia"
+   ],
+   "percentBounded": true,
+   "formula": "100 × t9884/v9612 ÷ t4709/v93",
+   "spec": {
+    "num": {
+     "table": "9884",
+     "variable": "9612",
+     "classes": "c86/95251/c2/6794/c58/95253"
+    },
+    "den": {
+     "table": "4709",
+     "variable": "93"
+    }
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9884"
+  },
+  {
+   "id": "unidades_conservacao_pct_2022",
+   "alias": "conservacao",
+   "label": "Moradores em Unidades de Conservação",
+   "name": "Moradores em Unidades de Conservação",
+   "theme": "Território",
+   "unit": "%",
+   "topic": "presença de moradores em unidades de conservação",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "100 × Σ c2661[50581] ÷ Σ c2661[32776] (t10211/v93)",
+   "spec": {
+    "table": "10211",
+    "variable": "93",
+    "classes": "c1/6795",
+    "cls": "c2661",
+    "num": [
+     50581
+    ],
+    "den": [
+     32776
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10211"
+  },
+  {
+   "id": "cor_indigena_pct_2022",
+   "alias": "indigena",
+   "label": "Cor ou raça indígena",
+   "name": "Cor ou raça indígena",
+   "theme": "Raça/cor",
+   "unit": "%",
+   "topic": "presença de moradores de cor ou raça indígena",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "Quesito cor ou raça; não equivale à população indígena por pertencimento étnico.",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9605/v1000093/c86/2780",
+   "spec": {
+    "table": "9605",
+    "variable": "1000093",
+    "classes": "c86/2780"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9605"
+  },
+  {
+   "id": "cor_amarela_pct_2022",
+   "alias": "amarela",
+   "label": "Cor ou raça amarela",
+   "name": "Cor ou raça amarela",
+   "theme": "Raça/cor",
+   "unit": "%",
+   "topic": "presença de moradores de cor ou raça amarela",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t9605/v1000093/c86/2778",
+   "spec": {
+    "table": "9605",
+    "variable": "1000093",
+    "classes": "c86/2778"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9605"
+  },
+  {
+   "id": "deficiencia_2mais_pct_2022",
+   "alias": "deficiencia",
+   "label": "Pessoas com deficiência (2+)",
+   "name": "Pessoas com deficiência (2+)",
+   "theme": "Deficiência",
+   "unit": "%",
+   "topic": "presença de pessoas com deficiência",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "Pessoas de 2 anos ou mais",
+   "definition": "Definição censitária por dificuldade funcional (Grupo de Washington).",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t10125/v13403/c2/6794/c58/95253",
+   "spec": {
+    "table": "10125",
+    "variable": "13403",
+    "classes": "c2/6794/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10125"
+  },
+  {
+   "id": "autismo_pct_2022",
+   "alias": "autismo",
+   "label": "Diagnóstico de autismo declarado",
+   "name": "Diagnóstico de autismo declarado",
+   "theme": "Deficiência",
+   "unit": "%",
+   "topic": "presença de diagnóstico declarado de autismo",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "direct",
+   "universe": "População residente",
+   "definition": "Diagnóstico de TEA declarado por profissional de saúde; não é prevalência clínica.",
+   "synonyms": [],
+   "percentBounded": true,
+   "formula": "t10145/v13408/c2/6794/c58/95253",
+   "spec": {
+    "table": "10145",
+    "variable": "13408",
+    "classes": "c2/6794/c58/95253"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/10145"
+  },
+  {
+   "id": "internet_domicilio_pct_2022",
+   "alias": "internet",
+   "label": "Domicílios com internet",
+   "name": "Domicílios com internet",
+   "theme": "Acesso digital e bens",
+   "unit": "%",
+   "topic": "presença de domicílios com internet",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "conectividade",
+    "wifi"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c2072[77585] ÷ Σ c2072[77584] (t9936/v381)",
+   "spec": {
+    "table": "9936",
+    "variable": "381",
+    "classes": "c63/95826/c125/2932",
+    "cls": "c2072",
+    "num": [
+     77585
+    ],
+    "den": [
+     77584
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9936"
+  },
+  {
+   "id": "maquina_lavar_pct_2022",
+   "alias": "maquinalavar",
+   "label": "Domicílios com máquina de lavar",
+   "name": "Domicílios com máquina de lavar",
+   "theme": "Acesso digital e bens",
+   "unit": "%",
+   "topic": "presença de domicílios com máquina de lavar",
+   "log": false,
+   "year": 2022,
+   "source": "IBGE Censo Demográfico 2022",
+   "kind": "ratio",
+   "universe": "Domicílios particulares permanentes ocupados",
+   "definition": "",
+   "synonyms": [
+    "bens duraveis"
+   ],
+   "percentBounded": true,
+   "formula": "100 × Σ c1977[73092] ÷ Σ c1977[73091] (t9935/v381)",
+   "spec": {
+    "table": "9935",
+    "variable": "381",
+    "classes": "c63/95826/c125/2932",
+    "cls": "c1977",
+    "num": [
+     73092
+    ],
+    "den": [
+     73091
+    ]
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/9935"
+  },
+  {
+   "id": "vab_agropecuaria_pct_2021",
+   "alias": "pibagro",
+   "label": "Agropecuária no valor adicionado",
+   "name": "Agropecuária no valor adicionado",
+   "theme": "Economia local",
+   "unit": "%",
+   "topic": "peso da agropecuária na economia",
+   "log": false,
+   "year": 2021,
+   "source": "IBGE PIB dos Municípios 2021",
+   "kind": "varratio",
+   "universe": "Valor adicionado bruto municipal",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "synonyms": [
+    "agronegocio"
+   ],
+   "percentBounded": true,
+   "formula": "100 × v513 ÷ v498 (t5938)",
+   "spec": {
+    "table": "5938",
+    "denVar": "498",
+    "scale": 100,
+    "numVar": "513"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/5938"
+  },
+  {
+   "id": "vab_industria_pct_2021",
+   "alias": "pibindustria",
+   "label": "Indústria no valor adicionado",
+   "name": "Indústria no valor adicionado",
+   "theme": "Economia local",
+   "unit": "%",
+   "topic": "peso da indústria na economia",
+   "log": false,
+   "year": 2021,
+   "source": "IBGE PIB dos Municípios 2021",
+   "kind": "varratio",
+   "universe": "Valor adicionado bruto municipal",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "synonyms": [
+    "fabricas"
+   ],
+   "percentBounded": true,
+   "formula": "100 × v517 ÷ v498 (t5938)",
+   "spec": {
+    "table": "5938",
+    "denVar": "498",
+    "scale": 100,
+    "numVar": "517"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/5938"
+  },
+  {
+   "id": "vab_servicos_pct_2021",
+   "alias": "pibservicos",
+   "label": "Serviços no valor adicionado",
+   "name": "Serviços no valor adicionado",
+   "theme": "Economia local",
+   "unit": "%",
+   "topic": "peso dos serviços na economia",
+   "log": false,
+   "year": 2021,
+   "source": "IBGE PIB dos Municípios 2021",
+   "kind": "varratio",
+   "universe": "Valor adicionado bruto municipal",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "synonyms": [
+    "comercio"
+   ],
+   "percentBounded": true,
+   "formula": "100 × v6575 ÷ v498 (t5938)",
+   "spec": {
+    "table": "5938",
+    "denVar": "498",
+    "scale": 100,
+    "numVar": "6575"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/5938"
+  },
+  {
+   "id": "vab_adm_publica_pct_2021",
+   "alias": "pibpublico",
+   "label": "Administração pública no valor adicionado",
+   "name": "Administração pública no valor adicionado",
+   "theme": "Economia local",
+   "unit": "%",
+   "topic": "peso da administração pública na economia",
+   "log": false,
+   "year": 2021,
+   "source": "IBGE PIB dos Municípios 2021",
+   "kind": "varratio",
+   "universe": "Valor adicionado bruto municipal",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "synonyms": [
+    "prefeitura",
+    "estado"
+   ],
+   "percentBounded": true,
+   "formula": "100 × v525 ÷ v498 (t5938)",
+   "spec": {
+    "table": "5938",
+    "denVar": "498",
+    "scale": 100,
+    "numVar": "525"
+   },
+   "url": "https://sidra.ibge.gov.br/tabela/5938"
+  }
+ ],
+ "planned": [
+  {
+   "label": "Índice de Gini da renda domiciliar",
+   "theme": "Renda e desigualdade",
+   "status": "nao_publicado_municipio",
+   "reason": "Nenhuma tabela do Censo 2022 no inventário N6 (api/v3/agregados?periodo=2022&nivel=N6) publica Gini; não estimamos Gini a partir de faixas."
+  },
+  {
+   "label": "PIB per capita",
+   "theme": "Economia local",
+   "status": "nao_importado",
+   "reason": "A tabela 5938 não traz PIB per capita; exige dividir pela estimativa populacional do mesmo ano (outra pesquisa)."
+  },
+  {
+   "label": "Desocupação PNAD Contínua",
+   "theme": "Trabalho",
+   "status": "nao_publicado_municipio",
+   "reason": "PNAD Contínua não é representativa por município; usamos a desocupação do Censo 2022."
+  },
+  {
+   "label": "Migração recente entre UFs (5 anos)",
+   "theme": "Migração",
+   "status": "nao_importado",
+   "reason": "Tabelas 10159/10160 não trazem denominador de 5+ anos na mesma tabela."
+  },
+  {
+   "label": "População quilombola",
+   "theme": "Território",
+   "status": "nao_importado",
+   "reason": "Publicada por localidades quilombolas; integração pendente de validação de cobertura municipal."
+  },
+  {
+   "label": "IDHM",
+   "theme": "Desenvolvimento",
+   "status": "nao_importado",
+   "reason": "Fonte PNUD/IPEA/FJP; último IDHM municipal é do Censo 2010."
+  },
+  {
+   "label": "IDEB",
+   "theme": "Educação",
+   "status": "nao_importado",
+   "reason": "Fonte INEP, fora do IBGE; não importado."
+  }
+ ]
+}
