@@ -1,0 +1,3058 @@
+{
+ "municipalities": {
+  "1302603": "Manaus/AM",
+  "2611606": "Recife/PE",
+  "3106200": "Belo Horizonte/MG",
+  "4314902": "Porto Alegre/RS",
+  "5208707": "Goiânia/GO"
+ },
+ "checks": 435,
+ "mismatches": 0,
+ "results": [
+  {
+   "indicator": "renda_domiciliar_pc_media_2022",
+   "municipality": "Manaus/AM",
+   "db": 1284.7,
+   "recomputed": 1284.7,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_media_2022",
+   "municipality": "Recife/PE",
+   "db": 2284.77,
+   "recomputed": 2284.77,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_media_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 2748.85,
+   "recomputed": 2748.85,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_media_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 3203.31,
+   "recomputed": 3203.31,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_media_2022",
+   "municipality": "Goiânia/GO",
+   "db": 2668.8,
+   "recomputed": 2668.8,
+   "ok": true
+  },
+  {
+   "indicator": "populacao_residente_2022",
+   "municipality": "Manaus/AM",
+   "db": 2063689.0,
+   "recomputed": 2063689.0,
+   "ok": true
+  },
+  {
+   "indicator": "populacao_residente_2022",
+   "municipality": "Recife/PE",
+   "db": 1488920.0,
+   "recomputed": 1488920.0,
+   "ok": true
+  },
+  {
+   "indicator": "populacao_residente_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 2315560.0,
+   "recomputed": 2315560.0,
+   "ok": true
+  },
+  {
+   "indicator": "populacao_residente_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1332845.0,
+   "recomputed": 1332845.0,
+   "ok": true
+  },
+  {
+   "indicator": "populacao_residente_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1437366.0,
+   "recomputed": 1437366.0,
+   "ok": true
+  },
+  {
+   "indicator": "alfabetizacao_15mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 97.02,
+   "recomputed": 97.02,
+   "ok": true
+  },
+  {
+   "indicator": "alfabetizacao_15mais_2022",
+   "municipality": "Recife/PE",
+   "db": 94.52,
+   "recomputed": 94.52,
+   "ok": true
+  },
+  {
+   "indicator": "alfabetizacao_15mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 97.78,
+   "recomputed": 97.78,
+   "ok": true
+  },
+  {
+   "indicator": "alfabetizacao_15mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 98.26,
+   "recomputed": 98.26,
+   "ok": true
+  },
+  {
+   "indicator": "alfabetizacao_15mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 97.51,
+   "recomputed": 97.51,
+   "ok": true
+  },
+  {
+   "indicator": "superior_completo_25mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 19.81,
+   "recomputed": 19.81,
+   "ok": true
+  },
+  {
+   "indicator": "superior_completo_25mais_2022",
+   "municipality": "Recife/PE",
+   "db": 28.71,
+   "recomputed": 28.71,
+   "ok": true
+  },
+  {
+   "indicator": "superior_completo_25mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 32.94,
+   "recomputed": 32.94,
+   "ok": true
+  },
+  {
+   "indicator": "superior_completo_25mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 34.82,
+   "recomputed": 34.82,
+   "ok": true
+  },
+  {
+   "indicator": "superior_completo_25mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 30.46,
+   "recomputed": 30.46,
+   "ok": true
+  },
+  {
+   "indicator": "cor_branca_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 23.73,
+   "recomputed": 23.73,
+   "ok": true
+  },
+  {
+   "indicator": "cor_branca_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 38.85,
+   "recomputed": 38.85,
+   "ok": true
+  },
+  {
+   "indicator": "cor_branca_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 43.57,
+   "recomputed": 43.57,
+   "ok": true
+  },
+  {
+   "indicator": "cor_branca_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 73.62,
+   "recomputed": 73.62,
+   "ok": true
+  },
+  {
+   "indicator": "cor_branca_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 43.6,
+   "recomputed": 43.6,
+   "ok": true
+  },
+  {
+   "indicator": "cor_preta_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 5.58,
+   "recomputed": 5.58,
+   "ok": true
+  },
+  {
+   "indicator": "cor_preta_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 12.26,
+   "recomputed": 12.26,
+   "ok": true
+  },
+  {
+   "indicator": "cor_preta_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 13.51,
+   "recomputed": 13.51,
+   "ok": true
+  },
+  {
+   "indicator": "cor_preta_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 12.62,
+   "recomputed": 12.62,
+   "ok": true
+  },
+  {
+   "indicator": "cor_preta_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 7.94,
+   "recomputed": 7.94,
+   "ok": true
+  },
+  {
+   "indicator": "cor_parda_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 69.56,
+   "recomputed": 69.56,
+   "ok": true
+  },
+  {
+   "indicator": "cor_parda_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 48.53,
+   "recomputed": 48.53,
+   "ok": true
+  },
+  {
+   "indicator": "cor_parda_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 42.59,
+   "recomputed": 42.59,
+   "ok": true
+  },
+  {
+   "indicator": "cor_parda_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 13.38,
+   "recomputed": 13.38,
+   "ok": true
+  },
+  {
+   "indicator": "cor_parda_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 47.97,
+   "recomputed": 47.97,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_catolica_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 44.38,
+   "recomputed": 44.38,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_catolica_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 47.55,
+   "recomputed": 47.55,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_catolica_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 53.13,
+   "recomputed": 53.13,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_catolica_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 54.46,
+   "recomputed": 54.46,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_catolica_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 46.78,
+   "recomputed": 46.78,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_evangelica_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 39.49,
+   "recomputed": 39.49,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_evangelica_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 27.85,
+   "recomputed": 27.85,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_evangelica_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 27.29,
+   "recomputed": 27.29,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_evangelica_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 13.25,
+   "recomputed": 13.25,
+   "ok": true
+  },
+  {
+   "indicator": "religiao_evangelica_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 33.92,
+   "recomputed": 33.92,
+   "ok": true
+  },
+  {
+   "indicator": "sem_religiao_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 8.85,
+   "recomputed": 8.85,
+   "ok": true
+  },
+  {
+   "indicator": "sem_religiao_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 14.88,
+   "recomputed": 14.88,
+   "ok": true
+  },
+  {
+   "indicator": "sem_religiao_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 9.75,
+   "recomputed": 9.75,
+   "ok": true
+  },
+  {
+   "indicator": "sem_religiao_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 15.55,
+   "recomputed": 15.55,
+   "ok": true
+  },
+  {
+   "indicator": "sem_religiao_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 9.22,
+   "recomputed": 9.22,
+   "ok": true
+  },
+  {
+   "indicator": "idade_mediana_2022",
+   "municipality": "Manaus/AM",
+   "db": 30.0,
+   "recomputed": 30.0,
+   "ok": true
+  },
+  {
+   "indicator": "idade_mediana_2022",
+   "municipality": "Recife/PE",
+   "db": 37.0,
+   "recomputed": 37.0,
+   "ok": true
+  },
+  {
+   "indicator": "idade_mediana_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 38.0,
+   "recomputed": 38.0,
+   "ok": true
+  },
+  {
+   "indicator": "idade_mediana_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 39.0,
+   "recomputed": 39.0,
+   "ok": true
+  },
+  {
+   "indicator": "idade_mediana_2022",
+   "municipality": "Goiânia/GO",
+   "db": 35.0,
+   "recomputed": 35.0,
+   "ok": true
+  },
+  {
+   "indicator": "urbanizacao_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 99.03,
+   "recomputed": 99.03,
+   "ok": true
+  },
+  {
+   "indicator": "urbanizacao_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 100.0,
+   "recomputed": 100.0,
+   "ok": true
+  },
+  {
+   "indicator": "urbanizacao_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 100.0,
+   "recomputed": 100.0,
+   "ok": true
+  },
+  {
+   "indicator": "urbanizacao_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 99.82,
+   "recomputed": 99.82,
+   "ok": true
+  },
+  {
+   "indicator": "urbanizacao_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 99.85,
+   "recomputed": 99.85,
+   "ok": true
+  },
+  {
+   "indicator": "pop_0_14_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 23.526752,
+   "recomputed": 23.526752,
+   "ok": true
+  },
+  {
+   "indicator": "pop_0_14_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 17.71257,
+   "recomputed": 17.71257,
+   "ok": true
+  },
+  {
+   "indicator": "pop_0_14_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 15.516333,
+   "recomputed": 15.516333,
+   "ok": true
+  },
+  {
+   "indicator": "pop_0_14_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 16.023844,
+   "recomputed": 16.023844,
+   "ok": true
+  },
+  {
+   "indicator": "pop_0_14_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 18.028881,
+   "recomputed": 18.028881,
+   "ok": true
+  },
+  {
+   "indicator": "pop_15_29_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 26.065846,
+   "recomputed": 26.065846,
+   "ok": true
+  },
+  {
+   "indicator": "pop_15_29_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 21.132364,
+   "recomputed": 21.132364,
+   "ok": true
+  },
+  {
+   "indicator": "pop_15_29_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 20.695512,
+   "recomputed": 20.695512,
+   "ok": true
+  },
+  {
+   "indicator": "pop_15_29_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 20.126721,
+   "recomputed": 20.126721,
+   "ok": true
+  },
+  {
+   "indicator": "pop_15_29_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 22.819727,
+   "recomputed": 22.819727,
+   "ok": true
+  },
+  {
+   "indicator": "pop_30_59_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 40.709332,
+   "recomputed": 40.709332,
+   "ok": true
+  },
+  {
+   "indicator": "pop_30_59_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 43.424361,
+   "recomputed": 43.424361,
+   "ok": true
+  },
+  {
+   "indicator": "pop_30_59_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 43.831687,
+   "recomputed": 43.831687,
+   "ok": true
+  },
+  {
+   "indicator": "pop_30_59_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 41.921904,
+   "recomputed": 41.921904,
+   "ok": true
+  },
+  {
+   "indicator": "pop_30_59_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 44.088214,
+   "recomputed": 44.088214,
+   "ok": true
+  },
+  {
+   "indicator": "pop_60mais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 9.69807,
+   "recomputed": 9.69807,
+   "ok": true
+  },
+  {
+   "indicator": "pop_60mais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 17.730704,
+   "recomputed": 17.730704,
+   "ok": true
+  },
+  {
+   "indicator": "pop_60mais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 19.956468,
+   "recomputed": 19.956468,
+   "ok": true
+  },
+  {
+   "indicator": "pop_60mais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 21.927531,
+   "recomputed": 21.927531,
+   "ok": true
+  },
+  {
+   "indicator": "pop_60mais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 15.063178,
+   "recomputed": 15.063178,
+   "ok": true
+  },
+  {
+   "indicator": "pop_65mais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 6.214357,
+   "recomputed": 6.214357,
+   "ok": true
+  },
+  {
+   "indicator": "pop_65mais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 12.228931,
+   "recomputed": 12.228931,
+   "ok": true
+  },
+  {
+   "indicator": "pop_65mais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 14.138437,
+   "recomputed": 14.138437,
+   "ok": true
+  },
+  {
+   "indicator": "pop_65mais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 15.764399,
+   "recomputed": 15.764399,
+   "ok": true
+  },
+  {
+   "indicator": "pop_65mais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 10.277688,
+   "recomputed": 10.277688,
+   "ok": true
+  },
+  {
+   "indicator": "pop_80mais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.039934,
+   "recomputed": 1.039934,
+   "ok": true
+  },
+  {
+   "indicator": "pop_80mais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 2.679593,
+   "recomputed": 2.679593,
+   "ok": true
+  },
+  {
+   "indicator": "pop_80mais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 3.366831,
+   "recomputed": 3.366831,
+   "ok": true
+  },
+  {
+   "indicator": "pop_80mais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 3.637557,
+   "recomputed": 3.637557,
+   "ok": true
+  },
+  {
+   "indicator": "pop_80mais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 2.022936,
+   "recomputed": 2.022936,
+   "ok": true
+  },
+  {
+   "indicator": "razao_dependencia_2022",
+   "municipality": "Manaus/AM",
+   "db": 42.330741,
+   "recomputed": 42.330741,
+   "ok": true
+  },
+  {
+   "indicator": "razao_dependencia_2022",
+   "municipality": "Recife/PE",
+   "db": 42.737857,
+   "recomputed": 42.737857,
+   "ok": true
+  },
+  {
+   "indicator": "razao_dependencia_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 42.15605,
+   "recomputed": 42.15605,
+   "ok": true
+  },
+  {
+   "indicator": "razao_dependencia_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 46.602292,
+   "recomputed": 46.602292,
+   "ok": true
+  },
+  {
+   "indicator": "razao_dependencia_2022",
+   "municipality": "Goiânia/GO",
+   "db": 39.482793,
+   "recomputed": 39.482793,
+   "ok": true
+  },
+  {
+   "indicator": "mulheres_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 51.599199,
+   "recomputed": 51.599199,
+   "ok": true
+  },
+  {
+   "indicator": "mulheres_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 54.091825,
+   "recomputed": 54.091825,
+   "ok": true
+  },
+  {
+   "indicator": "mulheres_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 53.542685,
+   "recomputed": 53.542685,
+   "ok": true
+  },
+  {
+   "indicator": "mulheres_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 53.985122,
+   "recomputed": 53.985122,
+   "ok": true
+  },
+  {
+   "indicator": "mulheres_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 52.629254,
+   "recomputed": 52.629254,
+   "ok": true
+  },
+  {
+   "indicator": "indice_envelhecimento_2022",
+   "municipality": "Manaus/AM",
+   "db": 26.41,
+   "recomputed": 26.41,
+   "ok": true
+  },
+  {
+   "indicator": "indice_envelhecimento_2022",
+   "municipality": "Recife/PE",
+   "db": 69.04,
+   "recomputed": 69.04,
+   "ok": true
+  },
+  {
+   "indicator": "indice_envelhecimento_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 91.12,
+   "recomputed": 91.12,
+   "ok": true
+  },
+  {
+   "indicator": "indice_envelhecimento_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 98.38,
+   "recomputed": 98.38,
+   "ok": true
+  },
+  {
+   "indicator": "indice_envelhecimento_2022",
+   "municipality": "Goiânia/GO",
+   "db": 57.01,
+   "recomputed": 57.01,
+   "ok": true
+  },
+  {
+   "indicator": "razao_sexo_2022",
+   "municipality": "Manaus/AM",
+   "db": 93.8,
+   "recomputed": 93.8,
+   "ok": true
+  },
+  {
+   "indicator": "razao_sexo_2022",
+   "municipality": "Recife/PE",
+   "db": 84.87,
+   "recomputed": 84.87,
+   "ok": true
+  },
+  {
+   "indicator": "razao_sexo_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 86.77,
+   "recomputed": 86.77,
+   "ok": true
+  },
+  {
+   "indicator": "razao_sexo_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 85.24,
+   "recomputed": 85.24,
+   "ok": true
+  },
+  {
+   "indicator": "razao_sexo_2022",
+   "municipality": "Goiânia/GO",
+   "db": 90.01,
+   "recomputed": 90.01,
+   "ok": true
+  },
+  {
+   "indicator": "densidade_2022",
+   "municipality": "Manaus/AM",
+   "db": 181.01,
+   "recomputed": 181.01,
+   "ok": true
+  },
+  {
+   "indicator": "densidade_2022",
+   "municipality": "Recife/PE",
+   "db": 6803.6,
+   "recomputed": 6803.6,
+   "ok": true
+  },
+  {
+   "indicator": "densidade_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 6988.18,
+   "recomputed": 6988.18,
+   "ok": true
+  },
+  {
+   "indicator": "densidade_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 2690.5,
+   "recomputed": 2690.5,
+   "ok": true
+  },
+  {
+   "indicator": "densidade_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1970.9,
+   "recomputed": 1970.9,
+   "ok": true
+  },
+  {
+   "indicator": "crescimento_pop_2010_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.14,
+   "recomputed": 1.14,
+   "ok": true
+  },
+  {
+   "indicator": "crescimento_pop_2010_2022",
+   "municipality": "Recife/PE",
+   "db": -0.27,
+   "recomputed": -0.27,
+   "ok": true
+  },
+  {
+   "indicator": "crescimento_pop_2010_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": -0.21,
+   "recomputed": -0.21,
+   "ok": true
+  },
+  {
+   "indicator": "crescimento_pop_2010_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": -0.46,
+   "recomputed": -0.46,
+   "ok": true
+  },
+  {
+   "indicator": "crescimento_pop_2010_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.83,
+   "recomputed": 0.83,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_mediana_2022",
+   "municipality": "Manaus/AM",
+   "db": 686.0,
+   "recomputed": 686.0,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_mediana_2022",
+   "municipality": "Recife/PE",
+   "db": 970.67,
+   "recomputed": 970.67,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_mediana_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 1441.0,
+   "recomputed": 1441.0,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_mediana_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1700.0,
+   "recomputed": 1700.0,
+   "ok": true
+  },
+  {
+   "indicator": "renda_domiciliar_pc_mediana_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1450.0,
+   "recomputed": 1450.0,
+   "ok": true
+  },
+  {
+   "indicator": "renda_sem_rendimento_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 4.798991,
+   "recomputed": 4.798991,
+   "ok": true
+  },
+  {
+   "indicator": "renda_sem_rendimento_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 3.848667,
+   "recomputed": 3.848667,
+   "ok": true
+  },
+  {
+   "indicator": "renda_sem_rendimento_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 3.383504,
+   "recomputed": 3.383504,
+   "ok": true
+  },
+  {
+   "indicator": "renda_sem_rendimento_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 3.19201,
+   "recomputed": 3.19201,
+   "ok": true
+  },
+  {
+   "indicator": "renda_sem_rendimento_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 3.473986,
+   "recomputed": 3.473986,
+   "ok": true
+  },
+  {
+   "indicator": "renda_ate_meio_sm_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 40.392443,
+   "recomputed": 40.392443,
+   "ok": true
+  },
+  {
+   "indicator": "renda_ate_meio_sm_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 31.018545,
+   "recomputed": 31.018545,
+   "ok": true
+  },
+  {
+   "indicator": "renda_ate_meio_sm_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 15.138048,
+   "recomputed": 15.138048,
+   "ok": true
+  },
+  {
+   "indicator": "renda_ate_meio_sm_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 14.059248,
+   "recomputed": 14.059248,
+   "ok": true
+  },
+  {
+   "indicator": "renda_ate_meio_sm_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 14.163478,
+   "recomputed": 14.163478,
+   "ok": true
+  },
+  {
+   "indicator": "renda_mais_5sm_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 2.698727,
+   "recomputed": 2.698727,
+   "ok": true
+  },
+  {
+   "indicator": "renda_mais_5sm_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 8.477568,
+   "recomputed": 8.477568,
+   "ok": true
+  },
+  {
+   "indicator": "renda_mais_5sm_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 10.205581,
+   "recomputed": 10.205581,
+   "ok": true
+  },
+  {
+   "indicator": "renda_mais_5sm_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 13.490505,
+   "recomputed": 13.490505,
+   "ok": true
+  },
+  {
+   "indicator": "renda_mais_5sm_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 9.371892,
+   "recomputed": 9.371892,
+   "ok": true
+  },
+  {
+   "indicator": "renda_trabalho_participacao_2022",
+   "municipality": "Manaus/AM",
+   "db": 81.18,
+   "recomputed": 81.18,
+   "ok": true
+  },
+  {
+   "indicator": "renda_trabalho_participacao_2022",
+   "municipality": "Recife/PE",
+   "db": 76.6,
+   "recomputed": 76.6,
+   "ok": true
+  },
+  {
+   "indicator": "renda_trabalho_participacao_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 76.56,
+   "recomputed": 76.56,
+   "ok": true
+  },
+  {
+   "indicator": "renda_trabalho_participacao_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 72.3,
+   "recomputed": 72.3,
+   "ok": true
+  },
+  {
+   "indicator": "renda_trabalho_participacao_2022",
+   "municipality": "Goiânia/GO",
+   "db": 81.93,
+   "recomputed": 81.93,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_medio_2022",
+   "municipality": "Manaus/AM",
+   "db": 2646.61,
+   "recomputed": 2646.61,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_medio_2022",
+   "municipality": "Recife/PE",
+   "db": 3960.3,
+   "recomputed": 3960.3,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_medio_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 4153.27,
+   "recomputed": 4153.27,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_medio_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 4632.83,
+   "recomputed": 4632.83,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_medio_2022",
+   "municipality": "Goiânia/GO",
+   "db": 4248.65,
+   "recomputed": 4248.65,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_mediano_2022",
+   "municipality": "Manaus/AM",
+   "db": 1500.0,
+   "recomputed": 1500.0,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_mediano_2022",
+   "municipality": "Recife/PE",
+   "db": 1500.0,
+   "recomputed": 1500.0,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_mediano_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 2000.0,
+   "recomputed": 2000.0,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_mediano_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 2500.0,
+   "recomputed": 2500.0,
+   "ok": true
+  },
+  {
+   "indicator": "rendimento_trabalho_mediano_2022",
+   "municipality": "Goiânia/GO",
+   "db": 2000.0,
+   "recomputed": 2000.0,
+   "ok": true
+  },
+  {
+   "indicator": "nivel_ocupacao_10mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 47.19,
+   "recomputed": 47.19,
+   "ok": true
+  },
+  {
+   "indicator": "nivel_ocupacao_10mais_2022",
+   "municipality": "Recife/PE",
+   "db": 50.37,
+   "recomputed": 50.37,
+   "ok": true
+  },
+  {
+   "indicator": "nivel_ocupacao_10mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 56.81,
+   "recomputed": 56.81,
+   "ok": true
+  },
+  {
+   "indicator": "nivel_ocupacao_10mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 56.12,
+   "recomputed": 56.12,
+   "ok": true
+  },
+  {
+   "indicator": "nivel_ocupacao_10mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 58.97,
+   "recomputed": 58.97,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_desocupacao_14mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 9.684882,
+   "recomputed": 9.684882,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_desocupacao_14mais_2022",
+   "municipality": "Recife/PE",
+   "db": 7.809805,
+   "recomputed": 7.809805,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_desocupacao_14mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 5.05325,
+   "recomputed": 5.05325,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_desocupacao_14mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 4.887236,
+   "recomputed": 4.887236,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_desocupacao_14mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 3.316712,
+   "recomputed": 3.316712,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_participacao_14mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 56.345028,
+   "recomputed": 56.345028,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_participacao_14mais_2022",
+   "municipality": "Recife/PE",
+   "db": 57.692373,
+   "recomputed": 57.692373,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_participacao_14mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 62.767683,
+   "recomputed": 62.767683,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_participacao_14mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 62.011657,
+   "recomputed": 62.011657,
+   "ok": true
+  },
+  {
+   "indicator": "taxa_participacao_14mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 64.387194,
+   "recomputed": 64.387194,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_com_carteira_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 40.950733,
+   "recomputed": 40.950733,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_com_carteira_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 41.041366,
+   "recomputed": 41.041366,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_com_carteira_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 45.782867,
+   "recomputed": 45.782867,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_com_carteira_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 44.049351,
+   "recomputed": 44.049351,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_com_carteira_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 40.507437,
+   "recomputed": 40.507437,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_sem_carteira_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 18.316945,
+   "recomputed": 18.316945,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_sem_carteira_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 15.83405,
+   "recomputed": 15.83405,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_sem_carteira_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 13.249451,
+   "recomputed": 13.249451,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_sem_carteira_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 13.385929,
+   "recomputed": 13.385929,
+   "ok": true
+  },
+  {
+   "indicator": "ocupados_sem_carteira_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 16.554282,
+   "recomputed": 16.554282,
+   "ok": true
+  },
+  {
+   "indicator": "conta_propria_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 27.075159,
+   "recomputed": 27.075159,
+   "ok": true
+  },
+  {
+   "indicator": "conta_propria_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 26.322428,
+   "recomputed": 26.322428,
+   "ok": true
+  },
+  {
+   "indicator": "conta_propria_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 25.595339,
+   "recomputed": 25.595339,
+   "ok": true
+  },
+  {
+   "indicator": "conta_propria_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 25.960168,
+   "recomputed": 25.960168,
+   "ok": true
+  },
+  {
+   "indicator": "conta_propria_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 26.62421,
+   "recomputed": 26.62421,
+   "ok": true
+  },
+  {
+   "indicator": "empregadores_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 2.09512,
+   "recomputed": 2.09512,
+   "ok": true
+  },
+  {
+   "indicator": "empregadores_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 3.80935,
+   "recomputed": 3.80935,
+   "ok": true
+  },
+  {
+   "indicator": "empregadores_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 4.129227,
+   "recomputed": 4.129227,
+   "ok": true
+  },
+  {
+   "indicator": "empregadores_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 5.021463,
+   "recomputed": 5.021463,
+   "ok": true
+  },
+  {
+   "indicator": "empregadores_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 5.773119,
+   "recomputed": 5.773119,
+   "ok": true
+  },
+  {
+   "indicator": "servidores_estatutarios_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 9.366446,
+   "recomputed": 9.366446,
+   "ok": true
+  },
+  {
+   "indicator": "servidores_estatutarios_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 11.19211,
+   "recomputed": 11.19211,
+   "ok": true
+  },
+  {
+   "indicator": "servidores_estatutarios_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 9.866708,
+   "recomputed": 9.866708,
+   "ok": true
+  },
+  {
+   "indicator": "servidores_estatutarios_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 9.989642,
+   "recomputed": 9.989642,
+   "ok": true
+  },
+  {
+   "indicator": "servidores_estatutarios_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 9.377627,
+   "recomputed": 9.377627,
+   "ok": true
+  },
+  {
+   "indicator": "contribui_previdencia_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 60.342769,
+   "recomputed": 60.342769,
+   "ok": true
+  },
+  {
+   "indicator": "contribui_previdencia_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 67.831891,
+   "recomputed": 67.831891,
+   "ok": true
+  },
+  {
+   "indicator": "contribui_previdencia_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 76.600201,
+   "recomputed": 76.600201,
+   "ok": true
+  },
+  {
+   "indicator": "contribui_previdencia_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 75.732362,
+   "recomputed": 75.732362,
+   "ok": true
+  },
+  {
+   "indicator": "contribui_previdencia_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 70.468687,
+   "recomputed": 70.468687,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_agropecuaria_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 0.737766,
+   "recomputed": 0.737766,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_agropecuaria_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.364797,
+   "recomputed": 0.364797,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_agropecuaria_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.27457,
+   "recomputed": 0.27457,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_agropecuaria_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.489738,
+   "recomputed": 0.489738,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_agropecuaria_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.757155,
+   "recomputed": 0.757155,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_elementares_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 17.64889,
+   "recomputed": 17.64889,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_elementares_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 14.146636,
+   "recomputed": 14.146636,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_elementares_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 11.145547,
+   "recomputed": 11.145547,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_elementares_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 10.648065,
+   "recomputed": 10.648065,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_elementares_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 11.230031,
+   "recomputed": 11.230031,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_dirigentes_profissionais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 14.822963,
+   "recomputed": 14.822963,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_dirigentes_profissionais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 24.250857,
+   "recomputed": 24.250857,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_dirigentes_profissionais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 27.463752,
+   "recomputed": 27.463752,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_dirigentes_profissionais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 30.523774,
+   "recomputed": 30.523774,
+   "ok": true
+  },
+  {
+   "indicator": "ocup_dirigentes_profissionais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 24.545828,
+   "recomputed": 24.545828,
+   "ok": true
+  },
+  {
+   "indicator": "trabalha_outro_municipio_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.162219,
+   "recomputed": 1.162219,
+   "ok": true
+  },
+  {
+   "indicator": "trabalha_outro_municipio_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 6.276021,
+   "recomputed": 6.276021,
+   "ok": true
+  },
+  {
+   "indicator": "trabalha_outro_municipio_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 5.847564,
+   "recomputed": 5.847564,
+   "ok": true
+  },
+  {
+   "indicator": "trabalha_outro_municipio_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 4.276704,
+   "recomputed": 4.276704,
+   "ok": true
+  },
+  {
+   "indicator": "trabalha_outro_municipio_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 3.610948,
+   "recomputed": 3.610948,
+   "ok": true
+  },
+  {
+   "indicator": "anos_estudo_medio_2022",
+   "municipality": "Manaus/AM",
+   "db": 10.4,
+   "recomputed": 10.4,
+   "ok": true
+  },
+  {
+   "indicator": "anos_estudo_medio_2022",
+   "municipality": "Recife/PE",
+   "db": 10.8,
+   "recomputed": 10.8,
+   "ok": true
+  },
+  {
+   "indicator": "anos_estudo_medio_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 11.2,
+   "recomputed": 11.2,
+   "ok": true
+  },
+  {
+   "indicator": "anos_estudo_medio_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 11.4,
+   "recomputed": 11.4,
+   "ok": true
+  },
+  {
+   "indicator": "anos_estudo_medio_2022",
+   "municipality": "Goiânia/GO",
+   "db": 11.0,
+   "recomputed": 11.0,
+   "ok": true
+  },
+  {
+   "indicator": "sem_instrucao_fund_incompleto_18mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 20.745785,
+   "recomputed": 20.745785,
+   "ok": true
+  },
+  {
+   "indicator": "sem_instrucao_fund_incompleto_18mais_2022",
+   "municipality": "Recife/PE",
+   "db": 22.749146,
+   "recomputed": 22.749146,
+   "ok": true
+  },
+  {
+   "indicator": "sem_instrucao_fund_incompleto_18mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 19.716479,
+   "recomputed": 19.716479,
+   "ok": true
+  },
+  {
+   "indicator": "sem_instrucao_fund_incompleto_18mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 18.927661,
+   "recomputed": 18.927661,
+   "ok": true
+  },
+  {
+   "indicator": "sem_instrucao_fund_incompleto_18mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 19.96641,
+   "recomputed": 19.96641,
+   "ok": true
+  },
+  {
+   "indicator": "medio_completo_ou_mais_18mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 62.581282,
+   "recomputed": 62.581282,
+   "ok": true
+  },
+  {
+   "indicator": "medio_completo_ou_mais_18mais_2022",
+   "municipality": "Recife/PE",
+   "db": 64.969356,
+   "recomputed": 64.969356,
+   "ok": true
+  },
+  {
+   "indicator": "medio_completo_ou_mais_18mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 66.766178,
+   "recomputed": 66.766178,
+   "ok": true
+  },
+  {
+   "indicator": "medio_completo_ou_mais_18mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 66.431259,
+   "recomputed": 66.431259,
+   "ok": true
+  },
+  {
+   "indicator": "medio_completo_ou_mais_18mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 66.050906,
+   "recomputed": 66.050906,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_0_3_2022",
+   "municipality": "Manaus/AM",
+   "db": 12.92,
+   "recomputed": 12.92,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_0_3_2022",
+   "municipality": "Recife/PE",
+   "db": 32.34,
+   "recomputed": 32.34,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_0_3_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 50.95,
+   "recomputed": 50.95,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_0_3_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 38.84,
+   "recomputed": 38.84,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_0_3_2022",
+   "municipality": "Goiânia/GO",
+   "db": 30.17,
+   "recomputed": 30.17,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_4_5_2022",
+   "municipality": "Manaus/AM",
+   "db": 69.12,
+   "recomputed": 69.12,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_4_5_2022",
+   "municipality": "Recife/PE",
+   "db": 85.13,
+   "recomputed": 85.13,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_4_5_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 93.71,
+   "recomputed": 93.71,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_4_5_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 74.61,
+   "recomputed": 74.61,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_4_5_2022",
+   "municipality": "Goiânia/GO",
+   "db": 76.53,
+   "recomputed": 76.53,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_15_17_2022",
+   "municipality": "Manaus/AM",
+   "db": 85.19,
+   "recomputed": 85.19,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_15_17_2022",
+   "municipality": "Recife/PE",
+   "db": 84.73,
+   "recomputed": 84.73,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_15_17_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 85.66,
+   "recomputed": 85.66,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_15_17_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 84.72,
+   "recomputed": 84.72,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_15_17_2022",
+   "municipality": "Goiânia/GO",
+   "db": 84.57,
+   "recomputed": 84.57,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_18_24_2022",
+   "municipality": "Manaus/AM",
+   "db": 31.17,
+   "recomputed": 31.17,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_18_24_2022",
+   "municipality": "Recife/PE",
+   "db": 32.43,
+   "recomputed": 32.43,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_18_24_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 36.61,
+   "recomputed": 36.61,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_18_24_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 37.46,
+   "recomputed": 37.46,
+   "ok": true
+  },
+  {
+   "indicator": "freq_escolar_18_24_2022",
+   "municipality": "Goiânia/GO",
+   "db": 35.22,
+   "recomputed": 35.22,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_proprio_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 66.339095,
+   "recomputed": 66.339095,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_proprio_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 69.263559,
+   "recomputed": 69.263559,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_proprio_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 68.025352,
+   "recomputed": 68.025352,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_proprio_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 73.17252,
+   "recomputed": 73.17252,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_proprio_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 59.556343,
+   "recomputed": 59.556343,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_alugado_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 26.05749,
+   "recomputed": 26.05749,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_alugado_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 26.629153,
+   "recomputed": 26.629153,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_alugado_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 25.549963,
+   "recomputed": 25.549963,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_alugado_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 20.788734,
+   "recomputed": 20.788734,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_alugado_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 34.289883,
+   "recomputed": 34.289883,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_cedido_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 6.74231,
+   "recomputed": 6.74231,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_cedido_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 3.318302,
+   "recomputed": 3.318302,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_cedido_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 5.544722,
+   "recomputed": 5.544722,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_cedido_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 4.58275,
+   "recomputed": 4.58275,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_cedido_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 5.507684,
+   "recomputed": 5.507684,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_apartamento_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 16.67693,
+   "recomputed": 16.67693,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_apartamento_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 30.240145,
+   "recomputed": 30.240145,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_apartamento_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 38.855465,
+   "recomputed": 38.855465,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_apartamento_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 49.552532,
+   "recomputed": 49.552532,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_apartamento_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 27.859239,
+   "recomputed": 27.859239,
+   "ok": true
+  },
+  {
+   "indicator": "moradores_por_domicilio_2022",
+   "municipality": "Manaus/AM",
+   "db": 3.27,
+   "recomputed": 3.27,
+   "ok": true
+  },
+  {
+   "indicator": "moradores_por_domicilio_2022",
+   "municipality": "Recife/PE",
+   "db": 2.7,
+   "recomputed": 2.7,
+   "ok": true
+  },
+  {
+   "indicator": "moradores_por_domicilio_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 2.59,
+   "recomputed": 2.59,
+   "ok": true
+  },
+  {
+   "indicator": "moradores_por_domicilio_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 2.37,
+   "recomputed": 2.37,
+   "ok": true
+  },
+  {
+   "indicator": "moradores_por_domicilio_2022",
+   "municipality": "Goiânia/GO",
+   "db": 2.61,
+   "recomputed": 2.61,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_unipessoal_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 15.10331,
+   "recomputed": 15.10331,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_unipessoal_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 20.467493,
+   "recomputed": 20.467493,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_unipessoal_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 22.95821,
+   "recomputed": 22.95821,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_unipessoal_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 28.998742,
+   "recomputed": 28.998742,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_unipessoal_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 22.09063,
+   "recomputed": 22.09063,
+   "ok": true
+  },
+  {
+   "indicator": "adensamento_3mais_dormitorio_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 8.849351,
+   "recomputed": 8.849351,
+   "ok": true
+  },
+  {
+   "indicator": "adensamento_3mais_dormitorio_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 2.273628,
+   "recomputed": 2.273628,
+   "ok": true
+  },
+  {
+   "indicator": "adensamento_3mais_dormitorio_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 1.084294,
+   "recomputed": 1.084294,
+   "ok": true
+  },
+  {
+   "indicator": "adensamento_3mais_dormitorio_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1.296091,
+   "recomputed": 1.296091,
+   "ok": true
+  },
+  {
+   "indicator": "adensamento_3mais_dormitorio_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.941388,
+   "recomputed": 0.941388,
+   "ok": true
+  },
+  {
+   "indicator": "paredes_alvenaria_revestida_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 87.121838,
+   "recomputed": 87.121838,
+   "ok": true
+  },
+  {
+   "indicator": "paredes_alvenaria_revestida_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 92.933471,
+   "recomputed": 92.933471,
+   "ok": true
+  },
+  {
+   "indicator": "paredes_alvenaria_revestida_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 93.509416,
+   "recomputed": 93.509416,
+   "ok": true
+  },
+  {
+   "indicator": "paredes_alvenaria_revestida_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 89.302316,
+   "recomputed": 89.302316,
+   "ok": true
+  },
+  {
+   "indicator": "paredes_alvenaria_revestida_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 95.496112,
+   "recomputed": 95.496112,
+   "ok": true
+  },
+  {
+   "indicator": "agua_rede_geral_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 76.240275,
+   "recomputed": 76.240275,
+   "ok": true
+  },
+  {
+   "indicator": "agua_rede_geral_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 84.042334,
+   "recomputed": 84.042334,
+   "ok": true
+  },
+  {
+   "indicator": "agua_rede_geral_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 99.333509,
+   "recomputed": 99.333509,
+   "ok": true
+  },
+  {
+   "indicator": "agua_rede_geral_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 99.118498,
+   "recomputed": 99.118498,
+   "ok": true
+  },
+  {
+   "indicator": "agua_rede_geral_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 95.414983,
+   "recomputed": 95.414983,
+   "ok": true
+  },
+  {
+   "indicator": "agua_canalizada_dentro_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 97.053941,
+   "recomputed": 97.053941,
+   "ok": true
+  },
+  {
+   "indicator": "agua_canalizada_dentro_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 96.637386,
+   "recomputed": 96.637386,
+   "ok": true
+  },
+  {
+   "indicator": "agua_canalizada_dentro_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 99.808337,
+   "recomputed": 99.808337,
+   "ok": true
+  },
+  {
+   "indicator": "agua_canalizada_dentro_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 99.517422,
+   "recomputed": 99.517422,
+   "ok": true
+  },
+  {
+   "indicator": "agua_canalizada_dentro_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 99.565448,
+   "recomputed": 99.565448,
+   "ok": true
+  },
+  {
+   "indicator": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 50.602163,
+   "recomputed": 50.602163,
+   "ok": true
+  },
+  {
+   "indicator": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 67.435489,
+   "recomputed": 67.435489,
+   "ok": true
+  },
+  {
+   "indicator": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 97.224995,
+   "recomputed": 97.224995,
+   "ok": true
+  },
+  {
+   "indicator": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 93.009609,
+   "recomputed": 93.009609,
+   "ok": true
+  },
+  {
+   "indicator": "esgoto_rede_ou_fossa_ligada_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 79.188848,
+   "recomputed": 79.188848,
+   "ok": true
+  },
+  {
+   "indicator": "fossa_rudimentar_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 18.334545,
+   "recomputed": 18.334545,
+   "ok": true
+  },
+  {
+   "indicator": "fossa_rudimentar_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 13.278023,
+   "recomputed": 13.278023,
+   "ok": true
+  },
+  {
+   "indicator": "fossa_rudimentar_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.575213,
+   "recomputed": 0.575213,
+   "ok": true
+  },
+  {
+   "indicator": "fossa_rudimentar_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1.148585,
+   "recomputed": 1.148585,
+   "ok": true
+  },
+  {
+   "indicator": "fossa_rudimentar_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 8.181638,
+   "recomputed": 8.181638,
+   "ok": true
+  },
+  {
+   "indicator": "sem_banheiro_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 0.08031,
+   "recomputed": 0.08031,
+   "ok": true
+  },
+  {
+   "indicator": "sem_banheiro_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.074526,
+   "recomputed": 0.074526,
+   "ok": true
+  },
+  {
+   "indicator": "sem_banheiro_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.008993,
+   "recomputed": 0.008993,
+   "ok": true
+  },
+  {
+   "indicator": "sem_banheiro_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.028482,
+   "recomputed": 0.028482,
+   "ok": true
+  },
+  {
+   "indicator": "sem_banheiro_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.007285,
+   "recomputed": 0.007285,
+   "ok": true
+  },
+  {
+   "indicator": "banheiro_exclusivo_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 99.090566,
+   "recomputed": 99.090566,
+   "ok": true
+  },
+  {
+   "indicator": "banheiro_exclusivo_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 99.511015,
+   "recomputed": 99.511015,
+   "ok": true
+  },
+  {
+   "indicator": "banheiro_exclusivo_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 99.893883,
+   "recomputed": 99.893883,
+   "ok": true
+  },
+  {
+   "indicator": "banheiro_exclusivo_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 99.715003,
+   "recomputed": 99.715003,
+   "ok": true
+  },
+  {
+   "indicator": "banheiro_exclusivo_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 99.913126,
+   "recomputed": 99.913126,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_coletado_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 97.344388,
+   "recomputed": 97.344388,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_coletado_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 98.318784,
+   "recomputed": 98.318784,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_coletado_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 99.480993,
+   "recomputed": 99.480993,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_coletado_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 99.462429,
+   "recomputed": 99.462429,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_coletado_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 99.779081,
+   "recomputed": 99.779081,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_queimado_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.178614,
+   "recomputed": 1.178614,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_queimado_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.062105,
+   "recomputed": 0.062105,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_queimado_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.10578,
+   "recomputed": 0.10578,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_queimado_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.059471,
+   "recomputed": 0.059471,
+   "ok": true
+  },
+  {
+   "indicator": "lixo_queimado_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.10108,
+   "recomputed": 0.10108,
+   "ok": true
+  },
+  {
+   "indicator": "responsavel_mulher_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 53.592503,
+   "recomputed": 53.592503,
+   "ok": true
+  },
+  {
+   "indicator": "responsavel_mulher_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 55.881977,
+   "recomputed": 55.881977,
+   "ok": true
+  },
+  {
+   "indicator": "responsavel_mulher_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 51.444739,
+   "recomputed": 51.444739,
+   "ok": true
+  },
+  {
+   "indicator": "responsavel_mulher_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 55.340159,
+   "recomputed": 55.340159,
+   "ok": true
+  },
+  {
+   "indicator": "responsavel_mulher_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 50.046496,
+   "recomputed": 50.046496,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_sem_conjuge_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 44.513834,
+   "recomputed": 44.513834,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_sem_conjuge_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 49.402587,
+   "recomputed": 49.402587,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_sem_conjuge_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 51.044122,
+   "recomputed": 51.044122,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_sem_conjuge_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 52.580437,
+   "recomputed": 52.580437,
+   "ok": true
+  },
+  {
+   "indicator": "domicilio_sem_conjuge_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 46.276949,
+   "recomputed": 46.276949,
+   "ok": true
+  },
+  {
+   "indicator": "monoparental_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 21.066579,
+   "recomputed": 21.066579,
+   "ok": true
+  },
+  {
+   "indicator": "monoparental_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 20.09598,
+   "recomputed": 20.09598,
+   "ok": true
+  },
+  {
+   "indicator": "monoparental_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 18.860925,
+   "recomputed": 18.860925,
+   "ok": true
+  },
+  {
+   "indicator": "monoparental_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 16.529152,
+   "recomputed": 16.529152,
+   "ok": true
+  },
+  {
+   "indicator": "monoparental_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 15.791552,
+   "recomputed": 15.791552,
+   "ok": true
+  },
+  {
+   "indicator": "casal_sem_filhos_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 14.472935,
+   "recomputed": 14.472935,
+   "ok": true
+  },
+  {
+   "indicator": "casal_sem_filhos_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 18.466142,
+   "recomputed": 18.466142,
+   "ok": true
+  },
+  {
+   "indicator": "casal_sem_filhos_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 17.289462,
+   "recomputed": 17.289462,
+   "ok": true
+  },
+  {
+   "indicator": "casal_sem_filhos_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 20.710625,
+   "recomputed": 20.710625,
+   "ok": true
+  },
+  {
+   "indicator": "casal_sem_filhos_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 20.097578,
+   "recomputed": 20.097578,
+   "ok": true
+  },
+  {
+   "indicator": "vive_em_uniao_10mais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 46.293959,
+   "recomputed": 46.293959,
+   "ok": true
+  },
+  {
+   "indicator": "vive_em_uniao_10mais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 46.111299,
+   "recomputed": 46.111299,
+   "ok": true
+  },
+  {
+   "indicator": "vive_em_uniao_10mais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 45.119496,
+   "recomputed": 45.119496,
+   "ok": true
+  },
+  {
+   "indicator": "vive_em_uniao_10mais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 48.231598,
+   "recomputed": 48.231598,
+   "ok": true
+  },
+  {
+   "indicator": "vive_em_uniao_10mais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 49.82146,
+   "recomputed": 49.82146,
+   "ok": true
+  },
+  {
+   "indicator": "filhos_por_mulher_12mais_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.601859,
+   "recomputed": 1.601859,
+   "ok": true
+  },
+  {
+   "indicator": "filhos_por_mulher_12mais_2022",
+   "municipality": "Recife/PE",
+   "db": 1.464323,
+   "recomputed": 1.464323,
+   "ok": true
+  },
+  {
+   "indicator": "filhos_por_mulher_12mais_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 1.397211,
+   "recomputed": 1.397211,
+   "ok": true
+  },
+  {
+   "indicator": "filhos_por_mulher_12mais_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1.308704,
+   "recomputed": 1.308704,
+   "ok": true
+  },
+  {
+   "indicator": "filhos_por_mulher_12mais_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1.447159,
+   "recomputed": 1.447159,
+   "ok": true
+  },
+  {
+   "indicator": "nascidos_outra_uf_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 14.757698,
+   "recomputed": 14.757698,
+   "ok": true
+  },
+  {
+   "indicator": "nascidos_outra_uf_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 7.633117,
+   "recomputed": 7.633117,
+   "ok": true
+  },
+  {
+   "indicator": "nascidos_outra_uf_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 6.856916,
+   "recomputed": 6.856916,
+   "ok": true
+  },
+  {
+   "indicator": "nascidos_outra_uf_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 5.936924,
+   "recomputed": 5.936924,
+   "ok": true
+  },
+  {
+   "indicator": "nascidos_outra_uf_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 26.465632,
+   "recomputed": 26.465632,
+   "ok": true
+  },
+  {
+   "indicator": "estrangeiros_naturalizados_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 2.165588,
+   "recomputed": 2.165588,
+   "ok": true
+  },
+  {
+   "indicator": "estrangeiros_naturalizados_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.23695,
+   "recomputed": 0.23695,
+   "ok": true
+  },
+  {
+   "indicator": "estrangeiros_naturalizados_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.387595,
+   "recomputed": 0.387595,
+   "ok": true
+  },
+  {
+   "indicator": "estrangeiros_naturalizados_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.880673,
+   "recomputed": 0.880673,
+   "ok": true
+  },
+  {
+   "indicator": "estrangeiros_naturalizados_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.448668,
+   "recomputed": 0.448668,
+   "ok": true
+  },
+  {
+   "indicator": "favela_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 55.81403,
+   "recomputed": 55.81403,
+   "ok": true
+  },
+  {
+   "indicator": "favela_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 24.282567,
+   "recomputed": 24.282567,
+   "ok": true
+  },
+  {
+   "indicator": "favela_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 13.289615,
+   "recomputed": 13.289615,
+   "ok": true
+  },
+  {
+   "indicator": "favela_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 13.168748,
+   "recomputed": 13.168748,
+   "ok": true
+  },
+  {
+   "indicator": "favela_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1.782149,
+   "recomputed": 1.782149,
+   "ok": true
+  },
+  {
+   "indicator": "unidades_conservacao_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 5.719418,
+   "recomputed": 5.719418,
+   "ok": true
+  },
+  {
+   "indicator": "unidades_conservacao_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 2.804986,
+   "recomputed": 2.804986,
+   "ok": true
+  },
+  {
+   "indicator": "unidades_conservacao_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 1.511038,
+   "recomputed": 1.511038,
+   "ok": true
+  },
+  {
+   "indicator": "unidades_conservacao_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.481001,
+   "recomputed": 0.481001,
+   "ok": true
+  },
+  {
+   "indicator": "unidades_conservacao_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.0,
+   "recomputed": 0.0,
+   "ok": true
+  },
+  {
+   "indicator": "cor_indigena_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 0.91,
+   "recomputed": 0.91,
+   "ok": true
+  },
+  {
+   "indicator": "cor_indigena_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.18,
+   "recomputed": 0.18,
+   "ok": true
+  },
+  {
+   "indicator": "cor_indigena_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.11,
+   "recomputed": 0.11,
+   "ok": true
+  },
+  {
+   "indicator": "cor_indigena_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.2,
+   "recomputed": 0.2,
+   "ok": true
+  },
+  {
+   "indicator": "cor_indigena_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.13,
+   "recomputed": 0.13,
+   "ok": true
+  },
+  {
+   "indicator": "cor_amarela_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 0.22,
+   "recomputed": 0.22,
+   "ok": true
+  },
+  {
+   "indicator": "cor_amarela_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 0.18,
+   "recomputed": 0.18,
+   "ok": true
+  },
+  {
+   "indicator": "cor_amarela_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.21,
+   "recomputed": 0.21,
+   "ok": true
+  },
+  {
+   "indicator": "cor_amarela_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.17,
+   "recomputed": 0.17,
+   "ok": true
+  },
+  {
+   "indicator": "cor_amarela_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 0.35,
+   "recomputed": 0.35,
+   "ok": true
+  },
+  {
+   "indicator": "deficiencia_2mais_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 7.4,
+   "recomputed": 7.4,
+   "ok": true
+  },
+  {
+   "indicator": "deficiencia_2mais_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 8.4,
+   "recomputed": 8.4,
+   "ok": true
+  },
+  {
+   "indicator": "deficiencia_2mais_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 6.7,
+   "recomputed": 6.7,
+   "ok": true
+  },
+  {
+   "indicator": "deficiencia_2mais_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 7.5,
+   "recomputed": 7.5,
+   "ok": true
+  },
+  {
+   "indicator": "deficiencia_2mais_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 6.7,
+   "recomputed": 6.7,
+   "ok": true
+  },
+  {
+   "indicator": "autismo_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 1.3,
+   "recomputed": 1.3,
+   "ok": true
+  },
+  {
+   "indicator": "autismo_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 1.4,
+   "recomputed": 1.4,
+   "ok": true
+  },
+  {
+   "indicator": "autismo_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 1.3,
+   "recomputed": 1.3,
+   "ok": true
+  },
+  {
+   "indicator": "autismo_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 1.5,
+   "recomputed": 1.5,
+   "ok": true
+  },
+  {
+   "indicator": "autismo_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 1.2,
+   "recomputed": 1.2,
+   "ok": true
+  },
+  {
+   "indicator": "internet_domicilio_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 89.216972,
+   "recomputed": 89.216972,
+   "ok": true
+  },
+  {
+   "indicator": "internet_domicilio_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 89.405504,
+   "recomputed": 89.405504,
+   "ok": true
+  },
+  {
+   "indicator": "internet_domicilio_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 91.731272,
+   "recomputed": 91.731272,
+   "ok": true
+  },
+  {
+   "indicator": "internet_domicilio_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 91.912067,
+   "recomputed": 91.912067,
+   "ok": true
+  },
+  {
+   "indicator": "internet_domicilio_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 92.417224,
+   "recomputed": 92.417224,
+   "ok": true
+  },
+  {
+   "indicator": "maquina_lavar_pct_2022",
+   "municipality": "Manaus/AM",
+   "db": 70.049914,
+   "recomputed": 70.049914,
+   "ok": true
+  },
+  {
+   "indicator": "maquina_lavar_pct_2022",
+   "municipality": "Recife/PE",
+   "db": 62.345331,
+   "recomputed": 62.345331,
+   "ok": true
+  },
+  {
+   "indicator": "maquina_lavar_pct_2022",
+   "municipality": "Belo Horizonte/MG",
+   "db": 85.162869,
+   "recomputed": 85.162869,
+   "ok": true
+  },
+  {
+   "indicator": "maquina_lavar_pct_2022",
+   "municipality": "Porto Alegre/RS",
+   "db": 90.990641,
+   "recomputed": 90.990641,
+   "ok": true
+  },
+  {
+   "indicator": "maquina_lavar_pct_2022",
+   "municipality": "Goiânia/GO",
+   "db": 83.267893,
+   "recomputed": 83.267893,
+   "ok": true
+  },
+  {
+   "indicator": "vab_agropecuaria_pct_2021",
+   "municipality": "Manaus/AM",
+   "db": 0.244417,
+   "recomputed": 0.244417,
+   "ok": true
+  },
+  {
+   "indicator": "vab_agropecuaria_pct_2021",
+   "municipality": "Recife/PE",
+   "db": 0.133033,
+   "recomputed": 0.133033,
+   "ok": true
+  },
+  {
+   "indicator": "vab_agropecuaria_pct_2021",
+   "municipality": "Belo Horizonte/MG",
+   "db": 0.004761,
+   "recomputed": 0.004761,
+   "ok": true
+  },
+  {
+   "indicator": "vab_agropecuaria_pct_2021",
+   "municipality": "Porto Alegre/RS",
+   "db": 0.053111,
+   "recomputed": 0.053111,
+   "ok": true
+  },
+  {
+   "indicator": "vab_agropecuaria_pct_2021",
+   "municipality": "Goiânia/GO",
+   "db": 0.150738,
+   "recomputed": 0.150738,
+   "ok": true
+  },
+  {
+   "indicator": "vab_industria_pct_2021",
+   "municipality": "Manaus/AM",
+   "db": 45.824406,
+   "recomputed": 45.824406,
+   "ok": true
+  },
+  {
+   "indicator": "vab_industria_pct_2021",
+   "municipality": "Recife/PE",
+   "db": 13.745018,
+   "recomputed": 13.745018,
+   "ok": true
+  },
+  {
+   "indicator": "vab_industria_pct_2021",
+   "municipality": "Belo Horizonte/MG",
+   "db": 17.518862,
+   "recomputed": 17.518862,
+   "ok": true
+  },
+  {
+   "indicator": "vab_industria_pct_2021",
+   "municipality": "Porto Alegre/RS",
+   "db": 9.486893,
+   "recomputed": 9.486893,
+   "ok": true
+  },
+  {
+   "indicator": "vab_industria_pct_2021",
+   "municipality": "Goiânia/GO",
+   "db": 16.579786,
+   "recomputed": 16.579786,
+   "ok": true
+  },
+  {
+   "indicator": "vab_servicos_pct_2021",
+   "municipality": "Manaus/AM",
+   "db": 40.219966,
+   "recomputed": 40.219966,
+   "ok": true
+  },
+  {
+   "indicator": "vab_servicos_pct_2021",
+   "municipality": "Recife/PE",
+   "db": 69.074578,
+   "recomputed": 69.074578,
+   "ok": true
+  },
+  {
+   "indicator": "vab_servicos_pct_2021",
+   "municipality": "Belo Horizonte/MG",
+   "db": 68.649889,
+   "recomputed": 68.649889,
+   "ok": true
+  },
+  {
+   "indicator": "vab_servicos_pct_2021",
+   "municipality": "Porto Alegre/RS",
+   "db": 79.064741,
+   "recomputed": 79.064741,
+   "ok": true
+  },
+  {
+   "indicator": "vab_servicos_pct_2021",
+   "municipality": "Goiânia/GO",
+   "db": 68.021541,
+   "recomputed": 68.021541,
+   "ok": true
+  },
+  {
+   "indicator": "vab_adm_publica_pct_2021",
+   "municipality": "Manaus/AM",
+   "db": 13.711213,
+   "recomputed": 13.711213,
+   "ok": true
+  },
+  {
+   "indicator": "vab_adm_publica_pct_2021",
+   "municipality": "Recife/PE",
+   "db": 17.047371,
+   "recomputed": 17.047371,
+   "ok": true
+  },
+  {
+   "indicator": "vab_adm_publica_pct_2021",
+   "municipality": "Belo Horizonte/MG",
+   "db": 13.826488,
+   "recomputed": 13.826488,
+   "ok": true
+  },
+  {
+   "indicator": "vab_adm_publica_pct_2021",
+   "municipality": "Porto Alegre/RS",
+   "db": 11.395255,
+   "recomputed": 11.395255,
+   "ok": true
+  },
+  {
+   "indicator": "vab_adm_publica_pct_2021",
+   "municipality": "Goiânia/GO",
+   "db": 15.247933,
+   "recomputed": 15.247933,
+   "ok": true
+  }
+ ]
+}
