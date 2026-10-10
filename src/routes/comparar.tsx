@@ -1,4 +1,5 @@
-import { candidateSeries } from "@/lib/series-identity";
+import { displayName, groupSummary } from "@/lib/duel";
+import { ModeSelector } from "@/components/duel/ModeSelector";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -37,12 +38,14 @@ function Comparar() {
   const muns = useQuery({ ...municipalitiesQuery(f.uf ?? ""), enabled: !!f.uf });
   const b = useQuery({ ...summaryQuery(election?.id ?? 0, f.uf, other || null), enabled: !!election && !!other });
   const nameOf = (c: string | null) => (muns.data ?? []).find((m) => m.ibge_code === c)?.name ?? (c ? c : f.uf ?? "Brasil");
-  const bShare = new Map((b.data ?? []).map((r) => [r.number, r.share]));
+  const ga = groupSummary(summary.data ?? []), gb = groupSummary(b.data ?? []);
+  const groups = (["bolsonaro", "lula", "outros"] as const);
 
   return (
     <div className="space-y-4 px-4">
       <PageHeader title="Comparar" subtitle="Município A × município B" />
       <FilterBar ctx={ctx} />
+      <ModeSelector ctx={ctx} />
       {!election ? <NoElection year={f.ano} round={f.turno} /> : (
         <Card title="Comparação no mesmo turno">
           {!f.uf ? (
@@ -54,16 +57,19 @@ function Comparar() {
                 {(muns.data ?? []).map((m) => <option key={m.ibge_code} value={m.ibge_code}>{m.name}</option>)}
               </select>
               <div className="mb-2 grid grid-cols-[1fr_auto_auto] gap-3 label-caps">
-                <span>Candidato</span><span className="w-16 truncate text-right">{nameOf(f.mun)}</span><span className="w-16 truncate text-right">{other ? nameOf(other) : "B"}</span>
+                <span>Grupo</span><span className="w-16 truncate text-right">{nameOf(f.mun)}</span><span className="w-16 truncate text-right">{other ? nameOf(other) : "B"}</span>
               </div>
               <ul className="divide-y">
-                {(summary.data ?? []).map((c) => (
-                  <li key={c.number} data-series={candidateSeries(c)} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2 text-sm">
-                    <span className="truncate"><span className="inline-block size-2 rounded-full bg-series mr-2" aria-hidden />{c.ballot_name}</span>
-                    <span className="w-16 text-right tabular-nums">{fmtPct(c.share)}</span>
-                    <span className="w-16 text-right tabular-nums text-muted-foreground">{other ? fmtPct(bShare.get(c.number)) : "—"}</span>
-                  </li>
-                ))}
+                {groups.map((k) => {
+                  const ra = ga?.[k], rb = gb?.[k], dim = ctx.mode !== "comparar" && k !== "outros" && (ctx.mode === "lula") !== (k === "lula");
+                  return (
+                    <li key={k} data-series={ra?.group ?? k} className={`grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2 text-sm ${dim ? "opacity-55" : ""}`}>
+                      <span className="truncate"><span className="inline-block size-2 rounded-full bg-series mr-2" aria-hidden />{displayName(ra?.group ?? "outros", f.ano, k === "bolsonaro" ? ctx.duel.bolsonaro : ctx.duel.lula)}</span>
+                      <span className="w-16 text-right tabular-nums">{fmtPct(ra?.share ?? null)}</span>
+                      <span className="w-16 text-right tabular-nums text-muted-foreground">{other ? fmtPct(rb?.share ?? null) : "—"}</span>
+                    </li>
+                  );
+                })}
               </ul>
             </>
           )}
@@ -82,7 +88,7 @@ function Comparar() {
           ))}
         </ul>
       </Card>
-      <Card title="Nota"><SourceNote>Comparações usam o mesmo cargo e turno; percentuais sobre votos nominais válidos.</SourceNote></Card>
+      <Card title="Nota"><SourceNote>Comparações usam o mesmo cargo e turno; percentuais sobre todos os votos nominais válidos; Outros = soma das demais candidaturas.</SourceNote></Card>
     </div>
   );
 }

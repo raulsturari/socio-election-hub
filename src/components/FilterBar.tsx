@@ -2,11 +2,12 @@ import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import type { useFilters } from "@/hooks/use-filters";
 import { FilterDrawer } from "./FilterDrawer";
+import { bolsonaroName, duelTitle } from "@/lib/duel";
 
 /** Compact summary of active filters; tapping opens the drawer. */
 export function FilterBar({ ctx }: { ctx: ReturnType<typeof useFilters> }) {
   const [open, setOpen] = useState(false);
-  const { f, candidate } = ctx;
+  const { f } = ctx;
   return (
     <>
       <button
@@ -16,7 +17,7 @@ export function FilterBar({ ctx }: { ctx: ReturnType<typeof useFilters> }) {
         <SlidersHorizontal className="size-4 shrink-0 text-primary" aria-hidden />
         <span className="min-w-0 flex-1 truncate text-sm">
           {f.ano} · {f.turno}º turno · {f.uf ?? "Brasil"}{f.mun ? " · município" : ""}
-          {candidate ? ` · ${candidate.ballot_name}` : ""}
+          {` · ${ctx.mode === "comparar" ? duelTitle(f.ano) : ctx.mode === "lula" ? "Lula" : bolsonaroName(f.ano)}`}
         </span>
         <span className="text-xs text-muted-foreground">Filtros</span>
       </button>

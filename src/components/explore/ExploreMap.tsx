@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { brazilMeshQuery } from '@/services/explore-queries';
 import type { GeoFeature } from '@/services/queries';
@@ -15,14 +15,15 @@ export function mapPaths(features:GeoFeature[]) {
   const offset = (360-(right-left)*0.92*scale)/2;
   return features.map(f => ({ code:f.properties.codarea, path:new Path2D(rings(f).map(r => r.map(([x=0,y=0],i) => `${i?'L':'M'}${offset+(x-left)*0.92*scale},${20+(top-y)*scale}`).join('')+'Z').join('')) }));
 }
-export function ExploreMap({rows,unit,replay}:{rows:ExploreRow[];unit:string;replay:number}) {
+/** `diverging`: signed Bolsonaro − Lula advantage, blue/red, symmetric scale. */
+export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:ExploreRow[];unit:string;replay:number;diverging?:boolean;detail?:((code:string)=>ReactNode)|undefined}) {
   const mesh = useQuery(brazilMeshQuery());
   const canvas = useRef<HTMLCanvasElement>(null);
   const lastReplay = useRef(replay);
   const [selected,setSelected] = useState<ExploreRow | null>(null);
   const geometry = useMemo(() => mesh.data && typeof Path2D !== 'undefined' ? mapPaths(mesh.data.features) : [],[mesh.data]);
   const values = useMemo(() => new Map(rows.map(r => [r.ibge_code,r])),[rows]);
-  const extent = useMemo(() => { const ys=rows.map(r=>r.y ?? 0);return [Math.min(0,...ys),Math.max(1,...ys)] as const; },[rows]);
+  const extent = useMemo(() => { const ys=rows.map(r=>r.y ?? 0);if(diverging){const m=Math.max(1,...ys.map(Math.abs));return [-m,m] as const;}return [Math.min(0,...ys),Math.max(1,...ys)] as const; },[rows,diverging]);
   useEffect(() => {
     const cv=canvas.current, ctx=cv?.getContext('2d'); if(!cv || !ctx || !geometry.length) return;
     const dpr=Math.min(window.devicePixelRatio,2);cv.width=360*dpr;cv.height=420*dpr;
@@ -56,9 +57,11 @@ export function ExploreMap({rows,unit,replay}:{rows:ExploreRow[];unit:string;rep
   };
   if(mesh.isPending)return <div className="h-[420px] skeleton bg-muted rounded-lg" aria-label="Carregando mapa"/>;
   if(mesh.error)return <div role="alert" className="h-[420px] flex flex-col justify-center items-center gap-4"><p>Mapa IBGE indisponível.</p><Button onClick={()=>mesh.refetch()}>Tentar novamente</Button></div>;
-  return <div className="relative"><canvas ref={canvas} role="img" aria-label="Mapa municipal interativo" className="w-full h-[420px] touch-pan-y" onPointerUp={e=>selectAt(e.clientX,e.clientY)} onMouseMove={e=>selectAt(e.clientX,e.clientY)}/>
-    <div className="min-h-12 text-sm text-center" role="status">{selected ? <><strong>{selected.name} · {selected.uf}</strong><span className="block text-series-label tabular-nums">{values.get(selected.ibge_code)?.y?.toLocaleString('pt-BR',{maximumFractionDigits:2}) ?? '—'} {unit}</span></> : <span className="text-muted-foreground">Municípios · malha IBGE 2022</span>}</div>
-    <div className="flex items-center gap-3 text-xs text-muted-foreground"><span>{extent[0].toLocaleString('pt-BR',{maximumFractionDigits:1})}</span><span className={`h-2 flex-1 rounded-full ${extent[0]<0?'explore-legend-signed':'explore-legend'}`}/><span>{extent[1].toLocaleString('pt-BR',{maximumFractionDigits:1})} {unit}</span></div>
+  const duelVars = diverging ? ({'--series-color':'var(--candidate-bolsonaro)','--series-negative':'var(--candidate-pt)'} as CSSProperties) : undefined;
+  return <div className="relative" style={duelVars}><canvas ref={canvas} role="img" aria-label="Mapa municipal interativo" className="w-full h-[420px] touch-pan-y" onPointerUp={e=>selectAt(e.clientX,e.clientY)} onMouseMove={e=>selectAt(e.clientX,e.clientY)}/>
+    <div className="min-h-12 text-sm text-center" role="status">{selected && detail ? <div className="text-left text-xs">{detail(selected.ibge_code)}</div> : selected ? <><strong>{selected.name} · {selected.uf}</strong><span className="block text-series-label tabular-nums">{values.get(selected.ibge_code)?.y?.toLocaleString('pt-BR',{maximumFractionDigits:2}) ?? '—'} {unit}</span></> : <span className="text-muted-foreground">Municípios · malha IBGE 2022</span>}</div>
+    <div className="flex items-center gap-3 text-xs text-muted-foreground"><span>{extent[0].toLocaleString('pt-BR',{maximumFractionDigits:1})}</span><span className={`h-2 flex-1 rounded-full ${diverging?'duel-legend':extent[0]<0?'explore-legend-signed':'explore-legend'}`}/><span>{extent[1].toLocaleString('pt-BR',{maximumFractionDigits:1})} {unit}</span></div>
+    {diverging&&<p className="mt-1 text-[11px] text-muted-foreground">Vantagem entre os dois: vermelho = Lula à frente de Bolsonaro, azul = Bolsonaro à frente de Lula. Não declara vencedor entre todas as candidaturas.</p>}
     <p className="mt-2 text-[11px] text-muted-foreground">Malha: 5.570 municípios. Boa Esperança do Norte não possui geometria nesta malha; não é desenhada por aproximação.</p>
   </div>;
 }

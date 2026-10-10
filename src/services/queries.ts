@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getAudit, getLab } from "@/lib/lab.functions";
 import type { LabInput } from "@/lib/lab-variables";
-import { getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
+import { getDuel, getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
 
 const LONG = 10 * 60_000;
 
@@ -51,3 +51,6 @@ export const labQuery = (input: LabInput) =>
 
 export const auditQuery = (electionId: number) =>
   queryOptions({ queryKey: ["audit", electionId], queryFn: () => getAudit({ data: { electionId } }), staleTime: LONG });
+
+export const duelQuery = (electionId: number, uf: string | null) =>
+  queryOptions({ queryKey: ["duel", electionId, uf], queryFn: () => getDuel({ data: { electionId, uf } }), staleTime: LONG });

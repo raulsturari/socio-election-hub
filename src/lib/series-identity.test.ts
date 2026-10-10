@@ -10,8 +10,8 @@ describe('explicit series identity',()=>{
     expect(candidateSeries({ballot_name:'Outro nome',party:'PT'})).toBe('pt');
   });
   it('does not infer political positioning or party alliances',()=>{
-    expect(candidateSeries({ballot_name:'Outro candidato',party:'PL'})).toMatch(/^neutral-/);
-    expect(candidateSeries({ballot_name:'Outro candidato',party:'PSOL'})).toMatch(/^neutral-/);
+    expect(candidateSeries({ballot_name:'Outro candidato',party:'PL'})).toBe('outros');
+    expect(candidateSeries({ballot_name:'Outro candidato',party:'PSOL'})).toBe('outros');
     expect(candidateSeries(null)).toBe('missing');
   });
 });

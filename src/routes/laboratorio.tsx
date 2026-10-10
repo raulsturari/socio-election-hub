@@ -1,4 +1,8 @@
 import { SeriesScope } from "@/components/SeriesScope";
+import { ModeSelector } from "@/components/duel/ModeSelector";
+import { DuelScatter, type ScatterSeries } from "@/components/duel/DuelScatter";
+import { displayName, duelTitle } from "@/lib/duel";
+import { fmtNum } from "@/lib/format";
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -39,7 +43,7 @@ export const Route = createFileRoute("/laboratorio")({
 
 function Laboratorio() {
   const ctx = useFilters();
-  const { f, election, elections, candidate, candidates } = ctx;
+  const { f, election, elections, candidate, duel, mode } = ctx;
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/laboratorio" });
   const [sheet, setSheet] = useState<"x" | "y" | "reg" | null>(null);
@@ -48,13 +52,18 @@ function Laboratorio() {
   const base = metric.needsBase && f.ano === 2026 ? elections.find((e) => e.year === 2022 && e.round === f.turno) ?? null : null;
   const baseMissing = metric.needsBase && !base;
 
-  const input: LabInput | null = election && !baseMissing && (!metric.needsCandidate || candidate) ? {
+  const mkInput = (num: number | null): LabInput | null => election && !baseMissing && (!metric.needsCandidate || num != null) ? {
     electionId: election.id, baseElectionId: base?.id ?? null, metric: metric.id,
-    candidateNumber: metric.needsCandidate ? candidate!.number : null, x: xv.id, uf: (f.uf ?? null) as LabInput["uf"],
+    candidateNumber: metric.needsCandidate ? num : null, x: xv.id, uf: (f.uf ?? null) as LabInput["uf"],
     region: f.uf ? null : search.reg ?? null,
   } : null;
-  const lab = useQuery({ ...labQuery(input!), enabled: !!input });
-  const yLabel = metric.needsCandidate ? `${metric.label} · ${candidate?.ballot_name ?? "—"}` : metric.label;
+  const compare = metric.needsCandidate && mode === "comparar";
+  const input = mkInput(candidate?.number ?? null);
+  const inputL = compare ? mkInput(duel.lula?.number ?? null) : null;
+  const lab = useQuery({ ...labQuery(input ?? ({} as LabInput)), enabled: !!input });
+  const labL = useQuery({ ...labQuery(inputL ?? ({} as LabInput)), enabled: !!inputL });
+  const focusName = (c: typeof candidate) => (c ? (c === duel.lula ? "Lula" : displayName("bolsonaro", f.ano, c)) : "—");
+  const yLabel = metric.needsCandidate ? `${metric.label} · ${compare ? duelTitle(f.ano) : focusName(candidate)}` : metric.label;
   const scope = f.uf ?? REGIONS.find((r) => r.id === search.reg)?.label ?? "Brasil";
 
   const patch = (p: { x?: string; y?: YMetric; reg?: string | undefined; cand?: number }) =>
@@ -64,13 +73,14 @@ function Laboratorio() {
     <div className="space-y-4 px-4">
       <PageHeader title="Laboratório" subtitle="Estatística municipal com dados oficiais" />
       <FilterBar ctx={ctx} />
+      {metric.needsCandidate && <ModeSelector ctx={ctx} />}
       <div className="grid grid-cols-3 gap-2">
         <Picker label="X" value={xv.label} onClick={() => setSheet("x")} />
         <Picker label="Y" value={metric.label} onClick={() => setSheet("y")} />
         <Picker label="Região" value={f.uf ? `UF ${f.uf}` : REGIONS.find((r) => r.id === search.reg)?.label ?? "Todas"} onClick={() => setSheet("reg")} />
       </div>
       <LabControls open={sheet} onClose={() => setSheet(null)} x={xv.id} y={metric.id} reg={search.reg ?? null}
-        candNumber={candidate?.number ?? null} candidates={candidates} onChange={patch} />
+        onChange={patch} />
 
       {election && <AuditCard electionId={election.id} label={`${f.ano} · ${f.turno}º turno`} />}
       <Warning />
@@ -83,6 +93,11 @@ function Laboratorio() {
         <EmptyState title="Indicador indisponível" description={lab.data.unavailable} />
       ) : lab.data && lab.data.points.y.length === 0 ? (
         <EmptyState title="Sem pares X/Y" description="Nenhum município tem as duas variáveis neste recorte (ex.: candidato sem o mesmo número em 2022)." />
+      ) : compare ? (
+        labL.isLoading ? <Skeleton /> : labL.error || !labL.data || "unavailable" in labL.data ? (
+          <EmptyState title="Série de Lula indisponível" description={labL.error?.message ?? "Sem dados para Lula neste recorte."} />
+        ) : !lab.data || "unavailable" in lab.data ? null : <DuelLab b={lab.data} l={labL.data} bName={focusName(duel.bolsonaro)} xv={xv} yLabel={metric.label} scope={scope}
+            fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}_bolsonaro_x_lula.csv`} />
       ) : lab.data ? (
         <SeriesScope candidate={candidate} electoral={metric.needsCandidate}><Results a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} /></SeriesScope>
       ) : null}
@@ -116,6 +131,47 @@ function Results({ a, xv, yLabel, scope, fileName }: { a: LabAnalysis; xv: (type
       </Card>
     </>
   );
+}
+
+function DuelLab({ b, l, bName, xv, yLabel, scope, fileName }: { b: LabAnalysis; l: LabAnalysis; bName: string; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
+  const toPts = (a: LabAnalysis) => a.points.y.map((y, i) => ({ code: String(a.points.c[i]), name: a.points.n[i] ?? "", uf: String(a.points.u[i] ?? ""), x: a.points.x[i] ?? 0, y }));
+  const stat = (a: LabAnalysis) => <span className="tabular-nums">N = {fmtInt(a.points.y.length)} de {fmtInt(a.totalRows)}</span>;
+  const series: ScatterSeries[] = [{ id: "bolsonaro", label: bName, points: toPts(b), stat: stat(b) }, { id: "pt", label: "Lula", points: toPts(l), stat: stat(l) }];
+  return (
+    <>
+      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`Fonte X: ${xv.source}. Duas séries com as mesmas escalas; estatísticas e modelos estimados separadamente por candidato (sem regressão conjunta com pontos duplicados).`}>
+        <DuelScatter series={series} xLabel={xv.label} yLabel={yLabel} formatX={fmtNum} log={xv.log} />
+        <button onClick={() => downloadDuelCsv(b, l, bName, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
+          <Download className="size-4" aria-hidden /> Exportar CSV (os dois)
+        </button>
+      </Card>
+      {([[b, bName, "bolsonaro"], [l, "Lula", "pt"]] as const).map(([a, name, s]) => (
+        <div key={s} data-series={s} className="space-y-4">
+          <Card title={`Correlação · ${name}`}><CorrelationGrid a={a} /></Card>
+          <Card title={`OLS multivariada · ${name}`} footer={a.missing.covariates ? `${fmtInt(a.missing.covariates)} municípios excluídos do modelo por covariável ausente.` : undefined}><ModelTable a={a} /></Card>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function downloadDuelCsv(b: LabAnalysis, l: LabAnalysis, bName: string, xl: string, yl: string, name: string) {
+  const esc = (s: string) => `"${s.replace(/"/g, '""')}"`;
+  const ly = new Map(l.points.c.map((c, i) => [String(c), l.points.y[i]]));
+  const codes = new Map<string, { n: string; u: string; x: number | undefined }>();
+  b.points.c.forEach((c, i) => codes.set(String(c), { n: b.points.n[i] ?? "", u: String(b.points.u[i] ?? ""), x: b.points.x[i] }));
+  l.points.c.forEach((c, i) => { if (!codes.has(String(c))) codes.set(String(c), { n: l.points.n[i] ?? "", u: String(l.points.u[i] ?? ""), x: l.points.x[i] }); });
+  const by = new Map(b.points.c.map((c, i) => [String(c), b.points.y[i]]));
+  const lines = [["codigo_ibge", "municipio", "uf", esc(xl), esc(`${yl} · ${bName}`), esc(`${yl} · Lula`)].join(",")];
+  for (const [c, m] of codes) lines.push([c, esc(m.n), m.u, m.x ?? "", by.get(c) ?? "", ly.get(c) ?? ""].join(","));
+  saveCsv(lines, name);
+}
+
+function saveCsv(lines: string[], name: string) {
+  const url = URL.createObjectURL(new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" }));
+  const el = document.createElement("a");
+  el.href = url; el.download = name; el.click();
+  URL.revokeObjectURL(url);
 }
 
 function downloadCsv(a: LabAnalysis, xl: string, yl: string, name: string) {

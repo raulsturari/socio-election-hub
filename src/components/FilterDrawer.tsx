@@ -3,11 +3,12 @@ import { ELECTION_YEARS, UFS } from "@/lib/constants";
 import { municipalitiesQuery } from "@/services/queries";
 import type { useFilters } from "@/hooks/use-filters";
 import { BottomSheet, Chip } from "./ui-kit";
+import { ModeSelector } from "./duel/ModeSelector";
 
 type Ctx = ReturnType<typeof useFilters>;
 
 export function FilterDrawer({ open, onClose, ctx }: { open: boolean; onClose: () => void; ctx: Ctx }) {
-  const { f, set, candidates, elections } = ctx;
+  const { f, set, elections } = ctx;
   const muns = useQuery({ ...municipalitiesQuery(f.uf ?? ""), enabled: open && !!f.uf });
   const available = (y: number, r: number) => elections.some((e) => e.year === y && e.round === r);
 
@@ -49,18 +50,8 @@ export function FilterDrawer({ open, onClose, ctx }: { open: boolean; onClose: (
             {(muns.data ?? []).map((m) => <option key={m.ibge_code} value={m.ibge_code}>{m.name}</option>)}
           </select>
         </Group>
-        <Group label="Candidato (mapa e dispersão)">
-          {candidates.length === 0 ? (
-            <p className="text-sm text-muted-foreground">—</p>
-          ) : (
-            <select
-              value={ctx.candidate?.number ?? ""}
-              onChange={(e) => set({ cand: Number(e.target.value) })}
-              className="min-h-11 w-full rounded-full border bg-secondary px-4 text-base"
-            >
-              {candidates.map((c) => <option key={c.number} value={c.number}>{c.ballot_name} ({c.party})</option>)}
-            </select>
-          )}
+        <Group label="Foco eleitoral">
+          <ModeSelector ctx={ctx} showOutrosToggle />
         </Group>
         <button onClick={onClose} className="min-h-12 w-full rounded-full bg-primary font-medium text-primary-foreground">
           Ver resultados
