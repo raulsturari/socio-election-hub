@@ -3,7 +3,7 @@ import type { XVariable, YMetric } from "./lab-variables";
 
 export interface ReadingContext { x: XVariable; metric: YMetric; year: number; round: number; scope: string }
 export interface ReadingSeries { name: string; id?: "bolsonaro" | "pt"; analysis: LabAnalysis; hasModelAnalysis?: boolean }
-export interface GraphReading { title: string; introduction: string; series: { name: string; id?: "bolsonaro" | "pt"; text: string }[]; limitations: string[] }
+export interface GraphReading { title: string; introduction: string; series: { name: string; id?: "bolsonaro" | "pt" | undefined; text: string }[]; limitations: string[] }
 export const MUNICIPAL_CAUTION = "São comparações entre municípios, não entre pessoas. O gráfico não prova causa e efeito.";
 export const READING_CONVENTION = "Convenção descritiva: menos de 20 pares exige cautela; |r| abaixo de 0,1 não define direção linear; abaixo de 0,3 indica padrão disperso. Intervalo contendo zero ou amplitude maior que 1 e sinais divergentes entre Pearson/Spearman impedem uma direção segura. Esses limites não são leis universais nem testes de causalidade.";
 
@@ -76,7 +76,7 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const axis = metric === "share" ? "Y mostra o percentual de todos os votos válidos, não o número de votos." : delta ? "Y mostra a mudança de 2022 para 2026 em pontos percentuais, não o nível atual nem um ganho garantido." : "Y mostra uma proporção municipal: comparecimento e abstenção sobre eleitores aptos; brancos e nulos sobre quem compareceu.";
   return {
     title: `${x.label} e ${delta ? "mudança entre eleições" : "resultado municipal"}`,
-    introduction: `Cada ponto é um município de ${scope}, em ${year}, ${round}º turno. X mostra ${x.label.toLowerCase()} do Censo 2022: referência dos moradores, não dos eleitores individuais nem uma composição medida em 2026. ${axis}${metric === "share_delta" && input.some((s) => s.id === "bolsonaro") ? " A série Bolsonaro compara Jair em 2022 com Flávio em 2026; não representa transferência individual de votos." : ""}`,
+    introduction: `Cada ponto é um município de ${scope}, em ${year}, ${round}º turno. X mostra ${x.label.toLowerCase()} do Censo 2022: referência dos moradores, não dos eleitores individuais nem uma composição medida em 2026. ${axis}${metric === "share_delta" && input.some((s) => s.id === "bolsonaro" || s.name.includes("Bolsonaro")) ? " A série Bolsonaro compara Jair em 2022 com Flávio em 2026; não representa transferência individual de votos." : ""}`,
     series: input.map((s) => {
       const target = outcome(metric, s.name);
       return { name: s.name, id: s.id, text: [simpleReading(s.analysis, x, target), adjustedReading(s.analysis, x, target)].filter(Boolean).join(" ") };
