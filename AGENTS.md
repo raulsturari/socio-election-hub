@@ -16,3 +16,5 @@
 - Public reads go through `createServerFn` in `src/lib/data.functions.ts` using a publishable-key client (`supabase-public.server.ts`, imported dynamically inside handlers) with paginated, ordered selects — PostgREST caps at 1000 rows.
 - Filters live in URL search params (`src/lib/filters.ts`) shared by all content routes — survive refresh and carry across bottom-nav tabs.
 - TSE codes missing from the community mapping are filled only by a unique exact normalized name+UF match, logged as a warning on the import job — keeps new municipalities (e.g. created after the mapping) reconcilable without guessing.
+- Lab statistics (Pearson/Spearman/OLS) are pure functions in `src/lib/lab-stats.ts` + `lab-analysis.ts`, run server-side in `lab.functions.ts` over the `lab_dataset` RPC — the phone gets only points and results, and tests pin values to scipy/numpy references.
+- Lab predictors come from `X_VARIABLES`; an entry with `indicatorId: null` is shown as unavailable, never simulated — add a SIDRA entry (table/variable/classifications) to the pipeline before enabling one.

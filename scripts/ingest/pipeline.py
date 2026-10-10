@@ -29,7 +29,7 @@ import zipfile
 from collections import defaultdict
 from email.utils import parsedate_to_datetime
 
-PIPELINE_VERSION = "2026.10.2"
+PIPELINE_VERSION = "2026.10.3"
 UA = {"User-Agent": "BrasilDataLab-ingest/1.0"}
 IBGE_MUNICIPIOS_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
 TSE_IBGE_MAP_URL = "https://raw.githubusercontent.com/betafcc/Municipios-Brasileiros-TSE/master/municipios_brasileiros_tse.csv"
@@ -51,6 +51,55 @@ SIDRA_INDICATORS = [
         "unit": "pessoas",
         "table": "4709", "variable": "93", "period": "2022",
         "methodology": "Censo Demográfico 2022, SIDRA tabela 4709, variável 93.",
+    },    {
+        "id": "alfabetizacao_15mais_2022", "name": "Taxa de alfabetização (15 anos ou mais)", "unit": "%",
+        "table": "9543", "variable": "2513", "period": "2022", "classes": "c2/6794/c86/95251/c287/100362",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9543, variável 2513, classificações c2/6794/c86/95251/c287/100362. Total de sexo, cor/raça e idade.",
+    },
+    {
+        "id": "superior_completo_25mais_2022", "name": "Pessoas de 25+ anos com superior completo", "unit": "%",
+        "table": "10199", "variable": "1001643", "period": "2022", "classes": "c1568/99713/c2/6794/c133/95278",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 10199, variável 1001643, classificações c1568/99713/c2/6794/c133/95278. Percentual do total de pessoas de 25+ anos do município.",
+    },
+    {
+        "id": "cor_branca_pct_2022", "name": "População de cor ou raça branca", "unit": "%",
+        "table": "9605", "variable": "1000093", "period": "2022", "classes": "c86/2776",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9605, variável 1000093, classificações c86/2776. Percentual da população residente.",
+    },
+    {
+        "id": "cor_preta_pct_2022", "name": "População de cor ou raça preta", "unit": "%",
+        "table": "9605", "variable": "1000093", "period": "2022", "classes": "c86/2777",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9605, variável 1000093, classificações c86/2777. Percentual da população residente.",
+    },
+    {
+        "id": "cor_parda_pct_2022", "name": "População de cor ou raça parda", "unit": "%",
+        "table": "9605", "variable": "1000093", "period": "2022", "classes": "c86/2779",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9605, variável 1000093, classificações c86/2779. Percentual da população residente.",
+    },
+    {
+        "id": "religiao_catolica_pct_2022", "name": "Católicos (10 anos ou mais)", "unit": "%",
+        "table": "9537", "variable": "1000140", "period": "2022", "classes": "c133/95263/c2/6794/c58/95253",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9537, variável 1000140, classificações c133/95263/c2/6794/c58/95253. Percentual das pessoas de 10+ anos.",
+    },
+    {
+        "id": "religiao_evangelica_pct_2022", "name": "Evangélicos (10 anos ou mais)", "unit": "%",
+        "table": "9537", "variable": "1000140", "period": "2022", "classes": "c133/95277/c2/6794/c58/95253",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9537, variável 1000140, classificações c133/95277/c2/6794/c58/95253. Percentual das pessoas de 10+ anos.",
+    },
+    {
+        "id": "sem_religiao_pct_2022", "name": "Sem religião (10 anos ou mais)", "unit": "%",
+        "table": "9537", "variable": "1000140", "period": "2022", "classes": "c133/2836/c2/6794/c58/95253",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9537, variável 1000140, classificações c133/2836/c2/6794/c58/95253. Percentual das pessoas de 10+ anos.",
+    },
+    {
+        "id": "idade_mediana_2022", "name": "Idade mediana", "unit": "anos",
+        "table": "9756", "variable": "10613", "period": "2022", "classes": "c86/95251",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9756, variável 10613, classificações c86/95251. Total de cor ou raça.",
+    },
+    {
+        "id": "urbanizacao_pct_2022", "name": "População em situação urbana", "unit": "%",
+        "table": "9923", "variable": "1000093", "period": "2022", "classes": "c1/1",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 9923, variável 1000093, classificações c1/1. Percentual da população residente.",
     },
 ]
 
@@ -396,11 +445,15 @@ def _run_detalhe(job: Job, zip_path: str, year: int, office: str) -> None:
 
 
 # ---------- SIDRA ----------
-def import_sidra() -> None:
+def import_sidra(only: set[str] | None = None) -> None:
     ensure_sources()
     valid = {m["ibge_code"] for m in select_all("municipalities?select=ibge_code&order=ibge_code")}
     for ind in SIDRA_INDICATORS:
         url = f"https://apisidra.ibge.gov.br/values/t/{ind['table']}/n6/all/v/{ind['variable']}/p/{ind['period']}"
+        if ind.get("classes"):
+            url += "/" + ind["classes"]
+        if only and ind["id"] not in only:
+            continue
         raw, lm = fetch(url)
         job = Job("IBGE_SIDRA", f"sidra_{ind['table']}_{ind['variable']}", url, None, hashlib.sha256(raw).hexdigest(), lm)
         data = json.loads(raw)[1:]  # first row is the header
@@ -431,7 +484,7 @@ if __name__ == "__main__":
     if cmd == "municipalities":
         import_municipalities()
     elif cmd == "sidra":
-        import_sidra()
+        import_sidra(set(sys.argv[2:]) or None)
     elif cmd == "tse-munzona" and len(sys.argv) > 2:
         import_tse_munzona(sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 2022)
     elif cmd == "tse-detalhe" and len(sys.argv) > 3:
