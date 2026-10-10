@@ -36,7 +36,7 @@ export const Route = createFileRoute("/laboratorio")({
   head: () => ({
     meta: [
       { title: "Laboratório estatístico eleitoral — Brasil Data Lab" },
-      { name: "description", content: "Pearson, Spearman e regressão OLS municipal entre indicadores do Censo 2022 e resultados TSE 2022/2026." },
+      { name: "description", content: "Pearson, Spearman e regressão OLS municipal entre dezenas de indicadores municipais do IBGE e resultados TSE 2022/2026." },
       { property: "og:title", content: "Laboratório estatístico eleitoral — Brasil Data Lab" },
       { property: "og:description", content: "Correlações e regressões municipais com dados oficiais TSE e IBGE, com avisos de falácia ecológica." },
       { property: "og:type", content: "website" },
@@ -123,7 +123,7 @@ function Results({ a, xv, yLabel, scope, fileName, context, name }: { context: R
   const reading = interpretGraph({ ...context, domain }, [{ name, analysis: a }]);
   return (
     <>
-      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022. ${scope}. Amostra: ${fmtInt(a.points.y.length)} de ${fmtInt(a.totalRows)} municípios${dropped ? ` (${fmtInt(dropped)} sem dado${a.missing.examples.length ? `: ${a.missing.examples.join(", ")}` : ""})` : ""}.`}>
+      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · ${xv.sourceShort ?? 'IBGE'}. ${scope}. Amostra: ${fmtInt(a.points.y.length)} de ${fmtInt(a.totalRows)} municípios${dropped ? ` (${fmtInt(dropped)} sem dado${a.missing.examples.length ? `: ${a.missing.examples.join(", ")}` : ""})` : ""}.`}>
         <LabScatter domain={domain} points={a.points} xv={xv} yLabel={yLabel} />
         <Button variant="secondary" onClick={() => downloadCsv(a, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV
@@ -147,7 +147,7 @@ function DuelLab({ b, l, bName, xv, yLabel, scope, fileName, context }: { contex
   const reading = interpretGraph({ ...context, domain }, [{ name: bName, id: "bolsonaro", analysis: b }, { name: "Lula", id: "pt", analysis: l }]);
   return (
     <>
-      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022 · ${scope}. ${bName}: ${fmtInt(b.points.y.length)} de ${fmtInt(b.totalRows)} municípios; Lula: ${fmtInt(l.points.y.length)} de ${fmtInt(l.totalRows)}.`}>
+      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · ${xv.sourceShort ?? 'IBGE'} · ${scope}. ${bName}: ${fmtInt(b.points.y.length)} de ${fmtInt(b.totalRows)} municípios; Lula: ${fmtInt(l.points.y.length)} de ${fmtInt(l.totalRows)}.`}>
         <DuelScatter domain={domain} series={series} xLabel={xv.label} yLabel={yLabel} formatX={fmtNum} log={xv.log} />
         <Button variant="secondary" onClick={() => downloadDuelCsv(b, l, bName, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV (os dois)
