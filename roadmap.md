@@ -5,3 +5,8 @@
 - [x] Criar galeria mobile, mapas Canvas, dispersão e barras, controles temporais e tour.
 - [x] Destacar Explorar na navegação sem perder filtros ou alterar dados.
 - [x] Executar testes unitários e E2E e conferir screenshots mobile.
+
+# Bolsonaro × Lula
+- [x] Agrupamento B/L/Outros puro + RPC duel_dataset, modo global na URL com links antigos `cand`.
+- [x] Atlas (vantagem, lado a lado, 3 grupos), Comparar, 2022×2026, Correlações, Lab (estatísticas separadas, CSV), Explorar (presets).
+- [x] Testes unitários, conferência no banco e navegador 390/430px.
