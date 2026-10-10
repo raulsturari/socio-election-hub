@@ -3,11 +3,11 @@ import { chi2UpperP, fUpperP, ols, pearsonTest, ranks, spearmanTest, tCrit95, tT
 import { analyze, type LabRow } from "./lab-analysis";
 import { X_VARIABLES } from "./lab-variables";
 
-// Reference values computed with scipy 1.x / statsmodels (documented inline).
+// Reference values computed with scipy.stats / numpy (documented inline).
 describe("distributions", () => {
   it("t two-sided p", () => expect(tTwoSidedP(2.228, 10)).toBeCloseTo(0.05, 3));
   it("t critical 95%", () => expect(tCrit95(30)).toBeCloseTo(2.0423, 3));
-  it("F upper p", () => expect(fUpperP(4.0, 2, 20)).toBeCloseTo(0.03452, 4));
+  it("F upper p", () => expect(fUpperP(4.0, 2, 20)).toBeCloseTo(0.034572, 5));
   it("chi2 upper p", () => expect(chi2UpperP(3.841, 1)).toBeCloseTo(0.05, 3));
 });
 
@@ -15,12 +15,12 @@ describe("correlations", () => {
   const x = [1, 2, 3, 4, 5, 6, 7, 8], y = [2, 1, 4, 3, 7, 8, 6, 9];
   it("pearson matches scipy.stats.pearsonr", () => {
     const r = pearsonTest(x, y)!;
-    expect(r.r).toBeCloseTo(0.89524, 4);
-    expect(r.p).toBeCloseTo(0.002659, 4);
+    expect(r.r).toBeCloseTo(0.896421, 5);
+    expect(r.p).toBeCloseTo(0.0025668, 5);
   });
   it("spearman matches scipy.stats.spearmanr", () => {
     const r = spearmanTest(x, y)!;
-    expect(r.r).toBeCloseTo(0.90476, 4);
+    expect(r.r).toBeCloseTo(0.880952, 5);
   });
   it("ties get average ranks", () => expect(ranks([10, 20, 20, 30])).toEqual([1, 2.5, 2.5, 4]));
   it("undefined with zero variance or tiny n", () => {
@@ -40,10 +40,10 @@ describe("ols", () => {
   it("matches statsmodels on noisy data (classic SE)", () => {
     const x = [1, 2, 3, 4, 5, 6, 7, 8], y = [2, 1, 4, 3, 7, 8, 6, 9];
     const f = ols(y, x.map((v) => [1, v]), ["c", "x"])!;
-    expect(f.coefficients[1]!.estimate).toBeCloseTo(1.08333, 4);
-    expect(f.coefficients[0]!.estimate).toBeCloseTo(0.125, 4);
-    expect(f.coefficients[1]!.se).toBeCloseTo(0.22045, 4);
-    expect(f.r2).toBeCloseTo(0.80146, 4);
+    expect(f.coefficients[1]!.estimate).toBeCloseTo(1.071429, 5);
+    expect(f.coefficients[0]!.estimate).toBeCloseTo(0.178571, 5);
+    expect(f.coefficients[1]!.se).toBeCloseTo(0.216261, 5);
+    expect(f.r2).toBeCloseTo(0.803571, 5);
   });
   it("returns null on perfect collinearity", () => {
     const X = Array.from({ length: 10 }, (_, i) => [1, i, 2 * i]);
