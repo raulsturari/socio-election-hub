@@ -1,7 +1,7 @@
 import type { ReadingContext, ReadingSeries } from './graph-reading';
 import type { ScatterGeometry } from './scatter-geometry';
 
-export function cityTopic(id: string, label: string, high = true): string {
+export function cityTopic(id: string, label: string, high = true, topic?: string): string {
   if (id === 'renda') return `nas cidades de ${high ? 'maior' : 'menor'} renda`;
   if (id === 'superior') return `nas cidades onde ${high ? 'mais' : 'menos'} moradores têm ensino superior`;
   const more = high ? 'maior' : 'menor';
@@ -13,7 +13,8 @@ export function cityTopic(id: string, label: string, high = true): string {
     urbanizacao: `${more} presença de moradores em áreas urbanas`, alfabetizacao: `${more} presença de moradores alfabetizados`,
     idade: `idade ${high ? 'mais alta' : 'mais baixa'}`,
   };
-  return `nas cidades com ${topics[id] ?? `${label.toLowerCase()} ${more}`}`;
+  // Catalog topics are noun phrases ("presença de idosos"), so the comparative goes first.
+  return `nas cidades com ${topics[id] ?? (topic ? `${more} ${topic}` : `${label.toLowerCase()} ${more}`)}`;
 }
 const shortName = (name: string) => name.includes('Flávio Bolsonaro') ? 'Flávio' : name.includes('Jair Bolsonaro') ? 'Jair Bolsonaro' : name;
 export function supportedCrossing(input: readonly ReadingSeries[], g: ScatterGeometry, directions: readonly number[]): boolean {
@@ -21,7 +22,7 @@ export function supportedCrossing(input: readonly ReadingSeries[], g: ScatterGeo
 }
 export function editorialNews(c: ReadingContext, input: readonly ReadingSeries[], g: ScatterGeometry, directions: number[]) {
   const a = input[0], b = input[1], da = directions[0] ?? 0, db = directions[1] ?? 0;
-  const high = cityTopic(c.x.id, c.x.label), low = cityTopic(c.x.id, c.x.label, false);
+  const high = cityTopic(c.x.id, c.x.label, true, c.x.topic), low = cityTopic(c.x.id, c.x.label, false, c.x.topic);
   const names = input.map(s => shortName(s.name));
   const uncertain = { title: `Sem padrão claro de ${c.metric.startsWith('share') ? 'votação' : 'participação'} por ${c.x.label.toLowerCase()}`, text: `Neste recorte, não aparece um padrão claro ${c.metric.startsWith('share') ? `no desempenho de ${names.join(' e ')}` : 'na participação eleitoral'} entre cidades de diferentes perfis. Os resultados não sustentam apontar um lado favorecido por essa característica.` };
   if (!a || input.some(s => s.analysis.points.y.length < 20)) return { title: `Poucas cidades para avaliar ${c.x.label.toLowerCase()}`, text: 'Faltam cidades com informações suficientes neste recorte. Não é possível contar uma história confiável sobre a disputa a partir dos resultados disponíveis.' };
@@ -55,7 +56,7 @@ function concentrationReason(x: ReadingContext['x']): string {
     urbanizacao: 'poucas cidades têm uma proporção tão alta de moradores em áreas urbanas',
     alfabetizacao: 'poucas cidades têm uma proporção tão alta de moradores alfabetizados',
   };
-  return topics[x.id] ?? `poucas cidades chegam a valores tão altos de ${x.label.toLowerCase()}`;
+  return topics[x.id] ?? `poucas cidades chegam aos valores mais altos de ${x.topic ?? x.label.toLowerCase()}`;
 }
 export function editorialShape(g: ScatterGeometry, c: ReadingContext, crossingSupported: boolean): string {
   const metric = c.metric;
