@@ -32,3 +32,8 @@
 - [x] Verificação no navegador 390/430px e desktop.
 - [x] Atualizar `tests/e2e/explore_mobile.py` para o seletor comparar/Bolsonaro/Lula.
 - [x] Tour Explorar: tempo por gráfico (5–60 s, padrão 15) e avanço só com gráfico inteiro pronto.
+
+# Comparações diretas no Explorar
+- [x] "Quem lidera em cada faixa?" por qualquer indicador, votos exatos, CSV, leitura derivada das faixas.
+- [x] Mapa de vantagem entre os primeiros; "Vantagem por estado" único (p.p. e saldo), ranking municipal único.
+- [x] Tour só em "Comparar candidatos"; mapas sociais em "Contexto demográfico".
