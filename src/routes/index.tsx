@@ -1,3 +1,4 @@
+import { SeriesScope } from "@/components/SeriesScope";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { filtersSchema } from "@/lib/filters";
@@ -63,7 +64,7 @@ function Atlas() {
             {!f.uf ? (
               <EmptyState title="Escolha uma UF" description="O mapa municipal é exibido por UF para manter o desempenho no celular." />
             ) : shares.isLoading ? <Skeleton /> : (
-              <ChoroplethMap uf={f.uf} shares={shareMap} selected={f.mun} onSelect={(mun) => set({ mun })} />
+              <SeriesScope candidate={candidate}><ChoroplethMap uf={f.uf} shares={shareMap} selected={f.mun} onSelect={(mun) => set({ mun })} /></SeriesScope>
             )}
           </Card>
         </>

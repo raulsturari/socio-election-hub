@@ -1,3 +1,4 @@
+import { SeriesScope } from "@/components/SeriesScope";
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
@@ -62,12 +63,12 @@ function ExplorePage(){
       <motion.div key={preset.id} initial={{opacity:reduced?1:0,x:reduced?0:direction*70}} animate={{opacity:1,x:0}} transition={{duration:0.55,ease:[0.22,1,0.36,1]}}>
         <p className="text-xs text-muted-foreground mb-2">{preset.subtitle}</p><h2 className="text-2xl font-semibold leading-tight mb-4">{preset.title}</h2>
         {(preset.id==='vote-ranking'||preset.id==='turnout-ranking')&&<label className="block mb-4 text-xs text-muted-foreground">Mínimo de eleitores aptos<input aria-label="Mínimo de eleitores" type="number" min="0" max="10000000" value={search.min??0} onChange={e=>navigate({to:'/explorar',search:prev=>({...prev,min:Math.max(0,Math.min(10000000,Number(e.target.value)))}),replace:true})} className="block w-full h-11 rounded-full bg-secondary text-foreground px-4 mt-1"/></label>}
-        {!effectiveElection?<div role="status" className="min-h-[510px] flex items-center text-center text-muted-foreground">Esta eleição não está disponível entre os dados validados. Selecione 2026 · 1º turno ou histórico de 2022.</div>:ctx.summary.isPending&&!retainedCandidate.current?<div className="h-[510px] skeleton"/>:ctx.summary.error?<div role="alert">Candidatos indisponíveis. <Button onClick={()=>ctx.summary.refetch()}>Tentar novamente</Button></div>:<ExploreViewer preset={preset} input={input} replay={replay}/>}
+        {!effectiveElection?<div role="status" className="min-h-[510px] flex items-center text-center text-muted-foreground">Esta eleição não está disponível entre os dados validados. Selecione 2026 · 1º turno ou histórico de 2022.</div>:ctx.summary.isPending&&!retainedCandidate.current?<div className="h-[510px] skeleton"/>:ctx.summary.error?<div role="alert">Candidatos indisponíveis. <Button onClick={()=>ctx.summary.refetch()}>Tentar novamente</Button></div>:<SeriesScope candidate={ctx.candidate} electoral={preset.metric==='share'||preset.metric==='share_delta'}><ExploreViewer preset={preset} input={input} replay={replay}/></SeriesScope>}
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{preset.note}</p>
       </motion.div>
     </section>
     <div className="flex justify-between items-center mt-5 gap-4"><Button variant="secondary" className="size-12 rounded-full" aria-label="Análise anterior" onClick={()=>step(-1)}><ArrowLeft/></Button><span className="text-xs text-muted-foreground">{index+1} de {PRESETS.length}</span><Button variant="secondary" className="size-12 rounded-full" aria-label="Próxima análise" onClick={()=>step(1)}><ArrowRight/></Button></div>
-    {gallery&&<PresetGallery input={input} active={preset.id} onSelect={id=>{select(id);window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});}}/>}
+    {gallery&&<PresetGallery candidate={ctx.candidate} input={input} active={preset.id} onSelect={id=>{select(id);window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});}}/>}
     <p className="mt-6 text-[11px] text-muted-foreground leading-relaxed">Somente resultados publicados e reconciliados. Transições são visuais entre observações discretas; não existem valores eleitorais para anos intermediários. Dados municipais não permitem inferir voto individual ou causalidade.</p>
   </div>;
 }

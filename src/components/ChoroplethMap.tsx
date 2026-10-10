@@ -56,7 +56,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect }: Props) {
                   key={p.code}
                   d={p.d}
                   onClick={() => onSelect(p.code)}
-                  className={`choro-path ${v == null ? "fill-secondary stroke-background" : "fill-primary stroke-background"}`}
+                  className={`choro-path ${v == null ? "fill-data-missing stroke-background" : "fill-series stroke-background"}`}
                   style={{ fillOpacity: v == null ? 1 : 0.12 + 0.88 * (v / max), strokeWidth: p.code === selected ? 3 / view.k : 0.4 / view.k }}
                 />
               );
@@ -69,7 +69,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect }: Props) {
       </div>
       <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
         <span>0%</span>
-        <span className="mx-2 h-1.5 flex-1 rounded-full bg-gradient-to-r from-primary/10 to-primary" />
+        <span className="mx-2 h-1.5 flex-1 rounded-full bg-gradient-to-r from-series/10 to-series" />
         <span className="tabular-nums">{fmtPct(max)}</span>
       </div>
       {selected && <p className="mt-2 text-xs text-muted-foreground">Selecionado: <span className="tabular-nums text-foreground">{fmtPct(sel ?? null)}</span> dos votos válidos</p>}

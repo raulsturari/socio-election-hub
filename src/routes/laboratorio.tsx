@@ -1,3 +1,4 @@
+import { SeriesScope } from "@/components/SeriesScope";
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -83,7 +84,7 @@ function Laboratorio() {
       ) : lab.data && lab.data.points.y.length === 0 ? (
         <EmptyState title="Sem pares X/Y" description="Nenhum município tem as duas variáveis neste recorte (ex.: candidato sem o mesmo número em 2022)." />
       ) : lab.data ? (
-        <Results a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} />
+        <SeriesScope candidate={candidate} electoral={metric.needsCandidate}><Results a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} /></SeriesScope>
       ) : null}
 
       <Card title="Método">

@@ -11,10 +11,10 @@ export function PresetThumbnail({preset,input}:{preset:Preset;input:z.infer<type
  const geometry=useMemo(()=>mesh.data&&typeof Path2D!=='undefined'?mapPaths(mesh.data.features):[],[mesh.data]);
  useEffect(()=>{
   const cv=canvas.current,ctx=cv?.getContext('2d');if(!cv||!ctx||!data.data)return;
-  ctx.clearRect(0,0,160,72);ctx.fillStyle=getComputedStyle(cv).getPropertyValue('--primary');const d=data.data;
+  ctx.clearRect(0,0,160,72);ctx.fillStyle=getComputedStyle(cv).getPropertyValue('--series-color');const d=data.data;
   if(preset.kind==='map'){
    const values=new Map(d.rows.map(r=>[r.ibge_code,r.y]));const max=Math.max(1,...d.rows.map(r=>Math.abs(r.y??0)));ctx.save();ctx.translate(45,0);ctx.scale(0.17,0.17);
-   for(const g of geometry){ctx.globalAlpha=0.12+Math.abs(values.get(g.code)??0)/max*0.88;ctx.fill(g.path);}ctx.restore();
+   for(const g of geometry){const value=values.get(g.code);ctx.fillStyle=getComputedStyle(cv).getPropertyValue(value==null?'--data-missing':'--series-color');ctx.globalAlpha=value==null?1:0.12+Math.abs(value)/max*0.88;ctx.fill(g.path);}ctx.restore();
   }else if(preset.kind==='scatter'){
    const maxX=Math.max(1,...d.rows.map(r=>r.x??0));ctx.globalAlpha=0.4;
    for(const r of d.rows){ctx.beginPath();ctx.arc(5+(r.x??0)/maxX*150,68-(r.y??0)/100*60,0.65,0,Math.PI*2);ctx.fill();}

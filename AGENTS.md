@@ -21,3 +21,4 @@
 - Explore presets live in a typed catalog; read-only server functions reuse lab_dataset and exact vote counts for weighted bars — keeps every visualization traceable without writing electoral data.
 - Explore national maps and scatterplots use Canvas; keyed IBGE transitions animate only visual properties and tour waits for successful queries — avoids thousands of animated DOM nodes and advancing past unloaded charts.
 - Explore map transitions composite prerendered rasters and gallery thumbnails fetch near the viewport — bounds animation work and avoids loading every municipal dataset at once.
+- Electoral colors resolve only explicit candidate names or party metadata through a shared identity resolver and scoped CSS tokens; nonpartisan scopes reset the palette — prevents ideology/ballot-number guesses and color leakage into social indicators.

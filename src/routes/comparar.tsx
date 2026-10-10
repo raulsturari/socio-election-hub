@@ -1,3 +1,4 @@
+import { candidateSeries } from "@/lib/series-identity";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -57,8 +58,8 @@ function Comparar() {
               </div>
               <ul className="divide-y">
                 {(summary.data ?? []).map((c) => (
-                  <li key={c.number} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2 text-sm">
-                    <span className="truncate">{c.ballot_name}</span>
+                  <li key={c.number} data-series={candidateSeries(c)} className="grid grid-cols-[1fr_auto_auto] items-center gap-3 py-2 text-sm">
+                    <span className="truncate"><span className="inline-block size-2 rounded-full bg-series mr-2" aria-hidden />{c.ballot_name}</span>
                     <span className="w-16 text-right tabular-nums">{fmtPct(c.share)}</span>
                     <span className="w-16 text-right tabular-nums text-muted-foreground">{other ? fmtPct(bShare.get(c.number)) : "—"}</span>
                   </li>
