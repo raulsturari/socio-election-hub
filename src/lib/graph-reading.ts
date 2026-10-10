@@ -2,7 +2,7 @@ import type { LabAnalysis } from './lab-analysis';
 import type { XVariable, YMetric } from './lab-variables';
 import { scatterDomain, type ScatterDomain } from './scatter-domain';
 import { analyzeScatterGeometry, type ScatterGeometry } from './scatter-geometry';
-import { editorialNews, editorialShape } from './graph-editorial';
+import { editorialNews, editorialShape, supportedCrossing } from './graph-editorial';
 
 export interface ReadingContext { x: XVariable; metric: YMetric; year: number; round: number; scope: string; domain?: ScatterDomain }
 export interface ReadingSeries { name: string; id?: 'bolsonaro' | 'pt'; analysis: LabAnalysis; hasModelAnalysis?: boolean }
@@ -47,7 +47,8 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const points = input.map(s => ({ name: s.name, points: readingPoints(s.analysis) }));
   const domain = context.domain ?? scatterDomain(points.flatMap(s => s.points), context.x.log, input.length > 1);
   const geometry = analyzeScatterGeometry(points, domain, context.metric === 'share');
-  const news = editorialNews(context, input, geometry, input.map(s => direction(s.analysis)));
+  const directions = input.map(s => direction(s.analysis));
+  const news = editorialNews(context, input, geometry, directions);
   const adjusted = adjustment(context, input);
   const limitations: string[] = [];
   // Missing X/Y is already reported once in the chart coverage; do not duplicate it here.
@@ -56,9 +57,9 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const missingCovariates = Math.max(0, ...input.map(s => s.analysis.missing.covariates));
   if (missingCovariates) limitations.push('A comparação entre cidades semelhantes abrange menos municípios por falta de informações.');
   if (input.some(s => s.analysis.pearson && s.analysis.spearman && Math.sign(s.analysis.pearson.r) !== Math.sign(s.analysis.spearman.r))) limitations.push('O padrão muda conforme a maneira de comparar as cidades; não há uma direção segura.');
-  const a = input[0], b = input[1];
-  const crossingSupported = !!a && !!b && geometry.crossing && direction(a.analysis) * direction(b.analysis) < 0;
-  const detail = [editorialShape(geometry, context.metric, crossingSupported), adjusted].filter(Boolean).join(' ');
+  const crossingSupported = supportedCrossing(input, geometry, directions);
+  const detail = [editorialShape(geometry, context, crossingSupported), adjusted].filter(Boolean).join(' ');
   const reversal = adjusted.startsWith('Mas o sentido');
-  return { title: reversal ? `Diferença na votação por ${context.x.label.toLowerCase()} muda entre cidades semelhantes` : news.title, paragraphs: [news.text, detail || 'As informações deste recorte não permitem descrever um desenho consistente entre as cidades.'], limitations, geometry };
+  const outcome = context.metric.startsWith('share') ? 'votação' : context.metric === 'abstention' ? 'abstenção' : context.metric === 'blank_null' ? 'votos brancos e nulos' : 'comparecimento';
+  return { title: reversal ? `Diferença em ${outcome} por ${context.x.label.toLowerCase()} muda entre cidades semelhantes` : news.title, paragraphs: [news.text, detail || 'As informações deste recorte não permitem descrever um desenho consistente entre as cidades.'], limitations, geometry };
 }
