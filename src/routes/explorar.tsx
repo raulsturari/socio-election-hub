@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
+import { useAccessibleMotion } from '@/hooks/use-reduced-motion';
 import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw, LayoutGrid, Compass } from 'lucide-react';
 import { filtersSchema } from '@/lib/filters';
 import { PRESETS, exploreSearchSchema } from '@/lib/explore';
@@ -22,7 +23,7 @@ function ExplorePage(){
   const ctx=useFilters(),search=Route.useSearch(),navigate=useNavigate(),cache=useQueryClient();
   const index=Math.max(0,PRESETS.findIndex(p=>p.id===search.preset)),preset=PRESETS[index] ?? PRESETS[0];
   const [playing,setPlaying]=useState(false),[progress,setProgress]=useState(0),[replay,setReplay]=useState(0),[gallery,setGallery]=useState(false),[direction,setDirection]=useState(1);
-  const reduced=useReducedMotion(),pointer=useRef<{x:number;y:number}|null>(null);
+  const reduced=useAccessibleMotion(),pointer=useRef<{x:number;y:number}|null>(null);
   const select=(id:string)=>{setDirection(PRESETS.findIndex(p=>p.id===id)>index?1:-1);setProgress(0);navigate({to:'/explorar',search:prev=>({...prev,preset:id}),replace:true});};
   const step=(dir:number)=>select(PRESETS[(index+dir+PRESETS.length)%PRESETS.length]?.id??PRESETS[0].id);
   const base=ctx.elections.find(e=>e.year===2022&&e.round===ctx.f.turno);

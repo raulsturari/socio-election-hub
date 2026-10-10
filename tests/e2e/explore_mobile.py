@@ -1,5 +1,5 @@
 """Real backend mobile E2E. Run: python3 tests/e2e/explore_mobile.py. Artifacts stay in /tmp/browser."""
-import asyncio, json, hashlib
+import asyncio, json
 from pathlib import Path
 from playwright.async_api import async_playwright, expect
 OUT=Path('/tmp/browser/explore-e2e');OUT.mkdir(parents=True,exist_ok=True)
@@ -23,8 +23,10 @@ async def main():
   await page.screenshot(path=str(OUT/'02-map-tooltip.png'))
   await page.get_by_label('Candidato',exact=True).select_option('13');await ready(page)
   assert before!=await canvas.screenshot()
+  before_year=await canvas.screenshot()
   await page.get_by_label('Ano eleitoral').fill('0');await ready(page)
   assert 'ano=2022' in page.url
+  assert before_year!=await canvas.screenshot()
   await page.get_by_label('Ano eleitoral').fill('1');await ready(page)
   await page.get_by_role('button',name='Galeria de análises').click()
   await page.get_by_role('button',name='Renda × percentual de votos',exact=False).click();await ready(page)
@@ -36,6 +38,7 @@ async def main():
   await page.wait_for_timeout(4300);assert 'education-scatter' in page.url
   await page.get_by_role('button',name='Pausar tour').click();paused=page.url;await page.wait_for_timeout(5300);assert page.url==paused
   await page.get_by_role('button',name='Repetir animação').click()
+  await page.wait_for_timeout(1400)
   # Horizontal pointer swipe changes preset, vertical scroll remains native.
   region=page.get_by_role('region',name='Análises oficiais');await region.scroll_into_view_if_needed();rect=await region.bounding_box()
   await page.mouse.move(310,rect['y']+100);await page.mouse.down();await page.mouse.move(90,rect['y']+105,steps=6);await page.mouse.up();assert 'religion-scatter' in page.url

@@ -23,7 +23,7 @@ export const getExplore = createServerFn({ method: 'GET' }).inputValidator((inpu
   const counts = preset.kind === 'bars' && (preset.id === 'states' || preset.id === 'income-bands') ? await selectAllPages((from,to) => sb.from('municipal_results').select('ibge_code, votes, valid_votes, candidates!inner(number)').eq('election_id',data.electionId).eq('candidates.number',data.candidateNumber ?? -1).order('ibge_code').range(from,to)) : [];
   const voteMap = new Map(counts.map(r => [r.ibge_code,r]));
   const all = raw.filter(r => r.uf !== 'ZZ').map(r => exploreRowSchema.parse({ ibge_code:r.ibge_code, name:r.name, uf:r.uf, x:r.x, y:preset.metric === 'indicator' ? r.x : r.y, eligible:r.eligible, votes:voteMap.get(r.ibge_code)?.votes ?? null, valid:voteMap.get(r.ibge_code)?.valid_votes ?? null }));
-  const rows = all.filter(r => r.y != null && (preset.kind !== 'scatter' || r.x != null));
+  const rows = all.filter(r => r.y != null && ((preset.kind !== 'scatter' && preset.id !== 'income-bands') || r.x != null));
   const values = rows.map(r => r.y ?? 0);
   setResponseHeader('Cache-Control','public, max-age=600');
   const usesIndicator=preset.metric==='indicator'||preset.kind==='scatter'||preset.id==='income-bands';
