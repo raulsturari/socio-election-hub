@@ -15,3 +15,4 @@
 - All joins between sources use the 7-digit IBGE code; TSE codes are mapped via `municipalities.tse_code`, validated against the IBGE Localidades API — single harmonization key.
 - Public reads go through `createServerFn` in `src/lib/data.functions.ts` using a publishable-key client (`supabase-public.server.ts`, imported dynamically inside handlers) with paginated, ordered selects — PostgREST caps at 1000 rows.
 - Filters live in URL search params (`src/lib/filters.ts`) shared by all content routes — survive refresh and carry across bottom-nav tabs.
+- TSE codes missing from the community mapping are filled only by a unique exact normalized name+UF match, logged as a warning on the import job — keeps new municipalities (e.g. created after the mapping) reconcilable without guessing.
