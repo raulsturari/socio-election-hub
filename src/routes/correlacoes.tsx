@@ -1,3 +1,4 @@
+import { SeriesScope } from "@/components/SeriesScope";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
@@ -56,7 +57,7 @@ function Correlacoes() {
         ) : (scatter.data ?? []).length === 0 ? (
           <EmptyState title="Dados não importados" description="Sem pares renda/votação para este recorte." />
         ) : (
-          <ScatterPlot points={scatter.data ?? []} />
+          <SeriesScope candidate={candidate}><ScatterPlot points={scatter.data ?? []} /></SeriesScope>
         )}
       </Card>
 

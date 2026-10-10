@@ -1,3 +1,4 @@
+import { candidateSeries } from "@/lib/series-identity";
 import { useQuery } from "@tanstack/react-query";
 import { summaryQuery } from "@/services/queries";
 import type { ElectionDTO } from "@/lib/data.functions";
@@ -34,13 +35,13 @@ function Column({ year, id, uf, ibge }: { year: number; id: number; uf: string |
       ) : (
         <ul className="space-y-2">
           {(q.data ?? []).slice(0, 6).map((c) => (
-            <li key={c.number} className="min-w-0">
+            <li key={c.number} data-series={candidateSeries(c)} className="min-w-0">
               <div className="flex justify-between gap-2 text-sm">
                 <span className="truncate">{c.ballot_name}</span>
                 <span className="tabular-nums">{fmtPct(c.share)}</span>
               </div>
               <div className="mt-1 h-1 rounded-full bg-muted">
-                <div className="h-1 rounded-full bg-primary" style={{ width: `${Math.min(100, Number(c.share ?? 0))}%` }} />
+                <div className="h-1 rounded-full bg-series" style={{ width: `${Math.min(100, Number(c.share ?? 0))}%` }} />
               </div>
               <p className="text-[11px] text-muted-foreground">{c.party}</p>
             </li>

@@ -61,5 +61,5 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
     return () => cancelAnimationFrame(raf);
   }, [points, width, height, alpha, radius, duration, replay]);
 
-  return <canvas ref={ref} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full text-primary" />;
+  return <canvas ref={ref} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full text-series" />;
 }

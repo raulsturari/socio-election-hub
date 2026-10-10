@@ -48,7 +48,7 @@ export function LabScatter({ points, xv, yLabel }: { points: LabAnalysis["points
       </svg>
       </div>
       <div className="mt-2 flex items-center gap-2 text-[11px] text-muted-foreground">
-        <span className="inline-block size-2 rounded-full bg-primary/60" aria-hidden /> 1 ponto = 1 município
+        <span className="inline-block size-2 rounded-full bg-series/60" aria-hidden /> 1 ponto = 1 município
         {xv.log && <span>· eixo X em escala log</span>}
       </div>
       <p className="mt-2 min-h-10 rounded-lg bg-muted px-3 py-2 text-xs" aria-live="polite">
