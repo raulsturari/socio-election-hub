@@ -1,5 +1,6 @@
 import { BottomSheet, Chip } from "@/components/ui-kit";
-import { REGIONS, X_VARIABLES, Y_METRICS, type YMetric } from "@/lib/lab-variables";
+import { REGIONS, Y_METRICS, type YMetric } from "@/lib/lab-variables";
+import { IndicatorPicker } from "./IndicatorPicker";
 
 interface Props {
   open: "x" | "y" | "reg" | null; onClose: () => void;
@@ -9,24 +10,10 @@ interface Props {
 
 /** Touch bottom sheets for the lab's variable pickers. */
 export function LabControls({ open, onClose, x, y, reg, onChange }: Props) {
-  const groups = [...new Set(X_VARIABLES.map((v) => v.group))];
   return (
     <>
       <BottomSheet open={open === "x"} onClose={onClose} title="Variável X (município)">
-        <div className="space-y-4 pb-4">
-          {groups.map((g) => (
-            <div key={g}>
-              <p className="label-caps mb-2">{g}</p>
-              <div className="flex flex-wrap gap-2">
-                {X_VARIABLES.filter((v) => v.group === g).map((v) => (
-                  <Chip key={v.id} active={v.id === x} onClick={() => { if (v.indicatorId) { onChange({ x: v.id }); onClose(); } }}>
-                    <span className={v.indicatorId ? "" : "text-muted-foreground"}>{v.label}{v.indicatorId ? "" : " · indisponível"}</span>
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        {open === "x" && <IndicatorPicker value={x} onSelect={(id) => { onChange({ x: id }); onClose(); }} />}
       </BottomSheet>
       <BottomSheet open={open === "y"} onClose={onClose} title="Variável Y (resultado)">
         <div className="space-y-4 pb-4">
