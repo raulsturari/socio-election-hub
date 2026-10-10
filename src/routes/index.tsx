@@ -8,7 +8,7 @@ import { resultsQuery } from "@/services/datasets";
 import { BottomSheet, Card, Chip, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
 
 const searchSchema = z.object({ 
-  ano: z.coerce.number().refine((y) => (ELECTION_YEARS as readonly number[]).includes(y)).optional().catch(2022),
+  ano: z.coerce.number().refine((y) => y === undefined || (ELECTION_YEARS as readonly number[]).includes(y)).optional().catch(2022),
   uf: z.string().nullable().optional().catch(null),
   municipio: z.string().nullable().optional().catch(null),
   candidato: z.string().nullable().optional().catch(null),
