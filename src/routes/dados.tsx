@@ -50,7 +50,7 @@ function Dados() {
                     {j.error && <Row k="Erro" v={j.error} />}
                   </dl>
                   <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-all rounded bg-background p-2 text-[10px] text-muted-foreground">
-                    {JSON.stringify({ cobertura: j.coverage, integridade: j.integrity }, null, 1)}
+                    {`Cobertura ${j.coverage}\nIntegridade ${j.integrity}`}
                   </pre>
                   <a href={j.source_url} target="_blank" rel="noreferrer" className="mt-2 block truncate text-xs text-primary">{j.source_url}</a>
                 </details>

@@ -58,7 +58,7 @@ export const getSummary = createServerFn({ method: "GET" })
           : [],
       );
     }
-    const { data: rows, error } = await sb.rpc("election_summary", { _election_id: data.electionId, _uf: data.uf ?? undefined });
+    const { data: rows, error } = await sb.rpc("election_summary", data.uf ? { _election_id: data.electionId, _uf: data.uf } : { _election_id: data.electionId });
     if (error) throw new Error(error.message);
     return (rows ?? []).map((r) => ({ ...r, votes: Number(r.votes) }));
   });
@@ -111,7 +111,8 @@ export const getScatter = createServerFn({ method: "GET" })
 export interface JobDTO {
   id: string; source_id: string; kind: string; status: string; source_url: string; file_name: string | null;
   file_sha256: string | null; source_last_modified: string | null; rows_read: number | null; rows_written: number | null;
-  coverage: unknown; integrity: unknown; error: string | null; started_at: string; finished_at: string | null;
+  /** JSON-encoded reports (kept as strings to stay serializable). */
+  coverage: string; integrity: string; error: string | null; started_at: string; finished_at: string | null;
 }
 
 export const getProvenance = createServerFn({ method: "GET" }).handler(async () => {
@@ -125,5 +126,8 @@ export const getProvenance = createServerFn({ method: "GET" }).handler(async () 
   ]);
   const err = sources.error ?? jobs.error ?? indicators.error;
   if (err) throw new Error(err.message);
-  return { sources: sources.data ?? [], jobs: (jobs.data ?? []) as JobDTO[], indicators: indicators.data ?? [] };
+  const jobRows: JobDTO[] = (jobs.data ?? []).map((j) => ({
+    ...j, coverage: JSON.stringify(j.coverage, null, 1), integrity: JSON.stringify(j.integrity, null, 1),
+  }));
+  return { sources: sources.data ?? [], jobs: jobRows, indicators: indicators.data ?? [] };
 });
