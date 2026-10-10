@@ -51,9 +51,7 @@
   --border: oklch(1 0 0 / 7%);
   --candidate-bolsonaro: #2563EB;
   --candidate-pt: #EF4444;
-  --candidate-neutral-1: oklch(0.80 0.015 250);
-  --candidate-neutral-2: oklch(0.67 0.015 80);
-  --candidate-neutral-3: oklch(0.90 0.01 150);
+  --candidate-outros: #9CA3AF;
   --data-missing: oklch(0.43 0 0);
   --series-color: var(--primary);
   --series-label: var(--foreground);
@@ -62,9 +60,7 @@
 
 [data-series="bolsonaro"] { --series-color: var(--candidate-bolsonaro); --series-label: oklch(0.78 0.12 260); --series-negative: var(--candidate-bolsonaro); }
 [data-series="pt"] { --series-color: var(--candidate-pt); --series-label: oklch(0.78 0.13 25); --series-negative: var(--candidate-pt); }
-[data-series="neutral-1"] { --series-color: var(--candidate-neutral-1); --series-label: var(--candidate-neutral-1); --series-negative: var(--candidate-neutral-1); }
-[data-series="neutral-2"] { --series-color: var(--candidate-neutral-2); --series-label: var(--candidate-neutral-2); --series-negative: var(--candidate-neutral-2); }
-[data-series="neutral-3"] { --series-color: var(--candidate-neutral-3); --series-label: var(--candidate-neutral-3); --series-negative: var(--candidate-neutral-3); }
+[data-series="outros"] { --series-color: var(--candidate-outros); --series-label: var(--candidate-outros); --series-negative: var(--candidate-outros); }
 [data-series="missing"] { --series-color: var(--data-missing); --series-label: var(--foreground); }
 [data-series="indicator"] { --series-color: var(--primary); --series-label: var(--foreground); --series-negative: var(--negative); }
 
@@ -102,4 +98,5 @@
 }
 .choro-path { transition: fill-opacity 350ms cubic-bezier(0.22, 1, 0.36, 1), fill 350ms cubic-bezier(0.22, 1, 0.36, 1); }
 .explore-legend { background: linear-gradient(90deg, var(--secondary), var(--series-color)); }
+.duel-legend { background: linear-gradient(90deg, var(--candidate-pt), var(--secondary), var(--candidate-bolsonaro)); }
 .explore-legend-signed { background: linear-gradient(90deg, var(--series-negative), var(--secondary), var(--series-color)); }
