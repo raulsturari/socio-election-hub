@@ -22,7 +22,7 @@ async def main():
   await canvas.click(position={'x':190,'y':250});await expect(page.get_by_role('status').first).to_contain_text('·')
   await page.get_by_role('status').first.scroll_into_view_if_needed()
   await page.screenshot(path=str(OUT/'02-map-tooltip.png'))
-  await page.get_by_label('Candidato',exact=True).select_option('13');await ready(page)
+  await page.get_by_role('radio',name='Lula',exact=True).click();await ready(page)
   assert before!=await canvas.screenshot()
   before_year=await canvas.screenshot()
   await page.get_by_label('Ano eleitoral').fill('0');await ready(page)
