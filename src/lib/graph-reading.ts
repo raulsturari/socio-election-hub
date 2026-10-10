@@ -89,7 +89,14 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const geometry = analyzeScatterGeometry(points, domain, context.metric === 'share');
   const text = conclusion(context, input, geometry);
   const closing: string[] = [];
-  if (geometry.composition && input[0] && input[1] && direction(input[0].analysis) * direction(input[1].analysis) < 0) closing.push('Parte do espelhamento pode ser aritmética: as séries dividem os mesmos votos válidos, mas Outros impede complementaridade perfeita.');
+  if (geometry.composition) {
+    const kind = geometry.composition.kind;
+    closing.push(kind === 'zero'
+      ? 'Os dois percentuais somam 100% nos pares observados; parte do espelhamento é matemática.'
+      : kind === 'constant'
+        ? 'A soma dos dois percentuais é constante nos pares observados, e o restante é Outros; isso também permite espelhamento matemático.'
+        : 'A participação de Outros varia nos pares observados: os dois percentuais não são complementos exatos, embora o total compartilhado contribua para o espelhamento.');
+  }
   if (context.metric === 'share_delta' && input.some(s => s.id === 'bolsonaro' || s.name.includes('Bolsonaro'))) closing.push('A variação em pontos percentuais compara Jair em 2022 com Flávio em 2026, não o nível atual nem transferência de eleitores.');
   const adjusted = adjustment(context, input);
   if (adjusted) closing.push(adjusted);

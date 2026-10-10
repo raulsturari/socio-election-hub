@@ -2,6 +2,19 @@ import { normalized, transformScatterX, type ScatterDomain } from './scatter-dom
 
 export interface GeometryPoint { code: string; x: number; y: number }
 export interface GeometrySeries { name: string; points: readonly GeometryPoint[] }
+// Percentage-point tolerance for numerical rounding only; source shares stay untouched.
+export const SHARE_RESIDUAL_TOLERANCE_PP = 1e-8;
+function compositionOf(pairs: readonly { y: number; otherY: number }[], validated: boolean) {
+  const tolerance = SHARE_RESIDUAL_TOLERANCE_PP;
+  if (!validated || !pairs.length || pairs.some(p => !Number.isFinite(p.y) || !Number.isFinite(p.otherY) || p.y < 0 || p.otherY < 0 || p.y > 100 || p.otherY > 100 || p.y + p.otherY > 100 + tolerance)) return null;
+  const residuals = pairs.map(p => {
+    const residual = 100 - p.y - p.otherY;
+    return Math.abs(residual) <= tolerance ? 0 : residual;
+  });
+  const othersMin = Math.min(...residuals), othersMax = Math.max(...residuals);
+  const kind = othersMax === 0 ? 'zero' : othersMax - othersMin <= tolerance ? 'constant' : 'varying';
+  return { n: pairs.length, othersMin, othersMax, othersMedian: quantile(residuals, .5), kind, tolerancePP: tolerance };
+}
 export const GEOMETRY_CRITERIA = 'Heurísticas descritivas conservadoras, não provas científicas: mínimo de 40 municípios para forma; concentração ≥70% no terço horizontal ou quinto vertical do eixo exibido; cauda quando P90/P10 ocupa menos de 55% da largura. Até quatro faixas quantílicas de X, sem dividir empates, com mínimo de 10 pares. Cruzamento exige vantagem mediana de sinais opostos nas faixas extremas, magnitude ≥3% da altura exibida e progressão consistente em ≥2/3 das transições. Abertura é a mediana dos IQRs de Y dentro de cada série/faixa: ≥15% da altura é ampla, ≤6% é estreita. Nenhum diagnóstico mistura as duas candidaturas. Constantes, amostras pequenas ou faixas insuficientes não recebem classificação.';
 export function quantile(values: readonly number[], p: number): number {
   if (!values.length) return NaN;
@@ -55,8 +68,7 @@ export function analyzeScatterGeometry(series: readonly GeometrySeries[], domain
     return previous && Math.sign(firstChange) * (v.first - previous.first) > 0 && Math.sign(secondChange) * (v.second - previous.second) > 0;
   }).length >= Math.ceil((bands.length - 1) * 2 / 3);
   const crossing = paired.length >= 40 && bands.length >= 3 && start * end < 0 && firstChange * secondChange < 0 && eachConsistent && Math.min(Math.abs(start), Math.abs(end)) >= tolerance && consistent >= Math.ceil((bands.length - 1) * 2 / 3);
-  const compositionValid = validatedShares && paired.length > 0 && paired.every(p => p.y >= 0 && p.otherY >= 0 && p.y + p.otherY <= 100 + 1e-8);
   return { domain, horizontal, vertical, pairedN: paired.length, crossing, bands, lowLeader: start > 0 ? first?.name : second?.name, highLeader: end > 0 ? first?.name : second?.name,
-    composition: compositionValid ? { n: paired.length, othersMedian: quantile(paired.map(p => Math.max(0, 100 - p.y - p.otherY)), .5) } : null };
+    composition: compositionOf(paired, validatedShares) };
 }
 export type ScatterGeometry = ReturnType<typeof analyzeScatterGeometry>;
