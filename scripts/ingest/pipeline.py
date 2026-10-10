@@ -2,10 +2,11 @@
 """
 Brasil Data Lab — reproducible ingestion pipeline (official sources only).
 
-Runs outside the web app (needs network + a privileged Postgres connection via
-standard PG* env vars). Every run creates a row in import_jobs with file hash,
-source Last-Modified, coverage and integrity checks, and writes logs to
-import_job_logs. Re-running is idempotent (upserts on natural keys).
+Runs outside the web app. Requires SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
+(server-side only; never ship to the browser). Every run creates a row in
+import_jobs with file hash, source Last-Modified, coverage and integrity
+checks, and writes logs to import_job_logs. Re-running is idempotent
+(upserts on natural keys; election results are replaced atomically per job).
 
 Usage:
   python3 scripts/ingest/pipeline.py municipalities
@@ -18,15 +19,16 @@ import csv
 import hashlib
 import io
 import json
-import subprocess
+import os
 import sys
-import tempfile
+import urllib.parse
 import urllib.request
 import zipfile
 from collections import defaultdict
 from email.utils import parsedate_to_datetime
 
 PIPELINE_VERSION = "2026.10.1"
+UA = {"User-Agent": "BrasilDataLab-ingest/1.0"}
 IBGE_MUNICIPIOS_URL = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios"
 TSE_IBGE_MAP_URL = "https://raw.githubusercontent.com/betafcc/Municipios-Brasileiros-TSE/master/municipios_brasileiros_tse.csv"
 TSE_MUNZONA_URL = "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip"
@@ -38,7 +40,7 @@ SIDRA_INDICATORS = [
         "name": "Rendimento nominal médio mensal domiciliar per capita",
         "unit": "R$",
         "table": "10295", "variable": "13431", "period": "2022",
-        "methodology": "Censo Demográfico 2022, SIDRA tabela 10295, variável 13431. Moradores em domicílios particulares permanentes ocupados; valores nominais de 2022.",
+        "methodology": "Censo Demográfico 2022, SIDRA tabela 10295, variável 13431. Moradores em domicílios particulares permanentes ocupados; valores nominais.",
     },
     {
         "id": "populacao_residente_2022",
@@ -50,93 +52,81 @@ SIDRA_INDICATORS = [
 ]
 
 
-# ---------- db helpers ----------
-def sql_literal(v) -> str:
-    if v is None:
-        return "NULL"
-    if isinstance(v, bool):
-        return "true" if v else "false"
-    if isinstance(v, (int, float)):
-        return str(v)
-    if isinstance(v, (dict, list)):
-        v = json.dumps(v, ensure_ascii=False)
-    return "'" + str(v).replace("'", "''") + "'"
-
-
-def psql(sql: str) -> str:
-    res = subprocess.run(
-        ["psql", "-v", "ON_ERROR_STOP=1", "-X", "-q", "-t", "-A", "-f", "-"],
-        input=sql, capture_output=True, text=True,
+# ---------- data API helpers (service role, server-side only) ----------
+def rest(method: str, path: str, body=None, prefer: str = "return=minimal"):
+    base, key = os.environ["SUPABASE_URL"], os.environ["SUPABASE_SERVICE_ROLE_KEY"]
+    req = urllib.request.Request(
+        f"{base}/rest/v1/{path}", method=method,
+        data=None if body is None else json.dumps(body).encode(),
+        headers={"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                 "Prefer": prefer},
     )
-    if res.returncode != 0:
-        raise RuntimeError(res.stderr.strip())
-    return res.stdout.strip()
+    with urllib.request.urlopen(req, timeout=300) as r:
+        raw = r.read()
+        return json.loads(raw) if raw else None
 
 
-def copy_rows(table: str, columns: list[str], rows: list[tuple]) -> str:
-    """Return a psql \\copy block loading rows into a temp staging table."""
-    tmp = tempfile.NamedTemporaryFile("w", delete=False, suffix=".csv", newline="", encoding="utf-8")
-    csv.writer(tmp).writerows(rows)
-    tmp.close()
-    return f"\\copy {table} ({', '.join(columns)}) FROM '{tmp.name}' WITH (FORMAT csv)\n"
+def select_all(path: str) -> list[dict]:
+    out, step = [], 1000
+    while True:
+        sep = "&" if "?" in path else "?"
+        page = rest("GET", f"{path}{sep}limit={step}&offset={len(out)}", prefer="")
+        out += page
+        if len(page) < step:
+            return out
+
+
+def upsert(table: str, rows: list[dict], on_conflict: str, batch: int = 5000) -> None:
+    for i in range(0, len(rows), batch):
+        rest("POST", f"{table}?on_conflict={on_conflict}", rows[i:i + batch],
+             "resolution=merge-duplicates,return=minimal")
 
 
 class Job:
-    def __init__(self, source_id: str, kind: str, url: str, file_name: str | None = None,
-                 sha256: str | None = None, last_modified: str | None = None):
-        self.id = psql(
-            "INSERT INTO import_jobs (source_id, kind, status, source_url, file_name, file_sha256, "
-            "source_last_modified, pipeline_version) VALUES ("
-            f"{sql_literal(source_id)}, {sql_literal(kind)}, 'running', {sql_literal(url)}, "
-            f"{sql_literal(file_name)}, {sql_literal(sha256)}, {sql_literal(last_modified)}, "
-            f"{sql_literal(PIPELINE_VERSION)}) RETURNING id;"
-        ).splitlines()[0]
+    def __init__(self, source_id: str, kind: str, url: str, file_name=None, sha256=None, last_modified=None):
+        self.id = rest("POST", "import_jobs", {
+            "source_id": source_id, "kind": kind, "status": "running", "source_url": url,
+            "file_name": file_name, "file_sha256": sha256, "source_last_modified": last_modified,
+            "pipeline_version": PIPELINE_VERSION,
+        }, "return=representation")[0]["id"]
         self.log("info", "job started", {"kind": kind})
 
     def log(self, level: str, message: str, context: dict | None = None) -> None:
         print(f"[{level}] {message} {json.dumps(context or {}, ensure_ascii=False)}")
-        psql(
-            "INSERT INTO import_job_logs (job_id, level, message, context) VALUES ("
-            f"{sql_literal(self.id)}, {sql_literal(level)}, {sql_literal(message)}, "
-            f"{sql_literal(context or {})}::jsonb);"
-        )
+        rest("POST", "import_job_logs", {"job_id": self.id, "level": level, "message": message,
+                                         "context": context or {}})
 
-    def finish(self, ok: bool, rows_read: int, rows_written: int, coverage: dict, integrity: dict,
-               error: str | None = None) -> None:
-        psql(
-            "UPDATE import_jobs SET "
-            f"status = {sql_literal('succeeded' if ok else 'failed')}, rows_read = {rows_read}, "
-            f"rows_written = {rows_written}, coverage = {sql_literal(coverage)}::jsonb, "
-            f"integrity = {sql_literal(integrity)}::jsonb, error = {sql_literal(error)}, "
-            f"finished_at = now() WHERE id = {sql_literal(self.id)};"
-        )
+    def finish(self, ok: bool, rows_read: int, rows_written: int, coverage: dict, integrity: dict, error=None):
+        rest("PATCH", f"import_jobs?id=eq.{self.id}", {
+            "status": "succeeded" if ok else "failed", "rows_read": rows_read, "rows_written": rows_written,
+            "coverage": coverage, "integrity": integrity, "error": error, "finished_at": "now()",
+        })
         self.log("info" if ok else "error", "job finished", {"ok": ok})
 
 
 def fetch(url: str) -> tuple[bytes, str | None]:
-    req = urllib.request.Request(url, headers={"User-Agent": "BrasilDataLab-ingest/1.0"})
-    with urllib.request.urlopen(req, timeout=300) as r:
+    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=300) as r:
         lm = r.headers.get("Last-Modified")
         return r.read(), (parsedate_to_datetime(lm).isoformat() if lm else None)
 
 
 def head_last_modified(url: str) -> str | None:
-    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "BrasilDataLab-ingest/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
+    with urllib.request.urlopen(urllib.request.Request(url, method="HEAD", headers=UA), timeout=60) as r:
         lm = r.headers.get("Last-Modified")
         return parsedate_to_datetime(lm).isoformat() if lm else None
 
 
 def ensure_sources() -> None:
-    sources = [
-        ("TSE", "TSE — Portal de Dados Abertos", "https://dadosabertos.tse.jus.br", "Resultados eleitorais oficiais"),
-        ("IBGE_LOCALIDADES", "IBGE — API de Localidades", IBGE_MUNICIPIOS_URL, "Cadastro oficial de municípios (código de 7 dígitos)"),
-        ("TSE_IBGE_MAP", "Tabela de correspondência TSE↔IBGE (betafcc/Municipios-Brasileiros-TSE)", TSE_IBGE_MAP_URL, "Correspondência comunitária, validada contra a API do IBGE durante a importação"),
-        ("IBGE_SIDRA", "IBGE SIDRA", "https://sidra.ibge.gov.br", "Indicadores municipais (Censo 2022)"),
-    ]
-    values = ",".join(f"({', '.join(sql_literal(x) for x in s)})" for s in sources)
-    psql(f"INSERT INTO data_sources (id, name, url, description) VALUES {values} "
-         "ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, url = EXCLUDED.url, description = EXCLUDED.description;")
+    upsert("data_sources", [
+        {"id": "TSE", "name": "TSE — Portal de Dados Abertos", "url": "https://dadosabertos.tse.jus.br/dataset/resultados-2022",
+         "description": "Resultados eleitorais oficiais (votacao_candidato_munzona)"},
+        {"id": "IBGE_LOCALIDADES", "name": "IBGE — API de Localidades", "url": IBGE_MUNICIPIOS_URL,
+         "description": "Cadastro oficial de municípios (código de 7 dígitos)"},
+        {"id": "TSE_IBGE_MAP", "name": "Correspondência TSE↔IBGE (betafcc/Municipios-Brasileiros-TSE)", "url": TSE_IBGE_MAP_URL,
+         "description": "Tabela comunitária; cada linha é validada contra código e UF da API do IBGE"},
+        {"id": "IBGE_SIDRA", "name": "IBGE SIDRA", "url": "https://sidra.ibge.gov.br",
+         "description": "Indicadores municipais do Censo 2022"},
+    ], "id")
 
 
 # ---------- municipalities ----------
@@ -147,8 +137,8 @@ def import_municipalities() -> None:
               hashlib.sha256(raw).hexdigest(), lm)
     ibge = {}
     for m in json.loads(raw):
-        uf = (m.get("microrregiao") or {}).get("mesorregiao", {}).get("UF", {}).get("sigla") \
-            or (m.get("regiao-imediata") or {}).get("regiao-intermediaria", {}).get("UF", {}).get("sigla")
+        uf = ((m.get("microrregiao") or {}).get("mesorregiao") or {}).get("UF", {}).get("sigla") \
+            or ((m.get("regiao-imediata") or {}).get("regiao-intermediaria") or {}).get("UF", {}).get("sigla")
         ibge[str(m["id"])] = (m["nome"], uf)
 
     map_raw, map_lm = fetch(TSE_IBGE_MAP_URL)
@@ -167,18 +157,14 @@ def import_municipalities() -> None:
     for rj in rejected:
         job.log("warn", "mapping row rejected (IBGE code/UF mismatch)", rj)
 
-    rows = [(code, tse_by_ibge.get(code), name, uf, code in capitals) for code, (name, uf) in ibge.items()]
-    script = "BEGIN;\nCREATE TEMP TABLE stg (ibge_code text, tse_code int, name text, uf text, is_capital boolean);\n"
-    script += copy_rows("stg", ["ibge_code", "tse_code", "name", "uf", "is_capital"], rows)
-    script += ("INSERT INTO municipalities (ibge_code, tse_code, name, uf, is_capital) SELECT * FROM stg "
-               "ON CONFLICT (ibge_code) DO UPDATE SET tse_code = EXCLUDED.tse_code, name = EXCLUDED.name, "
-               "uf = EXCLUDED.uf, is_capital = EXCLUDED.is_capital;\nCOMMIT;\n")
-    psql(script)
+    rows = [{"ibge_code": c, "tse_code": tse_by_ibge.get(c), "name": n, "uf": uf, "is_capital": c in capitals}
+            for c, (n, uf) in ibge.items()]
+    upsert("municipalities", rows, "ibge_code")
     unmapped = [c for c in ibge if c not in tse_by_ibge]
-    coverage = {"ibge_municipalities": len(ibge), "with_tse_code": len(tse_by_ibge), "without_tse_code": len(unmapped)}
-    integrity = {"rejected_mapping_rows": len(rejected), "unmapped_ibge_codes": unmapped[:50],
-                 "mapping_source_last_modified": map_lm}
-    job.finish(True, len(ibge), len(rows), coverage, integrity)
+    job.finish(True, len(ibge), len(rows),
+               {"ibge_municipalities": len(ibge), "with_tse_code": len(tse_by_ibge), "without_tse_code": len(unmapped)},
+               {"rejected_mapping_rows": len(rejected), "unmapped_ibge_codes": unmapped[:50],
+                "mapping_source_last_modified": map_lm})
 
 
 # ---------- TSE votacao_candidato_munzona ----------
@@ -197,160 +183,127 @@ def import_tse_munzona(zip_path: str, year: int = 2022, office: str = "President
         raise
 
 
-def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
-    tse_to_ibge = dict(
-        (int(a), b) for a, b in (l.split("|") for l in psql(
-            "SELECT tse_code, ibge_code FROM municipalities WHERE tse_code IS NOT NULL;").splitlines())
-    )
+def _parse_tse(job: Job, zip_path: str, year: int, office: str):
+    tse_to_ibge = {m["tse_code"]: m["ibge_code"]
+                   for m in select_all("municipalities?select=tse_code,ibge_code&tse_code=not.is.null")}
     zf = zipfile.ZipFile(zip_path)
     member = next(n for n in zf.namelist() if n.endswith(f"_{year}_BR.csv"))
     job.log("info", "reading member", {"member": member})
-
-    zone_votes: dict[tuple, int] = defaultdict(int)
-    candidates: dict[int, tuple[str, str]] = {}
-    file_totals: dict[int, int] = defaultdict(int)
-    exterior: dict[int, int] = defaultdict(int)
-    unmapped: dict[int, int] = defaultdict(int)
-    dates: dict[int, str] = {}
-    rows_read = 0
+    p = {"zone": defaultdict(int), "cands": {}, "file": defaultdict(int), "ext": defaultdict(int),
+         "unmapped": defaultdict(int), "dates": {}, "rows": 0}
     with zf.open(member) as fh:
         reader = csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1"), delimiter=";")
         vote_col = "QT_VOTOS_NOMINAIS_VALIDOS" if "QT_VOTOS_NOMINAIS_VALIDOS" in reader.fieldnames else "QT_VOTOS_NOMINAIS"
         for r in reader:
             if r["DS_CARGO"].strip().lower() != office.lower():
                 continue
-            rows_read += 1
-            rnd, votes = int(r["NR_TURNO"]), int(r[vote_col])
-            num = int(r["NR_CANDIDATO"])
-            candidates[num] = (r["NM_URNA_CANDIDATO"].strip(), r["SG_PARTIDO"].strip())
-            dates[rnd] = r["DT_ELEICAO"]
-            file_totals[rnd] += votes
+            p["rows"] += 1
+            rnd, votes, num = int(r["NR_TURNO"]), int(r[vote_col]), int(r["NR_CANDIDATO"])
+            p["cands"][num] = (r["NM_URNA_CANDIDATO"].strip(), r["SG_PARTIDO"].strip())
+            p["dates"][rnd] = r["DT_ELEICAO"]
+            p["file"][rnd] += votes
             if r["SG_UF"] == "ZZ":
-                exterior[rnd] += votes
+                p["ext"][rnd] += votes
                 continue
             ibge = tse_to_ibge.get(int(r["CD_MUNICIPIO"]))
             if ibge is None:
-                unmapped[int(r["CD_MUNICIPIO"])] += votes
+                p["unmapped"][int(r["CD_MUNICIPIO"])] += votes
                 continue
-            zone_votes[(rnd, ibge, int(r["NR_ZONA"]), num)] += votes
-    job.log("info", "file parsed", {"rows": rows_read, "vote_column": vote_col,
-                                    "exterior_votes_excluded": dict(exterior)})
-    for code, v in unmapped.items():
+            p["zone"][(rnd, ibge, int(r["NR_ZONA"]), num)] += votes
+    job.log("info", "file parsed", {"rows": p["rows"], "vote_column": vote_col, "exterior_excluded": dict(p["ext"])})
+    for code, v in p["unmapped"].items():
         job.log("warn", "TSE municipality without IBGE mapping", {"tse_code": code, "votes": v})
+    return p
 
-    office_label = office.upper()
-    cand_rows = [(year, office_label, n, nm, p) for n, (nm, p) in candidates.items()]
-    elec_sql = ",".join(
-        f"({year}, {rnd}, {sql_literal(office_label)}, to_date({sql_literal(d)}, 'DD/MM/YYYY'), false, {sql_literal(job.id)})"
-        for rnd, d in dates.items())
-    script = "BEGIN;\n"
-    script += (f"INSERT INTO elections (year, round, office, election_date, validated, import_job_id) VALUES {elec_sql} "
-               "ON CONFLICT (year, round, office) DO UPDATE SET election_date = EXCLUDED.election_date, "
-               "import_job_id = EXCLUDED.import_job_id, validated = false;\n")
-    script += "CREATE TEMP TABLE stg_c (year smallint, office text, number int, ballot_name text, party text);\n"
-    script += copy_rows("stg_c", ["year", "office", "number", "ballot_name", "party"], cand_rows)
-    script += ("INSERT INTO candidates (year, office, number, ballot_name, party) SELECT * FROM stg_c "
-               "ON CONFLICT (year, office, number) DO UPDATE SET ballot_name = EXCLUDED.ballot_name, party = EXCLUDED.party;\n")
-    script += "CREATE TEMP TABLE stg_z (round smallint, ibge_code text, zone int, number int, votes int);\n"
-    script += copy_rows("stg_z", ["round", "ibge_code", "zone", "number", "votes"],
-                        [(k[0], k[1], k[2], k[3], v) for k, v in zone_votes.items()])
-    script += f"""
-DELETE FROM municipal_results WHERE election_id IN (SELECT id FROM elections WHERE year={year} AND office={sql_literal(office_label)});
-DELETE FROM zone_results WHERE election_id IN (SELECT id FROM elections WHERE year={year} AND office={sql_literal(office_label)});
-INSERT INTO zone_results (election_id, ibge_code, zone, candidate_id, votes, import_job_id)
-SELECT e.id, s.ibge_code, s.zone, c.id, s.votes, {sql_literal(job.id)}
-FROM stg_z s
-JOIN elections e ON e.year={year} AND e.round=s.round AND e.office={sql_literal(office_label)}
-JOIN candidates c ON c.year={year} AND c.office={sql_literal(office_label)} AND c.number=s.number;
-INSERT INTO municipal_results (election_id, ibge_code, candidate_id, votes, valid_votes, zones_count, import_job_id)
-SELECT z.election_id, z.ibge_code, z.candidate_id, sum(z.votes),
-       sum(sum(z.votes)) OVER (PARTITION BY z.election_id, z.ibge_code), count(DISTINCT z.zone), {sql_literal(job.id)}
-FROM zone_results z JOIN elections e ON e.id = z.election_id
-WHERE e.year={year} AND e.office={sql_literal(office_label)}
-GROUP BY z.election_id, z.ibge_code, z.candidate_id;
-COMMIT;
-"""
-    psql(script)
 
-    # ---- reconciliation: file → zone → municipality, per round ----
-    checks, ok = {}, True
-    for rnd in sorted(dates):
-        out = psql(f"""
-SELECT (SELECT coalesce(sum(z.votes),0) FROM zone_results z JOIN elections e ON e.id=z.election_id
-        WHERE e.year={year} AND e.round={rnd} AND e.office={sql_literal(office_label)}),
-       (SELECT coalesce(sum(r.votes),0) FROM municipal_results r JOIN elections e ON e.id=r.election_id
-        WHERE e.year={year} AND e.round={rnd} AND e.office={sql_literal(office_label)}),
-       (SELECT count(DISTINCT r.ibge_code) FROM municipal_results r JOIN elections e ON e.id=r.election_id
-        WHERE e.year={year} AND e.round={rnd} AND e.office={sql_literal(office_label)});""")
-        zone_sum, mun_sum, mun_count = (int(x) for x in out.split("|"))
-        expected = file_totals[rnd] - exterior[rnd] - sum(unmapped.values())
-        round_ok = zone_sum == mun_sum == expected
-        ok &= round_ok
-        checks[f"round_{rnd}"] = {
-            "file_total_nominal": file_totals[rnd], "exterior_excluded": exterior[rnd],
-            "expected_domestic": expected, "zone_sum": zone_sum, "municipal_sum": mun_sum,
-            "municipalities": mun_count, "reconciled": round_ok,
-        }
-    ok &= not unmapped
+def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
+    p = _parse_tse(job, zip_path, year, office)
+    label = office.upper()
+    d2iso = lambda d: f"{d[6:10]}-{d[3:5]}-{d[0:2]}"
+    upsert("elections", [{"year": year, "round": r, "office": label, "election_date": d2iso(d),
+                          "validated": False, "import_job_id": job.id} for r, d in p["dates"].items()],
+           "year,round,office")
+    upsert("candidates", [{"year": year, "office": label, "number": n, "ballot_name": nm, "party": pt}
+                          for n, (nm, pt) in p["cands"].items()], "year,office,number")
+    elections = {e["round"]: e["id"] for e in select_all(f"elections?select=id,round&year=eq.{year}&office=eq.{label}")}
+    cands = {c["number"]: c["id"] for c in select_all(f"candidates?select=id,number&year=eq.{year}&office=eq.{label}")}
+
+    ids = ",".join(str(i) for i in elections.values())
+    rest("DELETE", f"municipal_results?election_id=in.({ids})")
+    rest("DELETE", f"zone_results?election_id=in.({ids})")
+
+    zone_rows = [{"election_id": elections[r], "ibge_code": m, "zone": z, "candidate_id": cands[n],
+                  "votes": v, "import_job_id": job.id} for (r, m, z, n), v in p["zone"].items()]
+    upsert("zone_results", zone_rows, "election_id,ibge_code,zone,candidate_id")
+
+    # Deterministic aggregation zone → municipality.
+    mun_votes, mun_zones, mun_valid = defaultdict(int), defaultdict(set), defaultdict(int)
+    for (r, m, z, n), v in p["zone"].items():
+        mun_votes[(r, m, n)] += v
+        mun_zones[(r, m)].add(z)
+        mun_valid[(r, m)] += v
+    upsert("municipal_results", [
+        {"election_id": elections[r], "ibge_code": m, "candidate_id": cands[n], "votes": v,
+         "valid_votes": mun_valid[(r, m)], "zones_count": len(mun_zones[(r, m)]), "import_job_id": job.id}
+        for (r, m, n), v in mun_votes.items()], "election_id,ibge_code,candidate_id")
+
+    # Reconciliation, re-read from the database: file − exterior − unmapped = Σ zones = Σ municipalities.
+    checks, ok = {}, not p["unmapped"]
+    for rnd, eid in sorted(elections.items()):
+        zsum = sum(x["votes"] for x in select_all(f"zone_results?select=votes&election_id=eq.{eid}"))
+        mrows = select_all(f"municipal_results?select=votes,ibge_code&election_id=eq.{eid}")
+        msum = sum(x["votes"] for x in mrows)
+        expected = p["file"][rnd] - p["ext"][rnd] - sum(p["unmapped"].values())
+        rok = zsum == msum == expected
+        ok &= rok
+        checks[f"round_{rnd}"] = {"file_total_nominal": p["file"][rnd], "exterior_excluded": p["ext"][rnd],
+                                  "expected_domestic": expected, "zone_sum": zsum, "municipal_sum": msum,
+                                  "municipalities": len({x["ibge_code"] for x in mrows}), "reconciled": rok}
     if ok:
-        psql(f"UPDATE elections SET validated = true WHERE year={year} AND office={sql_literal(office_label)};")
-    coverage = {"year": year, "office": office_label, "rounds": sorted(dates),
-                "municipalities_round_1": checks.get("round_1", {}).get("municipalities"),
-                "excludes": "votos no exterior (UF ZZ)"}
-    job.finish(ok, rows_read, len(zone_votes), coverage, {**checks, "unmapped_tse_codes": len(unmapped)},
+        rest("PATCH", f"elections?year=eq.{year}&office=eq.{label}", {"validated": True})
+    job.finish(ok, p["rows"], len(zone_rows),
+               {"year": year, "office": label, "rounds": sorted(elections),
+                "municipalities": checks.get("round_1", {}).get("municipalities"),
+                "excludes": "votos no exterior (UF ZZ); brancos e nulos não constam deste arquivo"},
+               {**checks, "unmapped_tse_codes": len(p["unmapped"])},
                None if ok else "reconciliation failed — election left unvalidated")
 
 
 # ---------- SIDRA ----------
 def import_sidra() -> None:
     ensure_sources()
-    valid = set(psql("SELECT ibge_code FROM municipalities;").splitlines())
+    valid = {m["ibge_code"] for m in select_all("municipalities?select=ibge_code")}
     for ind in SIDRA_INDICATORS:
-        url = (f"https://apisidra.ibge.gov.br/values/t/{ind['table']}/n6/all/v/{ind['variable']}"
-               f"/p/{ind['period']}?formato=json")
+        url = f"https://apisidra.ibge.gov.br/values/t/{ind['table']}/n6/all/v/{ind['variable']}/p/{ind['period']}"
         raw, lm = fetch(url)
-        job = Job("IBGE_SIDRA", f"sidra_{ind['table']}_{ind['variable']}", url, None,
-                  hashlib.sha256(raw).hexdigest(), lm)
+        job = Job("IBGE_SIDRA", f"sidra_{ind['table']}_{ind['variable']}", url, None, hashlib.sha256(raw).hexdigest(), lm)
         data = json.loads(raw)[1:]  # first row is the header
+        upsert("indicators", [{"id": ind["id"], "name": ind["name"], "unit": ind["unit"], "source_id": "IBGE_SIDRA",
+                               "source_table": ind["table"], "source_variable": ind["variable"],
+                               "methodology": ind["methodology"]}], "id")
         rows, missing, unknown = [], 0, 0
         for d in data:
-            code, val = d["D1C"], d["V"]
-            if code not in valid:
+            if d["D1C"] not in valid:
                 unknown += 1
                 continue
             try:
-                num = float(val)
-            except ValueError:  # SIDRA uses '-', '...', 'X' for unavailable/suppressed
+                val = float(d["V"])
+            except ValueError:  # SIDRA uses '-', '...', 'X' for unavailable / suppressed
                 missing += 1
-                num = None
-            rows.append((ind["id"], code, int(ind["period"]), num))
-        psql(
-            "INSERT INTO indicators (id, name, unit, source_id, source_table, source_variable, methodology) VALUES ("
-            + ", ".join(sql_literal(x) for x in (ind["id"], ind["name"], ind["unit"], "IBGE_SIDRA",
-                                                 ind["table"], ind["variable"], ind["methodology"]))
-            + ") ON CONFLICT (id) DO UPDATE SET name=EXCLUDED.name, unit=EXCLUDED.unit, "
-              "methodology=EXCLUDED.methodology, source_table=EXCLUDED.source_table, source_variable=EXCLUDED.source_variable;"
-        )
-        script = "BEGIN;\nCREATE TEMP TABLE stg (indicator_id text, ibge_code text, year smallint, value numeric);\n"
-        script += copy_rows("stg", ["indicator_id", "ibge_code", "year", "value"], rows)
-        script += (f"INSERT INTO indicator_values (indicator_id, ibge_code, year, value, import_job_id) "
-                   f"SELECT indicator_id, ibge_code, year, value, {sql_literal(job.id)} FROM stg "
-                   "ON CONFLICT (indicator_id, ibge_code, year) DO UPDATE SET value = EXCLUDED.value, "
-                   "import_job_id = EXCLUDED.import_job_id;\nCOMMIT;\n")
-        psql(script)
+                val = None
+            rows.append({"indicator_id": ind["id"], "ibge_code": d["D1C"], "year": int(ind["period"]),
+                         "value": val, "import_job_id": job.id})
+        upsert("indicator_values", rows, "indicator_id,ibge_code,year")
         job.finish(True, len(data), len(rows),
                    {"year": int(ind["period"]), "municipalities": len(rows), "table": ind["table"], "variable": ind["variable"]},
-                   {"values_unavailable": missing, "unknown_codes": unknown, "expected_municipalities": len(valid)})
+                   {"values_unavailable": missing, "unknown_codes": unknown, "expected_municipalities": len(valid),
+                    "dimension_rows_in_response": sorted({d.get("D2N", "") for d in data})[:5]})
 
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    if cmd == "municipalities":
-        import_municipalities()
-    elif cmd == "tse-munzona":
-        import_tse_munzona(sys.argv[2])
-    elif cmd == "sidra":
-        import_sidra()
-    else:
+    {"municipalities": import_municipalities, "sidra": import_sidra}.get(cmd, lambda: None)() \
+        if cmd != "tse-munzona" else import_tse_munzona(sys.argv[2])
+    if cmd not in ("municipalities", "sidra", "tse-munzona"):
         print(__doc__)
         sys.exit(1)
