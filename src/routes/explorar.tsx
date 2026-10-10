@@ -66,7 +66,7 @@ function ExplorePage(){
       </motion.div>
     </section>
     <div className="flex justify-between items-center mt-5 gap-4"><Button variant="secondary" className="size-12 rounded-full" aria-label="Análise anterior" onClick={()=>step(-1)}><ArrowLeft/></Button><span className="text-xs text-muted-foreground">{index+1} de {PRESETS.length}</span><Button variant="secondary" className="size-12 rounded-full" aria-label="Próxima análise" onClick={()=>step(1)}><ArrowRight/></Button></div>
-    {gallery&&<PresetGallery active={preset.id} onSelect={id=>{select(id);window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});}}/>}
+    {gallery&&<PresetGallery input={input} active={preset.id} onSelect={id=>{select(id);window.scrollTo({top:0,behavior:reduced?'instant':'smooth'});}}/>}
     <p className="mt-6 text-[11px] text-muted-foreground leading-relaxed">Somente resultados publicados e reconciliados. Transições são visuais entre observações discretas; não existem valores eleitorais para anos intermediários. Dados municipais não permitem inferir voto individual ou causalidade.</p>
   </div>;
 }
