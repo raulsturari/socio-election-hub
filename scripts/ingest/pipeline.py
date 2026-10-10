@@ -342,7 +342,8 @@ def import_tse_detalhe(zip_path: str, year: int, office: str = "Presidente") -> 
 
 
 DETALHE_FIELDS = {"eligible": "QT_APTOS", "turnout": "QT_COMPARECIMENTO", "abstentions": "QT_ABSTENCOES",
-                  "valid_votes": "QT_TOTAL_VOTOS_VALIDOS", "blank_votes": "QT_VOTOS_BRANCOS", "null_votes": "QT_TOTAL_VOTOS_NULOS"}
+                  "valid_votes": "QT_TOTAL_VOTOS_VALIDOS", "blank_votes": "QT_VOTOS_BRANCOS", "null_votes": "QT_TOTAL_VOTOS_NULOS",
+                  "not_installed_voters": "QT_ELEITORES_SECOES_NAO_INSTALADAS"}
 
 
 def _run_detalhe(job: Job, zip_path: str, year: int, office: str) -> None:
@@ -383,12 +384,12 @@ def _run_detalhe(job: Job, zip_path: str, year: int, office: str) -> None:
         valid_detalhe = sum(v["valid_votes"] for (r, _), v in agg.items() if r == rnd)
         mres = select_all(f"municipal_results?select=votes&election_id=eq.{eid}&order=ibge_code,candidate_id")
         valid_results = sum(x["votes"] for x in mres)
-        bad = sum(1 for (r, _), v in agg.items() if r == rnd and v["turnout"] + v["abstentions"] != v["eligible"])
+        bad = sum(1 for (r, _), v in agg.items() if r == rnd and v["turnout"] + v["abstentions"] + v["not_installed_voters"] != v["eligible"])
         rok = valid_detalhe == valid_results and bad == 0
         ok &= rok
         checks[f"round_{rnd}"] = {"municipalities": sum(1 for (r, _) in agg if r == rnd),
                                   "valid_votes_detalhe": valid_detalhe, "valid_votes_candidate_results": valid_results,
-                                  "rows_turnout_plus_abstention_ne_eligible": bad, "exterior_turnout_excluded": ext[rnd],
+                                  "rows_turnout_abstention_not_installed_ne_eligible": bad, "exterior_turnout_excluded": ext[rnd],
                                   "reconciled": rok}
     job.finish(ok, rows, len(out), {"year": year, "office": label, "rounds": sorted(elections)},
                {**checks, "unmapped_tse_codes": len(unmapped)}, None if ok else "turnout cross-check failed")
