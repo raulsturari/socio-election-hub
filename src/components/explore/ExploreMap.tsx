@@ -27,7 +27,9 @@ export function ExploreMap({rows,unit,replay,diverging=false,detail}:{rows:Explo
   const geometry = useMemo(() => mesh.data && typeof Path2D !== 'undefined' ? mapPaths(mesh.data.features) : [],[mesh.data]);
   const values = useMemo(() => new Map(rows.map(r => [r.ibge_code,r])),[rows]);
   const extent = useMemo(() => { const ys=rows.map(r=>r.y ?? 0);if(diverging){const m=Math.max(1,...ys.map(Math.abs));return [-m,m] as const;}return [Math.min(0,...ys),Math.max(1,...ys)] as const; },[rows,diverging]);
+  const dbg=useRef<{g?:unknown;v?:unknown;e?:unknown;r?:unknown}>({});
   useEffect(() => {
+    const d=dbg.current;console.log('map-effect',{g:d.g===geometry,v:d.v===values,e:d.e===extent,r:d.r===replay});d.g=geometry;d.v=values;d.e=extent;d.r=replay;
     const cv=canvas.current, ctx=cv?.getContext('2d'); if(!cv || !ctx || !geometry.length) return;
     setDrawn(false);
     const dpr=Math.min(window.devicePixelRatio,2);cv.width=360*dpr;cv.height=420*dpr;
