@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
+  useLocation,
   Outlet,
   Link,
   createRootRouteWithContext,
@@ -13,6 +14,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { BottomNav } from "@/components/BottomNav";
+import { MotionConfig, motion } from "motion/react";
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 function NotFoundComponent() {
   return (

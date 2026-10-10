@@ -30,7 +30,7 @@ export function TurnoutCard({ electionId, uf, ibge }: { electionId: number; uf: 
   );
 }
 
-function Stat({ label, value, sub }: { label: string; value: React.ReactNode; sub?: string }) {
+function Stat({ label, value, sub }: { label: string; value: import("react").ReactNode; sub?: string }) {
   return (
     <div className="min-w-0 rounded-lg bg-muted p-3">
       <dt className="label-caps">{label}</dt>

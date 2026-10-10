@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import type { ScatterPoint } from "@/lib/data.functions";
 import { pearson } from "@/lib/stats";
 import { fmtBRL, fmtInt, fmtPct } from "@/lib/format";
@@ -58,7 +58,7 @@ export function ScatterPlot({ points }: { points: ScatterPoint[] }) {
   );
 }
 
-function Stat({ label, value }: { label: string; value: React.ReactNode }) {
+function Stat({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="rounded-lg bg-muted p-3">
       <p className="label-caps">{label}</p>
