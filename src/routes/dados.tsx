@@ -14,7 +14,7 @@ export const Route = createFileRoute("/dados")({
       { property: "og:description", content: "Transparência sobre cada base de dados utilizada." },
     ],
   }),
-  errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{error.message}</div>,
+  errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,
   notFoundComponent: () => <div className="p-4 text-sm">Não encontrado.</div>,
   component: Dados,
 });

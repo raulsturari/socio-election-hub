@@ -7,15 +7,15 @@ import { ELECTION_YEARS, UFS } from "@/lib/constants";
 import { resultsQuery } from "@/services/datasets";
 import { BottomSheet, Card, Chip, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
 
-const searchSchema = z.object({
-  ano: z.coerce.number().refine((y) => (ELECTION_YEARS as readonly number[]).includes(y)).catch(2022),
-  uf: z.string().nullable().catch(null),
-  municipio: z.string().nullable().catch(null),
-  candidato: z.string().nullable().catch(null),
+const searchSchema = z.object({ 
+  ano: z.coerce.number().refine((y) => (ELECTION_YEARS as readonly number[]).includes(y)).optional().catch(2022),
+  uf: z.string().nullable().optional().catch(null),
+  municipio: z.string().nullable().optional().catch(null),
+  candidato: z.string().nullable().optional().catch(null),
 });
 
 export const Route = createFileRoute("/")({
-  validateSearch: (s) => searchSchema.parse(s),
+  validateSearch: (s: Record<string, unknown>) => searchSchema.parse(s),
   loaderDeps: ({ search }) => ({ ano: search.ano, uf: search.uf }),
   loader: ({ context, deps }) => context.queryClient.ensureQueryData(resultsQuery(deps.ano, deps.uf)),
   head: () => ({
@@ -26,13 +26,14 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Resultados eleitorais e indicadores por município, com fonte e metodologia." },
     ],
   }),
-  errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{error.message}</div>,
+  errorComponent: ({ error }) => <div role="alert" className="p-4 text-sm">{(error as Error).message}</div>,
   notFoundComponent: () => <div className="p-4 text-sm">Não encontrado.</div>,
   component: Atlas,
 });
 
 function Atlas() {
-  const search = Route.useSearch();
+  const raw = Route.useSearch();
+  const search = { ano: raw.ano ?? 2022, uf: raw.uf ?? null, municipio: raw.municipio ?? null, candidato: raw.candidato ?? null };
   const navigate = useNavigate({ from: "/" });
   const { data: results } = useSuspenseQuery(resultsQuery(search.ano, search.uf));
   const [sheet, setSheet] = useState(false);
