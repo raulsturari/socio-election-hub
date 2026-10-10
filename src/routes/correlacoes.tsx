@@ -2,11 +2,16 @@ import { DuelScatter, type ScatterSeries } from "@/components/duel/DuelScatter";
 import { DuelDetail } from "@/components/duel/DuelDetail";
 import { ModeSelector } from "@/components/duel/ModeSelector";
 import { displayName, duelMunicipality, duelTitle } from "@/lib/duel";
-import { pearson } from "@/lib/stats";
+import { pearsonTest, spearmanTest } from "@/lib/lab-stats";
+import type { LabAnalysis } from "@/lib/lab-analysis";
+import { X_VARIABLES } from "@/lib/lab-variables";
+import { interpretGraph, READING_CONVENTION } from "@/lib/graph-reading";
+import { GraphReading } from "@/components/lab/GraphReading";
+import { StatisticalDetails } from "@/components/lab/StatisticalDetails";
+import { CorrelationGrid } from "@/components/lab/StatsPanel";
 import { fmtBRL, fmtInt } from "@/lib/format";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle } from "lucide-react";
 import { filtersSchema } from "@/lib/filters";
 import { duelQuery, electionsQuery, scatterQuery } from "@/services/queries";
 import { useFilters } from "@/hooks/use-filters";
@@ -46,13 +51,24 @@ function Correlacoes() {
   const error = active.find((q) => q.error)?.error;
   const mk = (id: "bolsonaro" | "pt", label: string, pts: typeof qb.data): ScatterSeries => {
     const list = (pts ?? []).map((p) => ({ code: p.ibge_code, name: p.name, uf: p.uf, x: p.income, y: p.share }));
-    const r = pearson(list.map((p) => Math.log10(p.x)), list.map((p) => p.y));
-    return { id, label, points: list, stat: <span className="tabular-nums">r (log renda) = <strong>{r == null ? "—" : r.toFixed(2).replace(".", ",")}</strong> · N = {fmtInt(list.length)}</span> };
+    return { id, label, points: list };
   };
   const series: ScatterSeries[] = [
     ...(showB && duel.bolsonaro ? [mk("bolsonaro", displayName("bolsonaro", f.ano, duel.bolsonaro), qb.data)] : []),
     ...(showL && duel.lula ? [mk("pt", "Lula", ql.data)] : []),
   ];
+
+  const x = X_VARIABLES.find((v) => v.id === "renda");
+  const readings = series.map((s) => {
+    const tx = s.points.map((p) => Math.log10(p.x)), ys = s.points.map((p) => p.y);
+    const analysis: LabAnalysis = {
+      totalRows: s.points.length, missing: { x: 0, y: 0, covariates: 0, examples: [] },
+      points: { c: s.points.map((p) => p.code), n: s.points.map((p) => p.name), u: s.points.map((p) => p.uf), x: s.points.map((p) => p.x), y: ys },
+      pearson: pearsonTest(tx, ys), spearman: spearmanTest(tx, ys), model: null, modelNote: null,
+    };
+    return { name: s.label, id: s.id, analysis, hasModelAnalysis: false };
+  });
+  const ready = !!election && !loading && !error && series.some((s) => s.points.length > 0);
 
   return (
     <div className="space-y-4 px-4">
@@ -60,15 +76,7 @@ function Correlacoes() {
       <FilterBar ctx={ctx} />
       <ModeSelector ctx={ctx} />
 
-      <div className="flex gap-3 rounded-lg border p-3" role="note">
-        <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
-        <p className="text-xs leading-relaxed text-muted-foreground">
-          <span className="font-medium text-foreground">Falácia ecológica:</span> cada ponto é um município. Uma relação
-          entre médias municipais não indica como pessoas de determinada renda votaram. Correlação não implica causalidade.
-        </p>
-      </div>
-
-      <Card title={`${mode === "comparar" ? duelTitle(f.ano) : series[0]?.label ?? "—"} · ${f.uf ?? "Brasil"}`} footer="Estatísticas calculadas separadamente para cada candidato; um município não é contado duas vezes numa mesma estatística.">
+      <Card title={`${mode === "comparar" ? duelTitle(f.ano) : series[0]?.label ?? "—"} · ${f.uf ?? "Brasil"}`} footer={`TSE ${f.ano}/${f.turno}º turno · IBGE Censo 2022 · ${f.uf ?? "Brasil"}. ${ready ? series.map((s) => `${s.label}: ${fmtInt(s.points.length)} municípios`).join("; ") : ""}`}>
         {!election ? <NoElection year={f.ano} round={f.turno} /> : loading ? (
           <div className="aspect-[4/3] skeleton rounded-lg bg-muted" />
         ) : error ? (
@@ -81,12 +89,17 @@ function Correlacoes() {
         )}
       </Card>
 
-      <Card title="Fonte">
-        <SourceNote>
-          Renda: IBGE SIDRA tabela 10295, variável 13431 — rendimento nominal médio mensal domiciliar per capita, Censo 2022.
-          Votação: TSE, % de todos os votos nominais válidos do município (Outros = 100% − os dois). Junção por código IBGE. r calculado sobre log10 da renda.
-        </SourceNote>
-      </Card>
+      {ready && x && <>
+        <p className="text-xs text-muted-foreground">Amostra: apenas municípios com renda e votação disponíveis. O total de municípios sem esses dados não está disponível nesta consulta.</p>
+        <GraphReading reading={interpretGraph({ x, metric: "share", year: f.ano, round: f.turno, scope: f.uf ?? "Brasil" }, readings)} />
+        <StatisticalDetails key={JSON.stringify([f, mode])}>
+          {readings.map((s) => <div key={s.id} data-series={s.id} className="space-y-3"><h3 className="text-sm font-medium text-series-label">{s.name}</h3><CorrelationGrid a={s.analysis} /></div>)}
+          <h3 className="text-sm font-medium">Como calculamos</h3>
+          <SourceNote>Renda: {x.source}, rendimento nominal médio mensal domiciliar per capita. Votação: TSE, percentual de todos os votos válidos municipais, sem renormalizar os dois candidatos. Junção por código IBGE. Pares disponíveis, sem imputação; a cobertura de ausências não é fornecida por esta consulta. Pearson sobre log10 da renda; Spearman sobre postos. Intervalos Fisher-z e Fieller; testes bilaterais aproximados. Cada série é calculada separadamente, sem regressão conjunta. Esta tela não estima modelo ajustado. Falácia ecológica: não inferir voto individual ou causalidade.</SourceNote>
+          <SourceNote>{READING_CONVENTION}</SourceNote>
+        </StatisticalDetails>
+      </>}
+
     </div>
   );
 }

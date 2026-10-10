@@ -10,3 +10,8 @@
 - [x] Agrupamento B/L/Outros puro + RPC duel_dataset, modo global na URL com links antigos `cand`.
 - [x] Atlas (vantagem, lado a lado, 3 grupos), Comparar, 2022×2026, Correlações, Lab (estatísticas separadas, CSV), Explorar (presets).
 - [x] Testes unitários, conferência no banco e navegador 390/430px.
+
+# Leitura acessível das análises
+- [x] Motor determinístico contextual com testes de direção, incerteza, ajustes e séries independentes.
+- [x] Lab e Correlações: gráfico → leitura → detalhes fechados; fontes e problemas essenciais visíveis.
+- [x] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
