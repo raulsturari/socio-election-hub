@@ -3,6 +3,7 @@ import { interpretGraph, type ReadingContext } from './graph-reading';
 import type { LabAnalysis } from './lab-analysis';
 import { X_VARIABLES } from './lab-variables';
 import { cityTopic, editorialShape } from './graph-editorial';
+import journalisticExamples from '../../tests/fixtures/journalistic-reading-examples.json';
 const x=X_VARIABLES[0]; if(!x) throw new Error('Variable missing');
 const c:ReadingContext={x,metric:'share',year:2026,round:1,scope:'Brasil'};
 function analysis(r=.6):LabAnalysis {
@@ -17,6 +18,15 @@ const read=(a:LabAnalysis,ctx=c)=>interpretGraph(ctx,[{name:'Flávio Bolsonaro',
 const text=(a:LabAnalysis,ctx=c)=>read(a,ctx).paragraphs.join(' ');
 const duel=(a:LabAnalysis,b:LabAnalysis)=>interpretGraph(c,[{name:'Flávio Bolsonaro',analysis:a},{name:'Lula',analysis:b}]);
 describe('journalistic integrated reading',()=>{
+ it('actual generated examples have two paragraphs and 60–110 real whitespace-separated words',()=>{
+  expect('uma duas\ntrês'.split(/\s+/)).toHaveLength(3);
+  for(const example of journalisticExamples.examples){
+   expect(example.paragraphs).toHaveLength(2);
+   const words=example.paragraphs.join(' ').trim().split(/\s+/).length;
+   expect(words).toBeGreaterThanOrEqual(60);
+   expect(words).toBeLessThanOrEqual(110);
+  }
+ });
  it('uses the indicator theme at both extremes',()=>{
   expect(cityTopic('renda','Renda',false)).toBe('nas cidades de menor renda');
   expect(cityTopic('superior','Ensino',false)).toContain('menos moradores têm ensino superior');
