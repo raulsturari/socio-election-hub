@@ -569,6 +569,27 @@ export type Database = {
           votes: number
         }[]
       }
+      lab_dataset: {
+        Args: {
+          _base_election_id?: number
+          _candidate_number?: number
+          _election_id: number
+          _metric: string
+          _uf?: string
+          _x?: string
+        }
+        Returns: {
+          eligible: number
+          ibge_code: string
+          name: string
+          populacao: number
+          renda: number
+          superior: number
+          uf: string
+          x: number
+          y: number
+        }[]
+      }
       turnout_summary: {
         Args: { _election_id: number; _ibge?: string; _uf?: string }
         Returns: {
