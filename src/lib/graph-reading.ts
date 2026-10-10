@@ -44,7 +44,7 @@ function conclusion(c: ReadingContext, series: readonly ReadingSeries[], g: Scat
   const da = direction(a.analysis), db = b ? direction(b.analysis) : 0;
   if (a.analysis.points.y.length < 20 || b && b.analysis.points.y.length < 20) return 'Há poucos municípios com as informações necessárias; este recorte não sustenta uma conclusão sobre o desenho.';
   const subject = `À medida que ${indicator(c.x)} aumenta entre municípios`;
-  if (b && g.crossing && da * db < 0) return `As duas nuvens se cruzam no intervalo observado: ${g.lowLeader} tem vantagem nas faixas mais baixas do indicador, enquanto ${g.highLeader} se destaca nas mais altas. É a sobreposição de duas tendências opostas nos ${outcome(c.metric)}, não uma divisão em grupos de pessoas.`;
+  if (b && g.crossing && da * db < 0) return `Conforme ${indicator(c.x)} aumenta, a vantagem passa de ${g.lowLeader} para ${g.highLeader} nas faixas observadas. As duas nuvens se cruzam pela sobreposição de tendências opostas nos ${outcome(c.metric)}, não por uma divisão em grupos de pessoas.`;
   if (b && da * db < 0) return `${subject}, ${a.name} e ${b.name} seguem tendências opostas: os ${outcome(c.metric)} do primeiro tendem a ser ${da > 0 ? 'maiores' : 'menores'}, e os do segundo, ${db > 0 ? 'maiores' : 'menores'}. Isso, por si só, não configura um X: as faixas observadas não sustentam um cruzamento consistente.`;
   if (b && da && da === db) return `${subject}, ${a.name} e ${b.name} apresentam ${outcome(c.metric)} tendencialmente ${da > 0 ? 'maiores' : 'menores'}. As séries seguem a mesma direção, em vez de formar duas tendências cruzadas.`;
   if (b && (da || db)) return `${subject}, aparece uma direção mais definida para ${da ? a.name : b.name}, com ${outcome(c.metric)} ${(da || db) > 0 ? 'maiores' : 'menores'}; para ${da ? b.name : a.name}, a direção não fica clara neste recorte. As duas nuvens não devem ser tratadas como inversos automáticos.`;
@@ -54,12 +54,13 @@ function conclusion(c: ReadingContext, series: readonly ReadingSeries[], g: Scat
 }
 function geometryText(c: ReadingContext, g: ScatterGeometry): string {
   const h = g.horizontal, text: string[] = [];
-  if (h.concentration !== 'none') text.push(`${fmtReading((h.concentration === 'left' ? h.left : h.right) * 100)}% dos municípios ficam no terço ${h.concentration === 'left' ? 'esquerdo' : 'direito'} do eixo exibido${h.tail !== 'none' ? ', pois poucos extremos alongam a escala e comprimem o miolo' : ''}. A mediana do indicador é ${fmtReading(h.median)} ${c.x.unit}; estar nessa faixa não significa valor zero nem relação forte.`);
-  else if (c.x.log) text.push('A escala logarítmica espaça diferenças proporcionais do indicador e reduz a compressão causada pelos valores mais altos; o desenho deve ser lido nessa escala, não como se as distâncias fossem valores absolutos iguais.');
+  if (h.concentration !== 'none') text.push(`${fmtReading((h.concentration === 'left' ? h.left : h.right) * 100)}% dos municípios ficam no terço ${h.concentration === 'left' ? 'esquerdo' : 'direito'} do eixo${h.tail !== 'none' ? ': poucos extremos alongam a escala e comprimem o miolo' : ''}. A mediana é ${fmtReading(h.median)}${c.x.unit === '%' ? '%' : ` ${c.x.unit}`}; concentração não significa valor zero nem relação forte.`);
+  else if (c.x.log) text.push('A escala logarítmica reduz a compressão pelos valores altos e abre o miolo da nuvem: distâncias iguais representam diferenças proporcionais, não valores absolutos iguais.');
   const wide = g.vertical.filter(v => v.width === 'wide'), thin = g.vertical.filter(v => v.width === 'thin');
-  if (wide.length) text.push(`Dentro ${wide.length > 1 ? 'de cada série' : `da série de ${wide[0]?.name}`}, municípios com valores semelhantes do indicador ainda têm resultados muito diferentes: a abertura vertical mostra que a variável isolada não separa bem as votações${c.metric !== 'share' ? ' ou a participação' : ''}.`);
+  if (wide.length) text.push(`Dentro ${wide.length > 1 ? 'de cada série' : `da série de ${wide[0]?.name}`}, municípios com indicador parecido têm resultados muito diferentes. Essa abertura vertical limita quanto a variável isolada distingue os resultados.`);
   else if (thin.length) text.push(`A abertura dentro ${thin.length > 1 ? 'das duas séries' : `da série de ${thin[0]?.name}`} é pequena nas faixas comparáveis do indicador: há maior regularidade observada, não certeza sobre cidades individuais.`);
-  else text.push('A leitura considera a variação dentro de cada série em faixas semelhantes do indicador, sem confundir a distância entre as candidaturas com dispersão de uma delas.');
+  else if (g.vertical.some(v => v.width === 'moderate')) text.push('Mesmo nas faixas de indicador semelhante, os pontos não seguem uma linha fina: há variação dentro das séries, além da distância entre elas.');
+  else text.push('As faixas disponíveis não têm informação suficiente para classificar a abertura da nuvem com segurança.');
   const concentrated = g.vertical.filter(v => v.concentration !== 'none');
   if (concentrated.length) text.push(`${concentrated.map(v => `${v.name} concentra pontos ${v.concentration === 'base' ? 'na base' : 'no topo'}`).join(' e ')} do eixo; ${g.domain.y[0] !== 0 ? 'a base é uma faixa truncada, não votação zero' : 'a posição corresponde aos valores percentuais exibidos'}.`);
   return text.join(' ');
@@ -77,7 +78,8 @@ function adjustment(c: ReadingContext, series: readonly ReadingSeries[]): string
   if (states.every(s => s.state === 'indisponível')) return '';
   const controls = states[0]?.controls.filter(v => states.every(s => s.controls.includes(v))) ?? [];
   const prefix = `Ao comparar municípios semelhantes${controls.length ? ` em ${controls.join(', ')}` : ' nos controles disponíveis'}`;
-  return states.length === 2 && states[0]?.state === states[1]?.state ? `${prefix}, a leitura de ambas ${states[0]?.state === 'permanece' ? 'permanece' : `fica ${states[0]?.state}`}.` : `${prefix}, ${states.map(s => `a leitura de ${s.name} ${s.state === 'sem direção clara' || s.state === 'indisponível' ? `fica ${s.state}` : s.state}`).join(', enquanto ')}.`;
+  const describe = (state: string) => state === 'sem direção clara' || state === 'indisponível' ? `fica ${state}` : state;
+  return states.length === 2 && states[0]?.state === states[1]?.state ? `${prefix}, a leitura de ambas ${describe(states[0]?.state ?? 'indisponível')}.` : `${prefix}, ${states.map(s => `a leitura de ${s.name} ${describe(s.state)}`).join(', enquanto ')}.`;
 }
 /** One synthesis; calculations remain per series and geometry shares the exact render domain. */
 export function interpretGraph(context: ReadingContext, input: readonly ReadingSeries[]): GraphReading {
@@ -86,7 +88,7 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const geometry = analyzeScatterGeometry(points, domain, context.metric === 'share');
   const text = conclusion(context, input, geometry);
   const closing: string[] = [];
-  if (geometry.composition) closing.push('As duas séries dividem o mesmo total de votos válidos: parte do quase espelhamento pode ser aritmética. Outros ocupa o restante, impedindo complementaridade perfeita; isso não indica transferência individual de votos.');
+  if (geometry.composition && input[0] && input[1] && direction(input[0].analysis) * direction(input[1].analysis) < 0) closing.push('Parte do espelhamento pode ser aritmética: as séries dividem os mesmos votos válidos, mas Outros impede complementaridade perfeita.');
   if (context.metric === 'share_delta' && input.some(s => s.id === 'bolsonaro' || s.name.includes('Bolsonaro'))) closing.push('A variação em pontos percentuais compara Jair em 2022 com Flávio em 2026, não o nível atual nem transferência de eleitores.');
   const adjusted = adjustment(context, input);
   if (adjusted) closing.push(adjusted);
@@ -97,6 +99,7 @@ export function interpretGraph(context: ReadingContext, input: readonly ReadingS
   const missingCovariates = Math.max(0, ...input.map(s => s.analysis.missing.covariates));
   if (missingCovariates) limitations.push('A comparação ajustada usa apenas municípios com todas as informações adicionais.');
   if (input.some(s => s.analysis.pearson && s.analysis.spearman && Math.sign(s.analysis.pearson.r) !== Math.sign(s.analysis.spearman.r))) limitations.push('A direção varia entre distância dos valores e ordem dos municípios.');
-  const title = geometry.crossing && input.length > 1 ? 'A vantagem muda ao longo do indicador' : geometry.horizontal.concentration !== 'none' ? 'Concentração não elimina a diversidade dos resultados' : input.length > 1 && direction(input[0].analysis) * direction(input[1].analysis) < 0 ? 'Tendências opostas, com diferenças entre municípios' : 'Um padrão municipal, não uma regra individual';
+  const a = input[0], b = input[1], opposite = a && b && direction(a.analysis) * direction(b.analysis) < 0;
+  const title = geometry.crossing && opposite ? 'A vantagem muda ao longo do indicador' : geometry.horizontal.concentration !== 'none' ? 'Concentração não elimina a diversidade dos resultados' : opposite ? 'Tendências opostas, com diferenças entre municípios' : 'Um padrão municipal, não uma regra individual';
   return { title, paragraphs: [text, geometryText(context, geometry), closing.join(' ')].filter(Boolean), limitations, geometry };
 }
