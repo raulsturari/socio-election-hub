@@ -68,6 +68,7 @@ def rest(method: str, path: str, body=None, prefer: str = "return=minimal"):
 
 
 def select_all(path: str) -> list[dict]:
+    """Offset pagination; callers MUST include a deterministic order= on a unique key."""
     out, step = [], 1000
     while True:
         sep = "&" if "?" in path else "?"
@@ -189,7 +190,7 @@ def import_tse_munzona(zip_path: str, year: int = 2022, office: str = "President
 
 def _parse_tse(job: Job, zip_path: str, year: int, office: str):
     tse_to_ibge = {m["tse_code"]: m["ibge_code"]
-                   for m in select_all("municipalities?select=tse_code,ibge_code&tse_code=not.is.null")}
+                   for m in select_all("municipalities?select=tse_code,ibge_code&tse_code=not.is.null&order=ibge_code")}
     zf = zipfile.ZipFile(zip_path)
     member = next(n for n in zf.namelist() if n.endswith(f"_{year}_BR.csv"))
     job.log("info", "reading member", {"member": member})
@@ -254,8 +255,8 @@ def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
     # Reconciliation, re-read from the database: file − exterior − unmapped = Σ zones = Σ municipalities.
     checks, ok = {}, not p["unmapped"]
     for rnd, eid in sorted(elections.items()):
-        zsum = sum(x["votes"] for x in select_all(f"zone_results?select=votes&election_id=eq.{eid}"))
-        mrows = select_all(f"municipal_results?select=votes,ibge_code&election_id=eq.{eid}")
+        zsum = sum(x["votes"] for x in select_all(f"zone_results?select=votes&election_id=eq.{eid}&order=ibge_code,zone,candidate_id"))
+        mrows = select_all(f"municipal_results?select=votes,ibge_code&election_id=eq.{eid}&order=ibge_code,candidate_id")
         msum = sum(x["votes"] for x in mrows)
         expected = p["file"][rnd] - p["ext"][rnd] - sum(p["unmapped"].values())
         rok = zsum == msum == expected
@@ -276,7 +277,7 @@ def _run_tse(job: Job, zip_path: str, year: int, office: str) -> None:
 # ---------- SIDRA ----------
 def import_sidra() -> None:
     ensure_sources()
-    valid = {m["ibge_code"] for m in select_all("municipalities?select=ibge_code")}
+    valid = {m["ibge_code"] for m in select_all("municipalities?select=ibge_code&order=ibge_code")}
     for ind in SIDRA_INDICATORS:
         url = f"https://apisidra.ibge.gov.br/values/t/{ind['table']}/n6/all/v/{ind['variable']}/p/{ind['period']}"
         raw, lm = fetch(url)
@@ -306,8 +307,12 @@ def import_sidra() -> None:
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    {"municipalities": import_municipalities, "sidra": import_sidra}.get(cmd, lambda: None)() \
-        if cmd != "tse-munzona" else import_tse_munzona(sys.argv[2])
-    if cmd not in ("municipalities", "sidra", "tse-munzona"):
+    if cmd == "municipalities":
+        import_municipalities()
+    elif cmd == "sidra":
+        import_sidra()
+    elif cmd == "tse-munzona" and len(sys.argv) > 2:
+        import_tse_munzona(sys.argv[2])
+    else:
         print(__doc__)
         sys.exit(1)
