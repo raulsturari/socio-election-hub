@@ -17,6 +17,6 @@
 - [x] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
 
 # Conclusão integrada e geometria
-- [ ] Compartilhar escalas reais e diagnosticar concentração, caudas, cruzamento pareado e abertura por série.
-- [ ] Substituir blocos por candidato por uma conclusão única; critérios auditáveis recolhidos.
-- [ ] Testar casos geométricos e ajustes; verificar renda/preta, filtros, CSV e screenshots 390/430px.
+- [x] Compartilhar escalas reais e diagnosticar concentração, caudas, cruzamento pareado e abertura por série.
+- [x] Substituir blocos por candidato por uma conclusão única; critérios auditáveis recolhidos.
+- [x] Testar casos geométricos e ajustes; verificar renda/preta, filtros, CSV e screenshots 390/430px.
