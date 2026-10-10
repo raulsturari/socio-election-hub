@@ -2058,7 +2058,7 @@
    "name": "Esgoto por rede geral, pluvial ou fossa ligada",
    "theme": "Saneamento",
    "unit": "%",
-   "topic": "presença de domicílios ligados à rede de esgoto",
+   "topic": "cobertura de esgoto",
    "log": false,
    "year": 2022,
    "source": "IBGE Censo Demográfico 2022",

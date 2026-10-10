@@ -216,7 +216,7 @@ P += [
         dict(table="6803", variable="381", cls="c1821", num=[72144], den=[72129], universe=DPPO), synonyms=["abastecimento"]),
     ind("agua_canalizada_dentro_pct_2022", "aguacanalizada", "Água canalizada dentro de casa", "Saneamento", "%", "presença de domicílios com água canalizada dentro de casa", "ratio",
         dict(table="6804", variable="381", classes="c301/72053", cls="c1817", num=[72126], den=[72125], universe=DPPO)),
-    ind("esgoto_rede_ou_fossa_ligada_pct_2022", "esgoto", "Esgoto por rede geral, pluvial ou fossa ligada", "Saneamento", "%", "presença de domicílios ligados à rede de esgoto", "ratio",
+    ind("esgoto_rede_ou_fossa_ligada_pct_2022", "esgoto", "Esgoto por rede geral, pluvial ou fossa ligada", "Saneamento", "%", "cobertura de esgoto", "ratio",
         dict(table="6805", variable="381", cls="c11558", num=[46290], den=[46292], universe=DPPO), synonyms=["saneamento basico"]),
     ind("fossa_rudimentar_pct_2022", "fossa", "Fossa rudimentar ou buraco", "Saneamento", "%", "presença de domicílios com fossa rudimentar", "ratio",
         dict(table="6805", variable="381", cls="c11558", num=[72113], den=[46292], universe=DPPO)),
