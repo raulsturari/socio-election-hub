@@ -6,13 +6,13 @@ import { fmtNum } from "@/lib/format";
 import { useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { AlertTriangle, ChevronDown, Download } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import { filtersSchema } from "@/lib/filters";
 import { labSearchSchema, REGIONS, X_VARIABLES, Y_METRICS, type LabInput, type YMetric } from "@/lib/lab-variables";
 import type { LabAnalysis } from "@/lib/lab-analysis";
 import { electionsQuery, labQuery } from "@/services/queries";
 import { useFilters } from "@/hooks/use-filters";
-import { Card, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
+import { Card, EmptyState, PageHeader } from "@/components/ui-kit";
 import { FilterBar } from "@/components/FilterBar";
 import { NoElection } from "@/components/NoElection";
 import { LabScatter } from "@/components/lab/LabScatter";
@@ -20,6 +20,11 @@ import { CorrelationGrid, ModelTable } from "@/components/lab/StatsPanel";
 import { AuditCard } from "@/components/lab/AuditCard";
 import { LabControls } from "@/components/lab/LabControls";
 import { fmtInt } from "@/lib/format";
+import { interpretGraph, type ReadingContext } from "@/lib/graph-reading";
+import { GraphReading } from "@/components/lab/GraphReading";
+import { StatisticalDetails } from "@/components/lab/StatisticalDetails";
+import { LabMethod } from "@/components/lab/LabMethod";
+import { Button } from "@/components/ui/button";
 
 const searchSchema = filtersSchema.extend(labSearchSchema.shape);
 
@@ -47,7 +52,8 @@ function Laboratorio() {
   const search = Route.useSearch();
   const navigate = useNavigate({ from: "/laboratorio" });
   const [sheet, setSheet] = useState<"x" | "y" | "reg" | null>(null);
-  const xv = X_VARIABLES.find((v) => v.id === search.x) ?? X_VARIABLES[0]!;
+  const xv = X_VARIABLES.find((v) => v.id === search.x) ?? X_VARIABLES[0];
+  if (!xv) throw new Error("Catalogue de variables indisponível.");
   const metric = Y_METRICS.find((m) => m.id === search.y) ?? Y_METRICS[0];
   const base = metric.needsBase && f.ano === 2026 ? elections.find((e) => e.year === 2022 && e.round === f.turno) ?? null : null;
   const baseMissing = metric.needsBase && !base;
@@ -66,6 +72,9 @@ function Laboratorio() {
   const yLabel = metric.needsCandidate ? `${metric.label} · ${compare ? duelTitle(f.ano) : focusName(candidate)}` : metric.label;
   const scope = f.uf ?? REGIONS.find((r) => r.id === search.reg)?.label ?? "Brasil";
 
+  const readingContext: ReadingContext = { x: xv, metric: metric.id, year: f.ano, round: f.turno, scope };
+  const analysisKey = JSON.stringify([input, inputL, mode, f.mun]);
+
   const patch = (p: { x?: string; y?: YMetric; reg?: string | undefined; cand?: number }) =>
     navigate({ search: (prev) => ({ ...prev, ...p }), replace: true });
 
@@ -83,12 +92,11 @@ function Laboratorio() {
         onChange={patch} />
 
       {election && <AuditCard electionId={election.id} label={`${f.ano} · ${f.turno}º turno`} />}
-      <Warning />
 
       {!election ? <NoElection year={f.ano} round={f.turno} /> : baseMissing ? (
         <EmptyState title="Comparação indisponível" description="Variações 2022→2026 exigem ano 2026 e o mesmo turno validado em 2022. Selecione 2026 nos filtros." />
-      ) : lab.isLoading || !input ? <Skeleton /> : lab.error ? (
-        <EmptyState title="Erro ao calcular" description={lab.error.message} action={<button className="min-h-11 rounded-full bg-secondary px-4 text-sm" onClick={() => lab.refetch()}>Tentar de novo</button>} />
+      ) : lab.isLoading || ctx.summary.isLoading || !input ? <Skeleton /> : lab.error ? (
+        <EmptyState title="Erro ao calcular" description={lab.error.message} action={<Button variant="secondary" className="min-h-11 rounded-full" onClick={() => lab.refetch()}>Tentar de novo</Button>} />
       ) : lab.data && "unavailable" in lab.data ? (
         <EmptyState title="Indicador indisponível" description={lab.data.unavailable} />
       ) : lab.data && lab.data.points.y.length === 0 ? (
@@ -96,61 +104,58 @@ function Laboratorio() {
       ) : compare ? (
         labL.isLoading ? <Skeleton /> : labL.error || !labL.data || "unavailable" in labL.data ? (
           <EmptyState title="Série de Lula indisponível" description={labL.error?.message ?? "Sem dados para Lula neste recorte."} />
-        ) : !lab.data || "unavailable" in lab.data ? null : <DuelLab b={lab.data} l={labL.data} bName={focusName(duel.bolsonaro)} xv={xv} yLabel={metric.label} scope={scope}
+        ) : !lab.data || "unavailable" in lab.data ? null : <DuelLab key={analysisKey} context={readingContext} b={lab.data} l={labL.data} bName={focusName(duel.bolsonaro)} xv={xv} yLabel={metric.label} scope={scope}
             fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}_bolsonaro_x_lula.csv`} />
       ) : lab.data ? (
-        <SeriesScope candidate={candidate} electoral={metric.needsCandidate}><Results a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} /></SeriesScope>
+        <SeriesScope candidate={candidate} electoral={metric.needsCandidate}><Results key={analysisKey} context={readingContext} name={metric.needsCandidate ? focusName(candidate) : metric.label} a={lab.data} xv={xv} yLabel={yLabel} scope={scope} fileName={`lab_${f.ano}_t${f.turno}_${xv.id}_${metric.id}_${scope}.csv`} /></SeriesScope>
       ) : null}
 
-      <Card title="Método">
-        <SourceNote>
-          Unidade de análise: município (sem ponderação por eleitorado). X: Censo 2022 (IBGE SIDRA, mesma referência para 2022 e 2026).
-          Y: TSE, % dos votos nominais válidos; comparecimento e abstenção sobre aptos; brancos+nulos sobre comparecimento; variações em pontos
-          percentuais pelo mesmo número de urna. Missing: exclusão listwise, contada acima (nada é imputado). Pearson com IC de Fisher-z;
-          Spearman em postos com IC de Fieller. OLS: y ~ X + log10 renda + % superior completo + log10 população, com efeitos fixos de UF
-          quando o recorte inclui mais de uma UF; EP robusto HC1, IC 95% t, Breusch-Pagan e VIF. Cálculo no servidor sobre todos os municípios.
-        </SourceNote>
-      </Card>
+
     </div>
   );
 }
 
-function Results({ a, xv, yLabel, scope, fileName }: { a: LabAnalysis; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
+function Results({ a, xv, yLabel, scope, fileName, context, name }: { context: ReadingContext; name: string; a: LabAnalysis; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
   const dropped = a.missing.x + a.missing.y;
   return (
     <>
-      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`Fonte X: ${xv.source}. Amostra: ${fmtInt(a.points.y.length)} de ${fmtInt(a.totalRows)} municípios${dropped ? ` (${fmtInt(dropped)} sem dado${a.missing.examples.length ? `: ${a.missing.examples.join(", ")}` : ""})` : ""}.`}>
+      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022. ${scope}. Amostra: ${fmtInt(a.points.y.length)} de ${fmtInt(a.totalRows)} municípios${dropped ? ` (${fmtInt(dropped)} sem dado${a.missing.examples.length ? `: ${a.missing.examples.join(", ")}` : ""})` : ""}.`}>
         <LabScatter points={a.points} xv={xv} yLabel={yLabel} />
-        <button onClick={() => downloadCsv(a, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
+        <Button variant="secondary" onClick={() => downloadCsv(a, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV
-        </button>
+        </Button>
       </Card>
-      <Card title="Correlação bivariada"><CorrelationGrid a={a} /></Card>
-      <Card title="Regressão OLS multivariada" footer={a.missing.covariates ? `${fmtInt(a.missing.covariates)} municípios excluídos do modelo por covariável ausente.` : undefined}>
-        <ModelTable a={a} />
-      </Card>
+      <GraphReading reading={interpretGraph(context, [{ name, analysis: a }])} />
+      <StatisticalDetails>
+      <div><h3 className="mb-3 text-sm font-medium">Correlação bivariada</h3><CorrelationGrid a={a} /></div>
+      <div><h3 className="mb-3 text-sm font-medium">Regressão OLS multivariada</h3><ModelTable a={a} /></div>
+      <LabMethod x={xv} />
+      </StatisticalDetails>
     </>
   );
 }
 
-function DuelLab({ b, l, bName, xv, yLabel, scope, fileName }: { b: LabAnalysis; l: LabAnalysis; bName: string; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
+function DuelLab({ b, l, bName, xv, yLabel, scope, fileName, context }: { context: ReadingContext; b: LabAnalysis; l: LabAnalysis; bName: string; xv: (typeof X_VARIABLES)[number]; yLabel: string; scope: string; fileName: string }) {
   const toPts = (a: LabAnalysis) => a.points.y.map((y, i) => ({ code: String(a.points.c[i]), name: a.points.n[i] ?? "", uf: String(a.points.u[i] ?? ""), x: a.points.x[i] ?? 0, y }));
-  const stat = (a: LabAnalysis) => <span className="tabular-nums">N = {fmtInt(a.points.y.length)} de {fmtInt(a.totalRows)}</span>;
-  const series: ScatterSeries[] = [{ id: "bolsonaro", label: bName, points: toPts(b), stat: stat(b) }, { id: "pt", label: "Lula", points: toPts(l), stat: stat(l) }];
+  const series: ScatterSeries[] = [{ id: "bolsonaro", label: bName, points: toPts(b) }, { id: "pt", label: "Lula", points: toPts(l) }];
   return (
     <>
-      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`Fonte X: ${xv.source}. Duas séries com as mesmas escalas; estatísticas e modelos estimados separadamente por candidato (sem regressão conjunta com pontos duplicados).`}>
+      <Card title={`${xv.label} × ${yLabel} · ${scope}`} footer={`TSE ${context.year}/${context.round}º turno · IBGE Censo 2022 · ${scope}. ${bName}: ${fmtInt(b.points.y.length)} de ${fmtInt(b.totalRows)} municípios; Lula: ${fmtInt(l.points.y.length)} de ${fmtInt(l.totalRows)}.`}>
         <DuelScatter series={series} xLabel={xv.label} yLabel={yLabel} formatX={fmtNum} log={xv.log} />
-        <button onClick={() => downloadDuelCsv(b, l, bName, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
+        <Button variant="secondary" onClick={() => downloadDuelCsv(b, l, bName, xv.label, yLabel, fileName)} className="mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-secondary text-sm">
           <Download className="size-4" aria-hidden /> Exportar CSV (os dois)
-        </button>
+        </Button>
       </Card>
+      <GraphReading reading={interpretGraph(context, [{ name: bName, id: "bolsonaro", analysis: b }, { name: "Lula", id: "pt", analysis: l }])} />
+      <StatisticalDetails>
       {([[b, bName, "bolsonaro"], [l, "Lula", "pt"]] as const).map(([a, name, s]) => (
         <div key={s} data-series={s} className="space-y-4">
-          <Card title={`Correlação · ${name}`}><CorrelationGrid a={a} /></Card>
-          <Card title={`OLS multivariada · ${name}`} footer={a.missing.covariates ? `${fmtInt(a.missing.covariates)} municípios excluídos do modelo por covariável ausente.` : undefined}><ModelTable a={a} /></Card>
+          <h3 className="text-sm font-medium text-series-label">{name}</h3>
+          <CorrelationGrid a={a} /><ModelTable a={a} />
         </div>
       ))}
+      <LabMethod x={xv} />
+      </StatisticalDetails>
     </>
   );
 }
@@ -177,7 +182,7 @@ function saveCsv(lines: string[], name: string) {
 function downloadCsv(a: LabAnalysis, xl: string, yl: string, name: string) {
   const esc = (s: string) => `"${s.replace(/"/g, '""')}"`;
   const lines = [["codigo_ibge", "municipio", "uf", esc(xl), esc(yl)].join(",")];
-  a.points.c.forEach((c, i) => lines.push([c, esc(a.points.n[i]!), a.points.u[i], a.points.x[i], a.points.y[i]].join(",")));
+  a.points.c.forEach((c, i) => lines.push([c, esc(a.points.n[i] ?? ""), a.points.u[i], a.points.x[i], a.points.y[i]].join(",")));
   const url = URL.createObjectURL(new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" }));
   const el = document.createElement("a");
   el.href = url; el.download = name; el.click();
@@ -190,18 +195,6 @@ function Picker({ label, value, onClick }: { label: string; value: string; onCli
       <span className="label-caps flex items-center gap-1">{label}<ChevronDown className="size-3" aria-hidden /></span>
       <span className="w-full truncate text-xs" title={value}>{value}</span>
     </button>
-  );
-}
-
-function Warning() {
-  return (
-    <div className="flex gap-3 rounded-lg border p-3" role="note">
-      <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
-      <p className="text-xs leading-relaxed text-muted-foreground">
-        <span className="font-medium text-foreground">Dados agregados, não individuais.</span> Cada ponto é um município: associações
-        entre médias municipais não dizem como pessoas votaram (falácia ecológica). Correlação e coeficientes de regressão não indicam causalidade.
-      </p>
-    </div>
   );
 }
 
