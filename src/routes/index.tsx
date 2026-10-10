@@ -92,7 +92,7 @@ function Atlas() {
                     {(["b", "l"] as const).map((k) => (
                       <div key={k} data-series={k === "b" ? "bolsonaro" : "pt"}>
                         <p className="label-caps mb-1">{k === "b" ? displayName("bolsonaro", f.ano, duel.bolsonaro) : "Lula"} · mesma escala</p>
-                        <ChoroplethMap uf={f.uf} shares={pick(k)} max={sharedMax} selected={f.mun} onSelect={(mun) => set({ mun })} detail={k === "l" ? detail : undefined} label={k} />
+                        <ChoroplethMap uf={f.uf ?? ""} shares={pick(k)} max={sharedMax} selected={f.mun} onSelect={(mun) => set({ mun })} detail={k === "l" ? detail : undefined} label={k} />
                       </div>
                     ))}
                   </div>
