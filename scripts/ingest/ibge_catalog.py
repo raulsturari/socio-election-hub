@@ -110,9 +110,16 @@ def compute(ind: dict, uf_of: dict[str, str]) -> tuple[dict[str, tuple[float | N
         return {k[0]: parse_value(v) for k, v in c.items()}, [u], {"sha256": [sha]}
     if kind in ("ratio", "other_uf"):
         cls = s["cls"]
-        cats = "all" if kind == "other_uf" else ",".join(str(x) for x in sorted(set(s["num"] + s["den"] + s.get("partition", []))))
-        u = url_for(s["table"], s["variable"], period, s.get("classes"), f"{cls}/{cats}")
-        rows, sha = fetch_json(u)
+        cat_ids = sorted({s["total"], s["nodecl"], *s["ufCategory"].values()} if kind == "other_uf"
+                         else set(s["num"] + s["den"] + s.get("partition", [])))
+        # SIDRA caps a response at 50 000 values: request ≤8 categories × 5 571 municipalities at a time
+        rows, shas, urls_ = [], [], []
+        for i in range(0, len(cat_ids), 8):
+            u = url_for(s["table"], s["variable"], period, s.get("classes"), f"{cls}/" + ",".join(map(str, cat_ids[i:i + 8])))
+            part, sh = fetch_json(u)
+            rows = part if not rows else rows + part[1:]
+            shas.append(sh); urls_.append(u)
+        u, sha = urls_[0], shas[0]
         wanted = {str(x) for x in s.get("num", []) + s.get("den", [])} or {str(s["total"]), str(s["nodecl"])}
         c = cells(rows, class_key(rows, wanted))
         by = defaultdict(dict)
@@ -141,8 +148,8 @@ def compute(ind: dict, uf_of: dict[str, str]) -> tuple[dict[str, tuple[float | N
                     worst = max(worst, abs(sum(part) - den[0]) / den[0])
         if s.get("partition"):
             integrity["partition_max_relative_gap"] = round(worst, 6)
-        integrity["sha256"] = [sha]
-        return out, [u], integrity
+        integrity["sha256"] = shas
+        return out, urls_, integrity
     if kind == "varratio":
         u = url_for(s["table"], f"{s['numVar']},{s['denVar']}", period, s.get("classes"))
         rows, sha = fetch_json(u)
