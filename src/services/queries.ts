@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getAudit, getLab } from "@/lib/lab.functions";
 import type { LabInput } from "@/lib/lab-variables";
-import { getDuel, getElections, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
+import { getDuel, getElections, getIndicatorCoverage, getMunicipalities, getProvenance, getScatter, getShares, getSummary, getTurnout } from "@/lib/data.functions";
 
 const LONG = 10 * 60_000;
 
@@ -19,6 +19,9 @@ export const sharesQuery = (electionId: number, candidateId: number, uf: string 
 
 export const scatterQuery = (electionId: number, candidateId: number, uf: string | null) =>
   queryOptions({ queryKey: ["scatter", electionId, candidateId, uf], queryFn: () => getScatter({ data: { electionId, candidateId, uf } }), staleTime: LONG });
+
+export const indicatorCoverageQuery = () =>
+  queryOptions({ queryKey: ["indicator-coverage"], queryFn: () => getIndicatorCoverage(), staleTime: LONG });
 
 export const provenanceQuery = () =>
   queryOptions({ queryKey: ["provenance"], queryFn: () => getProvenance(), staleTime: 60_000 });

@@ -173,3 +173,12 @@ export const getDuel = createServerFn({ method: "GET" })
     );
     return { rows: raw.map((r) => duelRowSchema.parse(r)), bolsonaro: pair.bolsonaro, lula: pair.lula };
   });
+
+export interface IndicatorCoverageDTO { indicator_id: string; year: number; nonnull: number; total: number }
+/** Non-null municipal coverage per imported indicator (drives "Disponível no app" vs "Não importado"). */
+export const getIndicatorCoverage = createServerFn({ method: "GET" }).handler(async (): Promise<IndicatorCoverageDTO[]> => {
+  const { publicClient } = await import("./supabase-public.server");
+  const { data, error } = await publicClient().rpc("indicator_coverage");
+  if (error) throw new Error(error.message);
+  return (data ?? []).map((r) => ({ indicator_id: r.indicator_id, year: Number(r.year), nonnull: Number(r.nonnull), total: Number(r.total) }));
+});
