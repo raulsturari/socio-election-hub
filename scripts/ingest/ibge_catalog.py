@@ -186,8 +186,8 @@ def run(only: set[str] | None) -> list[dict]:
     for ind in manifest["indicators"]:
         if only and ind["id"] not in only:
             continue
-        before = rest("GET", f"indicator_values?select=ibge_code,value&indicator_id=eq.{ind['id']}&limit=10000", prefer="")
-        prev = {r["ibge_code"]: r["value"] for r in before or []}
+        before = select_all(f"indicator_values?select=ibge_code,value&indicator_id=eq.{ind['id']}&order=ibge_code")
+        prev = {r["ibge_code"]: r["value"] for r in before}
         values, urls, integrity = compute(ind, valid)
         job = Job("IBGE_PIB_MUN" if ind["spec"].get("table") == "5938" else "IBGE_SIDRA", f"ibge_catalog_{ind['id']}", urls[0], None,
                   integrity["sha256"][0], None)
@@ -212,7 +212,8 @@ def run(only: set[str] | None) -> list[dict]:
         changed = sum(1 for r in rows if r["ibge_code"] in prev and _differs(prev[r["ibge_code"]], r["value"]))
         nonnull = sum(1 for r in rows if r["value"] is not None)
         diff = {"rows_before": len(prev), "rows_after": len(rows), "values_changed": changed,
-                "null_to_value": sum(1 for r in rows if prev.get(r["ibge_code"], 0) is None and r["value"] is not None)}
+                "null_to_value": sum(1 for r in rows if r["ibge_code"] in prev and prev[r["ibge_code"]] is None and r["value"] is not None),
+                "changed_examples": [r["ibge_code"] for r in rows if r["ibge_code"] in prev and _differs(prev[r["ibge_code"]], r["value"])][:5]}
         if bad:
             job.log("warn", "valores fora do intervalo 0–100 descartados", {"count": len(bad), "examples": bad[:5]})
         if absent:

@@ -258,7 +258,7 @@ P += [
 P += [
     ind("favela_pct_2022", "favela", "Moradores em favelas e comunidades urbanas", "Território", "%", "presença de moradores em favelas", "xratio",
         dict(num=dict(table="9884", variable="9612", classes="c86/95251/c2/6794/c58/95253"), den=dict(table="4709", variable="93"), universe="População residente (universo)"),
-        synonyms=["comunidades", "periferia"], definition="Municípios sem favela publicada aparecem como ausentes, não como zero, a menos que o IBGE publique '-'."),
+        synonyms=["comunidades", "periferia"], definition="O IBGE publica a tabela só para os municípios com favelas e comunidades urbanas delimitadas; os demais ficam ausentes, não como zero."),
     ind("unidades_conservacao_pct_2022", "conservacao", "Moradores em Unidades de Conservação", "Território", "%", "presença de moradores em unidades de conservação", "ratio",
         dict(table="10211", variable="93", classes="c1/6795", cls="c2661", num=[50581], den=[32776], universe="População residente")),
     ind("cor_indigena_pct_2022", "indigena", "Cor ou raça indígena", "Raça/cor", "%", "presença de moradores de cor ou raça indígena", "direct",
@@ -290,7 +290,7 @@ for id_, alias, label, topic, v, syn in [
     ("vab_adm_publica_pct_2021", "pibpublico", "Administração pública no valor adicionado", "peso da administração pública na economia", "525", ["prefeitura", "estado"]),
 ]:
     P.append(ind(id_, alias, label, "Economia local", "%", topic, "varratio", dict(PIB, numVar=v), year=2021, source=PIBSRC, synonyms=syn,
-                 definition="Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública)."))
+                 definition="Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública). Municípios com VAB total negativo ou parcela fora de 0–100% ficam ausentes."))
 
 # ---------- planning list: verified unavailable / not imported ----------
 PLANNED = [

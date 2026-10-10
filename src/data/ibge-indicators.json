@@ -2534,7 +2534,7 @@
    "source": "IBGE Censo Demográfico 2022",
    "kind": "xratio",
    "universe": "População residente (universo)",
-   "definition": "Municípios sem favela publicada aparecem como ausentes, não como zero, a menos que o IBGE publique '-'.",
+   "definition": "O IBGE publica a tabela só para os municípios com favelas e comunidades urbanas delimitadas; os demais ficam ausentes, não como zero.",
    "synonyms": [
     "comunidades",
     "periferia"
@@ -2761,7 +2761,7 @@
    "source": "IBGE PIB dos Municípios 2021",
    "kind": "varratio",
    "universe": "Valor adicionado bruto municipal",
-   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública). Municípios com VAB total negativo ou parcela fora de 0–100% ficam ausentes.",
    "synonyms": [
     "agronegocio"
    ],
@@ -2788,7 +2788,7 @@
    "source": "IBGE PIB dos Municípios 2021",
    "kind": "varratio",
    "universe": "Valor adicionado bruto municipal",
-   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública). Municípios com VAB total negativo ou parcela fora de 0–100% ficam ausentes.",
    "synonyms": [
     "fabricas"
    ],
@@ -2815,7 +2815,7 @@
    "source": "IBGE PIB dos Municípios 2021",
    "kind": "varratio",
    "universe": "Valor adicionado bruto municipal",
-   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública). Municípios com VAB total negativo ou parcela fora de 0–100% ficam ausentes.",
    "synonyms": [
     "comercio"
    ],
@@ -2842,7 +2842,7 @@
    "source": "IBGE PIB dos Municípios 2021",
    "kind": "varratio",
    "universe": "Valor adicionado bruto municipal",
-   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública).",
+   "definition": "Participação no VAB total a preços correntes (VAB ≠ PIB; serviços excluem administração pública). Municípios com VAB total negativo ou parcela fora de 0–100% ficam ausentes.",
    "synonyms": [
     "prefeitura",
     "estado"
