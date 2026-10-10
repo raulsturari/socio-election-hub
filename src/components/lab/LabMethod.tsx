@@ -4,7 +4,7 @@ import type { XVariable } from "@/lib/lab-variables";
 
 export function LabMethod({ x }: { x: XVariable }) {
   return <div className="space-y-3"><h3 className="text-sm font-medium">Como calculamos</h3><SourceNote>
-    Fonte X: {x.source}. Unidade: município, sem ponderação por eleitorado. X: Censo 2022, mesma referência em ambos os anos.
+    Fonte X: {x.source}. Unidade: município, sem ponderação por eleitorado. X: {x.sourceShort ?? x.source}, mesma referência em ambos os anos.{x.universe ? ` Universo: ${x.universe}.` : ""}{x.definition ? ` ${x.definition}` : ""}
     Y: TSE; votos sobre todos os votos válidos, comparecimento e abstenção sobre aptos; brancos+nulos sobre comparecimento.
     Variações em pontos percentuais pelo mesmo número de urna, sem inferir continuidade pessoal ou transferência individual.
     Ausências: exclusão por pares no gráfico e completa no modelo; nada é imputado. Pearson na escala exibida, IC Fisher-z;

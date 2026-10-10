@@ -22,3 +22,11 @@
 - [x] Compartilhar escalas reais e diagnosticar concentração, caudas, cruzamento pareado e abertura por série.
 - [x] Substituir blocos por candidato por uma conclusão única; critérios auditáveis recolhidos.
 - [x] Testar casos geométricos e ajustes; verificar renda/preta, filtros, CSV e screenshots 390/430px.
+
+# Base IBGE ampliada
+- [x] Inventário N6 e manifesto declarativo (87 indicadores, 16 temas) com metadados verificados.
+- [x] Importador por catálogo: lotes ≤50 mil valores, retry/backoff, cache SHA-256, '-' = zero, logs por job.
+- [ ] Importar todos os indicadores e gerar relatório com cobertura e amostras conferidas.
+- [x] Seletor com busca, temas, cobertura; /dados com status; 7 novos presets em Explorar.
+- [x] Leitura usa tema/fonte/ano do indicador; modelo retido em colinearidade.
+- [ ] Verificação no navegador 390/430px e desktop.
