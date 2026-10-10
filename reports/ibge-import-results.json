@@ -40,10 +40,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 1000,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {
    "partition_max_relative_gap": 0.0
@@ -73,10 +74,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {},
   "sha256": [
@@ -100,10 +102,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {
    "partition_max_relative_gap": 0.001938
@@ -131,10 +134,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {},
   "sha256": [
@@ -158,10 +162,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {},
   "sha256": [
@@ -192,10 +197,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {
    "num_rows": 656
@@ -224,10 +230,11 @@
   },
   "absent": 1,
   "diff": {
-   "rows_before": 0,
+   "rows_before": 5570,
    "rows_after": 5570,
    "values_changed": 0,
-   "null_to_value": 0
+   "null_to_value": 0,
+   "changed_examples": []
   },
   "integrity": {},
   "sha256": [
@@ -235,6 +242,1928 @@
   ],
   "urls": [
    "https://apisidra.ibge.gov.br/values/t/5938/n6/all/v/513,498/p/2021"
+  ],
+  "ok": true
+ },
+ "pop_15_29_pct_2022": {
+  "id": "pop_15_29_pct_2022",
+  "alias": "jovens1529",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "ebb61aa7b302e9e009f3b198edb3d69d4e83a9335d97595412d0030bbdafabd7"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098,100362"
+  ],
+  "ok": true
+ },
+ "pop_30_59_pct_2022": {
+  "id": "pop_30_59_pct_2022",
+  "alias": "adultos3059",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "ebb61aa7b302e9e009f3b198edb3d69d4e83a9335d97595412d0030bbdafabd7"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098,100362"
+  ],
+  "ok": true
+ },
+ "pop_65mais_pct_2022": {
+  "id": "pop_65mais_pct_2022",
+  "alias": "idosos65",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "ebb61aa7b302e9e009f3b198edb3d69d4e83a9335d97595412d0030bbdafabd7"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098,100362"
+  ],
+  "ok": true
+ },
+ "pop_80mais_pct_2022": {
+  "id": "pop_80mais_pct_2022",
+  "alias": "idosos80",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "ebb61aa7b302e9e009f3b198edb3d69d4e83a9335d97595412d0030bbdafabd7"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098,100362"
+  ],
+  "ok": true
+ },
+ "razao_dependencia_2022": {
+  "id": "razao_dependencia_2022",
+  "alias": "dependencia",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "9dc99f7eb7cefd6bb1ca6dc772a8686e68e00502d8e7274e7e6d919acef7b8e9"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098"
+  ],
+  "ok": true
+ },
+ "indice_envelhecimento_2022": {
+  "id": "indice_envelhecimento_2022",
+  "alias": "envelhecimento",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "596ba1f027e7f11290e1ca0609b927ec2516744e50c5649934d38aff0c7aac2d"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9515/n6/all/v/10612/p/2022"
+  ],
+  "ok": true
+ },
+ "razao_sexo_2022": {
+  "id": "razao_sexo_2022",
+  "alias": "razaosexo",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "27db72ede089caaefc560f42e66bb327754c9d63158ae22f0b936807bca5bc00"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9515/n6/all/v/8845/p/2022"
+  ],
+  "ok": true
+ },
+ "densidade_2022": {
+  "id": "densidade_2022",
+  "alias": "densidade",
+  "theme": "Território",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "e1d9c45208e368bb8fa995c0b886ea52d9b1786696ddd526445b7ad6637f75d2"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/4714/n6/all/v/614/p/2022"
+  ],
+  "ok": true
+ },
+ "crescimento_pop_2010_2022": {
+  "id": "crescimento_pop_2010_2022",
+  "alias": "crescimento",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6f71b24a39f1041eb22b1042b0b960308ec178c16ab6ec5f685c021f79e0f79d"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/4709/n6/all/v/10605/p/2022"
+  ],
+  "ok": true
+ },
+ "renda_domiciliar_pc_mediana_2022": {
+  "id": "renda_domiciliar_pc_mediana_2022",
+  "alias": "rendamediana",
+  "theme": "Renda e desigualdade",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "99ca8b4c2ce70568577dfaabbd52bcd481ae8f1c7e245bb574218aecc5d23316"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10295/n6/all/v/13534/p/2022"
+  ],
+  "ok": true
+ },
+ "renda_sem_rendimento_pct_2022": {
+  "id": "renda_sem_rendimento_pct_2022",
+  "alias": "semrenda",
+  "theme": "Renda e desigualdade",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.001938
+  },
+  "sha256": [
+   "8c2488dc40b7e9e0d5a49d2283c5af1762f7704d030c01b628b7dcb426a78f65",
+   "2c84ad5a393e322610a38f844c6219ea9d1ba6cf40224aa755b9136bae4f2dfc"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9680,9681,9682,9683,9684,9685,9686,9687",
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9688,9689,9690,9692"
+  ],
+  "ok": true
+ },
+ "renda_mais_5sm_pct_2022": {
+  "id": "renda_mais_5sm_pct_2022",
+  "alias": "rendaalta",
+  "theme": "Renda e desigualdade",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.001938
+  },
+  "sha256": [
+   "8c2488dc40b7e9e0d5a49d2283c5af1762f7704d030c01b628b7dcb426a78f65",
+   "2c84ad5a393e322610a38f844c6219ea9d1ba6cf40224aa755b9136bae4f2dfc"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9680,9681,9682,9683,9684,9685,9686,9687",
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9688,9689,9690,9692"
+  ],
+  "ok": true
+ },
+ "renda_trabalho_participacao_2022": {
+  "id": "renda_trabalho_participacao_2022",
+  "alias": "rendatrabalho",
+  "theme": "Renda e desigualdade",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "fb5b10c5497e05543e223c30be4082b144fabcc55bba554a1d020e61de15fcec"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10297/n6/all/v/13504/p/2022/c11308/79451"
+  ],
+  "ok": true
+ },
+ "rendimento_trabalho_medio_2022": {
+  "id": "rendimento_trabalho_medio_2022",
+  "alias": "salariomedio",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "a7fa6ca0d088a415a5dd336ab5f80f47d891402be37ef8266b1efed52a1e02ff"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10289/n6/all/v/13536/p/2022/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "rendimento_trabalho_mediano_2022": {
+  "id": "rendimento_trabalho_mediano_2022",
+  "alias": "salariomediano",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "36c75a4e16a7014186d640b00970e7f1e756fb99b0d89a60fab0198e16e33885"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10289/n6/all/v/13537/p/2022/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "nivel_ocupacao_10mais_2022": {
+  "id": "nivel_ocupacao_10mais_2022",
+  "alias": "ocupacao",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6caa1d05dd54fd619e23d5aff2a6f671df94541c9895e88b5c7c7f6a293ce893"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10268/n6/all/v/675/p/2022/c2/6794/c86/95251/c58/95253"
+  ],
+  "ok": true
+ },
+ "taxa_desocupacao_14mais_2022": {
+  "id": "taxa_desocupacao_14mais_2022",
+  "alias": "desocupacao",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "8ff1ee1ad2f7570f93ca12358f4cdea04474c4bc5af2e86fd32efb17f1b27a3a"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9517/n6/all/v/1641/p/2022/c2/6794/c86/95251/c1568/120704/c629/32386,32446"
+  ],
+  "ok": true
+ },
+ "taxa_participacao_14mais_2022": {
+  "id": "taxa_participacao_14mais_2022",
+  "alias": "participacao",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f8f98e854d2f458946974b144dcd25dc9d3e459b45467333561588ba50fa86d4"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9517/n6/all/v/1641/p/2022/c2/6794/c86/95251/c1568/120704/c629/32385,32386"
+  ],
+  "ok": true
+ },
+ "ocupados_com_carteira_pct_2022": {
+  "id": "ocupados_com_carteira_pct_2022",
+  "alias": "carteira",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "46f6151adb0e403d9810009a383e6450a71720188b141548bb47ca7906aef305"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10261/n6/all/v/4090/p/2022/c2/6794/c86/95251/c11913/31722,79367,79372,79375,96165"
+  ],
+  "ok": true
+ },
+ "ocupados_sem_carteira_pct_2022": {
+  "id": "ocupados_sem_carteira_pct_2022",
+  "alias": "semcarteira",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "1133b1c41d5b3176c05beeb2acd4d494b9bb45382ffcea56592cc2482eb4058b"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10261/n6/all/v/4090/p/2022/c2/6794/c86/95251/c11913/31723,79368,79373,79376,96165"
+  ],
+  "ok": true
+ },
+ "conta_propria_pct_2022": {
+  "id": "conta_propria_pct_2022",
+  "alias": "contapropria",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6632386aeda897d6cac513553ba900adda672d5b979eb938200bbae70b9dfb03"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10261/n6/all/v/4090/p/2022/c2/6794/c86/95251/c11913/79378,96165"
+  ],
+  "ok": true
+ },
+ "empregadores_pct_2022": {
+  "id": "empregadores_pct_2022",
+  "alias": "empregadores",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "44bcbe5c80b022dc18b3ea8c02d4d841bcbe34ee5ac3091f5cb330f8916a9114"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10261/n6/all/v/4090/p/2022/c2/6794/c86/95251/c11913/79377,96165"
+  ],
+  "ok": true
+ },
+ "servidores_estatutarios_pct_2022": {
+  "id": "servidores_estatutarios_pct_2022",
+  "alias": "estatutarios",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "da96e3fb67fae924cf7a784016b9c424ff1a92c28c12002ddf75c0e5c9142fc2"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10261/n6/all/v/4090/p/2022/c2/6794/c86/95251/c11913/79370,96165"
+  ],
+  "ok": true
+ },
+ "contribui_previdencia_pct_2022": {
+  "id": "contribui_previdencia_pct_2022",
+  "alias": "previdencia",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "ee6fbd4702f4a8ecd116af475c1e69465cfc6758a7300fc2dbbf6ffd2f35b18a"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10264/n6/all/v/4090/p/2022/c2/6794/c86/95251/c12064/100971/c526/15349,15350"
+  ],
+  "ok": true
+ },
+ "ocup_agropecuaria_pct_2022": {
+  "id": "ocup_agropecuaria_pct_2022",
+  "alias": "agro",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "99c591b3b46463948c4d1a741095d64d6526b508bdae9bc03c80a93a7af42ba0"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10264/n6/all/v/4090/p/2022/c2/6794/c86/95251/c526/15349/c12064/12635,100971"
+  ],
+  "ok": true
+ },
+ "ocup_elementares_pct_2022": {
+  "id": "ocup_elementares_pct_2022",
+  "alias": "elementares",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "00429878b7d4e062b5d5b245be3093966b17b3f74fe15856d9c0be5cb19ed568"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10264/n6/all/v/4090/p/2022/c2/6794/c86/95251/c526/15349/c12064/12638,100971"
+  ],
+  "ok": true
+ },
+ "ocup_dirigentes_profissionais_pct_2022": {
+  "id": "ocup_dirigentes_profissionais_pct_2022",
+  "alias": "profissionais",
+  "theme": "Trabalho",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "a196c1c97d941e0566cbe8db98a663af13822a290a0133901a8f9813db33e825"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10264/n6/all/v/4090/p/2022/c2/6794/c86/95251/c526/15349/c12064/12630,12631,100971"
+  ],
+  "ok": true
+ },
+ "trabalha_outro_municipio_pct_2022": {
+  "id": "trabalha_outro_municipio_pct_2022",
+  "alias": "deslocamento",
+  "theme": "Mobilidade",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "d77635ffc5170aaa967bad85612c6effcee67f5d017fb35e56cb48413709f5f5"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10329/n6/all/v/13373/p/2022/c2/6794/c386/9680/c2087/79177/c469/12188,79176"
+  ],
+  "ok": true
+ },
+ "anos_estudo_medio_2022": {
+  "id": "anos_estudo_medio_2022",
+  "alias": "anosestudo",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "1124321532b3a6df89754f1f3791fa126b1f841ac8f8bb7cf6f2eef980681809"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10062/n6/all/v/13285/p/2022/c58/95253/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "sem_instrucao_fund_incompleto_18mais_2022": {
+  "id": "sem_instrucao_fund_incompleto_18mais_2022",
+  "alias": "fundincompleto",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f2cae5151b2e9257c46a1c380dfd772a92089481470e1a198ed288659c29945a"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10061/n6/all/v/2667/p/2022/c58/95253/c2/6794/c86/95251/c1568/9493,120704"
+  ],
+  "ok": true
+ },
+ "medio_completo_ou_mais_18mais_2022": {
+  "id": "medio_completo_ou_mais_18mais_2022",
+  "alias": "mediocompleto",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6a15ffca38dc6b8722a70c6846b7348fe0a2fce414a9306ceb31a5971f1b1571"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10061/n6/all/v/2667/p/2022/c58/95253/c2/6794/c86/95251/c1568/9495,99713,120704"
+  ],
+  "ok": true
+ },
+ "freq_escolar_0_3_2022": {
+  "id": "freq_escolar_0_3_2022",
+  "alias": "creche",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5539,
+   "zero": 31
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "3bd477e326c5b143473c4c214cdbaabea68032ff4ff30d5627aa4ad7381fa496"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10056/n6/all/v/3795/p/2022/c58/99749/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "freq_escolar_4_5_2022": {
+  "id": "freq_escolar_4_5_2022",
+  "alias": "preescola",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "fae809b1f4909bdcac5bd477b6b42a3d25e57f504189c84402e7742819c8e4ac"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10056/n6/all/v/3795/p/2022/c58/47813/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "freq_escolar_15_17_2022": {
+  "id": "freq_escolar_15_17_2022",
+  "alias": "freq1517",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "7eb15a5a95b66025bd397ec003fee622b33dbfb01588179643f3b6b945b1d165"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10056/n6/all/v/3795/p/2022/c58/2792/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "freq_escolar_18_24_2022": {
+  "id": "freq_escolar_18_24_2022",
+  "alias": "freq1824",
+  "theme": "Educação",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f7a480499f0f07cf7de0cadb19297c585e41243524bc3b15ff3e16b1aa3eff3f"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10056/n6/all/v/3795/p/2022/c58/100052/c2/6794/c86/95251"
+  ],
+  "ok": true
+ },
+ "domicilio_proprio_pct_2022": {
+  "id": "domicilio_proprio_pct_2022",
+  "alias": "proprio",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "589e4ee8bb7e3aea86c21dfd22b2862748e787177ac0313f50a59307ddd2c4a1"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9929/n6/all/v/381/p/2022/c1986/73103/c1988/73108/c63/73554,95826"
+  ],
+  "ok": true
+ },
+ "domicilio_alugado_pct_2022": {
+  "id": "domicilio_alugado_pct_2022",
+  "alias": "aluguel",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "7272576c125c321fa8ec21b10bef6be88b737031fb2cbbae2b43f65bb797dda4"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9929/n6/all/v/381/p/2022/c1986/73103/c1988/73108/c63/1055,95826"
+  ],
+  "ok": true
+ },
+ "domicilio_cedido_pct_2022": {
+  "id": "domicilio_cedido_pct_2022",
+  "alias": "cedido",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "e4a0d0f053f8a48b878371df7fcfcdad8c25bb74f525ff6f126df1398ee29fb3"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9929/n6/all/v/381/p/2022/c1986/73103/c1988/73108/c63/73553,95826"
+  ],
+  "ok": true
+ },
+ "domicilio_apartamento_pct_2022": {
+  "id": "domicilio_apartamento_pct_2022",
+  "alias": "apartamento",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "059cce53623731d606f965656c450524a9cf9c1bb0cbbea13ad25dd692b19a56"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6326/n6/all/v/381/p/2022/c125/2932,3247"
+  ],
+  "ok": true
+ },
+ "moradores_por_domicilio_2022": {
+  "id": "moradores_por_domicilio_2022",
+  "alias": "moradores",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "a5933f6e6624aa6335b5ff9afad92a19c6541fbb83857fe226794f0077cab7c6"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/4712/n6/all/v/5930/p/2022"
+  ],
+  "ok": true
+ },
+ "domicilio_unipessoal_pct_2022": {
+  "id": "domicilio_unipessoal_pct_2022",
+  "alias": "unipessoal",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "7bff6e28b4dbfce1436e2e53823600228c8b59bdfe45a0e8f2d55a639f3cbc9f"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9880/n6/all/v/800/p/2022/c125/2932/c11561/100679/c12237/104570/c11562/72593/c68/1092,9902"
+  ],
+  "ok": true
+ },
+ "adensamento_3mais_dormitorio_pct_2022": {
+  "id": "adensamento_3mais_dormitorio_pct_2022",
+  "alias": "adensamento",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "eec9e1c935fc045c51b1260c3e46a0eb421d0131c0ba8a61bc59fb7b45a61f9e"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9933/n6/all/v/381/p/2022/c63/95826/c125/2932/c1975/73086,73090"
+  ],
+  "ok": true
+ },
+ "paredes_alvenaria_revestida_pct_2022": {
+  "id": "paredes_alvenaria_revestida_pct_2022",
+  "alias": "alvenaria",
+  "theme": "Moradia",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f5c648a366386805e92d2d02303b3fcb7b7da2bb3a7a1524139d9c7514aba1ff"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9928/n6/all/v/381/p/2022/c63/95826/c125/2932/c137/13233,73073"
+  ],
+  "ok": true
+ },
+ "agua_rede_geral_pct_2022": {
+  "id": "agua_rede_geral_pct_2022",
+  "alias": "agua",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "62d1a902414523488de85b5bf7558cd47d8217c8ffa8b150586ec8c7cff819c5"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6803/n6/all/v/381/p/2022/c1821/72129,72144"
+  ],
+  "ok": true
+ },
+ "agua_canalizada_dentro_pct_2022": {
+  "id": "agua_canalizada_dentro_pct_2022",
+  "alias": "aguacanalizada",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "8bb55a79fe2c325de24f8cc55dabf3196d165dfcc5e1237b34dce3164e9251d6"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6804/n6/all/v/381/p/2022/c301/72053/c1817/72125,72126"
+  ],
+  "ok": true
+ },
+ "esgoto_rede_ou_fossa_ligada_pct_2022": {
+  "id": "esgoto_rede_ou_fossa_ligada_pct_2022",
+  "alias": "esgoto",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "e5535e3d03a9025b3885be4504760d2a00abb5ebe9e1c8faaa7e0a57397ccc26"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6805/n6/all/v/381/p/2022/c11558/46290,46292"
+  ],
+  "ok": true
+ },
+ "fossa_rudimentar_pct_2022": {
+  "id": "fossa_rudimentar_pct_2022",
+  "alias": "fossa",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "d0d44ba5f375233e0a6c37f8d73c20f26a321fec45b24eff51fa572ea007f02e"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6805/n6/all/v/381/p/2022/c11558/46292,72113"
+  ],
+  "ok": true
+ },
+ "sem_banheiro_pct_2022": {
+  "id": "sem_banheiro_pct_2022",
+  "alias": "sembanheiro",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f6991edeb05fc66fba5a2e84f2e9db473676c876eb4b41837f889ea19f635648"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6806/n6/all/v/381/p/2022/c11558/46292/c458/12046,72117"
+  ],
+  "ok": true
+ },
+ "banheiro_exclusivo_pct_2022": {
+  "id": "banheiro_exclusivo_pct_2022",
+  "alias": "banheiro",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f5c147c87d973f309a0344596c1516186b74f8e23bf72d019cb827654bca6341"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6806/n6/all/v/381/p/2022/c11558/46292/c458/12032,72117"
+  ],
+  "ok": true
+ },
+ "lixo_coletado_pct_2022": {
+  "id": "lixo_coletado_pct_2022",
+  "alias": "lixo",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "5372d138a0ff09c431d1e8fd842a0e161315b6a64e56094084ef9a49cb4c9e66"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6892/n6/all/v/381/p/2022/c67/2520,10972"
+  ],
+  "ok": true
+ },
+ "lixo_queimado_pct_2022": {
+  "id": "lixo_queimado_pct_2022",
+  "alias": "lixoqueimado",
+  "theme": "Saneamento",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "1e1891b1ecbc849cf2ea600acd561b6b3c2994e9bc2d978436cc63f8dcd20433"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/6892/n6/all/v/381/p/2022/c67/10972,72122"
+  ],
+  "ok": true
+ },
+ "responsavel_mulher_pct_2022": {
+  "id": "responsavel_mulher_pct_2022",
+  "alias": "chefiafeminina",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "76b1fe37178e79ac6b36d7da5c77497830fbce4b7f14ac5307c57a1d7bdaa023"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9880/n6/all/v/800/p/2022/c125/2932/c68/9902/c12237/104570/c11562/72593/c11561/100679,100681"
+  ],
+  "ok": true
+ },
+ "domicilio_sem_conjuge_pct_2022": {
+  "id": "domicilio_sem_conjuge_pct_2022",
+  "alias": "semconjuge",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "f2f1d67c7ce26f1652e36b0c6cb5515b89dfffb2f103eec49022640801d45c38"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9881/n6/all/v/800/p/2022/c1885/72599,72602"
+  ],
+  "ok": true
+ },
+ "monoparental_pct_2022": {
+  "id": "monoparental_pct_2022",
+  "alias": "monoparental",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "fca465a22a6db14a6d79bb9fdbebaaaedcb937ec8e6cbbc2d3534c3e09092ec3"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9882/n6/all/v/800/p/2022/c11561/100679/c1887/72603,72607"
+  ],
+  "ok": true
+ },
+ "casal_sem_filhos_pct_2022": {
+  "id": "casal_sem_filhos_pct_2022",
+  "alias": "casalsemfilhos",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "dc3ebf4cca1c719a12e1182a7e1a99dd9a2d32e2ec5e1d661cb3bfb9b4a0fe1e"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9882/n6/all/v/800/p/2022/c11561/100679/c1887/72603,72604"
+  ],
+  "ok": true
+ },
+ "vive_em_uniao_10mais_pct_2022": {
+  "id": "vive_em_uniao_10mais_pct_2022",
+  "alias": "uniao",
+  "theme": "Famílias",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5568,
+  "expected": 5571,
+  "status": {
+   "ok": 5568,
+   "den_zero": 2
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6919fa038b89be8ecce475743549791f95a2c6475b8068aba5b795c6216b4740"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10183/n6/all/v/140/p/2022/c2/6794/c58/95253/c133/95278/c464/12108,50292"
+  ],
+  "ok": true
+ },
+ "estrangeiros_naturalizados_pct_2022": {
+  "id": "estrangeiros_naturalizados_pct_2022",
+  "alias": "estrangeiros",
+  "theme": "Migração",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "894b9971091bbafd6ed016297828fe07559e83d3d0035ad51622941e22f0a5f2"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10157/n6/all/v/93/p/2022/c2/6794/c58/95253/c302/6832,6833,77794"
+  ],
+  "ok": true
+ },
+ "unidades_conservacao_pct_2022": {
+  "id": "unidades_conservacao_pct_2022",
+  "alias": "conservacao",
+  "theme": "Território",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "8439df431689d1ce15cadb5c8a1a5f917c83cc7c23c27610d02a14ec5a8bc189"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10211/n6/all/v/93/p/2022/c1/6795/c2661/32776,50581"
+  ],
+  "ok": true
+ },
+ "cor_indigena_pct_2022": {
+  "id": "cor_indigena_pct_2022",
+  "alias": "indigena",
+  "theme": "Raça/cor",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 4825,
+   "zero": 745
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "5b6d24aa72f4f69d65519d12656b7022baef21282d9f367624a82f6364367dfb"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9605/n6/all/v/1000093/p/2022/c86/2780"
+  ],
+  "ok": true
+ },
+ "cor_amarela_pct_2022": {
+  "id": "cor_amarela_pct_2022",
+  "alias": "amarela",
+  "theme": "Raça/cor",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 4995,
+   "zero": 575
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "6e525d39e99c094a997dc07fe5fcf0e7d1b5f86aff506a6015af095ec7e2611e"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9605/n6/all/v/1000093/p/2022/c86/2778"
+  ],
+  "ok": true
+ },
+ "deficiencia_2mais_pct_2022": {
+  "id": "deficiencia_2mais_pct_2022",
+  "alias": "deficiencia",
+  "theme": "Deficiência",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "620e5583e7e0a86b66f2a9d72e49d462d171de455e491ad3c28aeb80977baedf"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10125/n6/all/v/13403/p/2022/c2/6794/c58/95253"
+  ],
+  "ok": true
+ },
+ "autismo_pct_2022": {
+  "id": "autismo_pct_2022",
+  "alias": "autismo",
+  "theme": "Deficiência",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5556,
+   "zero": 14
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "07c34c27d1b588a09d94bceb971713e159cb7da58eddfdf67a9950c0bf97a321"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10145/n6/all/v/13408/p/2022/c2/6794/c58/95253"
+  ],
+  "ok": true
+ },
+ "internet_domicilio_pct_2022": {
+  "id": "internet_domicilio_pct_2022",
+  "alias": "internet",
+  "theme": "Acesso digital e bens",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "c35b5f34666bba15137514f6113e3da362f7b9ef5ff64c41cf8e5259c7e1a426"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9936/n6/all/v/381/p/2022/c63/95826/c125/2932/c2072/77584,77585"
+  ],
+  "ok": true
+ },
+ "maquina_lavar_pct_2022": {
+  "id": "maquina_lavar_pct_2022",
+  "alias": "maquinalavar",
+  "theme": "Acesso digital e bens",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "80b5c4caeb99166e58dd5cc6b9bf5cd824521de0b8fdd5f5d5b4523f0942d2ae"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9935/n6/all/v/381/p/2022/c63/95826/c125/2932/c1977/73091,73092"
+  ],
+  "ok": true
+ },
+ "vab_industria_pct_2021": {
+  "id": "vab_industria_pct_2021",
+  "alias": "pibindustria",
+  "theme": "Economia local",
+  "year": 2021,
+  "kind": "varratio",
+  "nonnull": 5569,
+  "expected": 5571,
+  "status": {
+   "ok": 5569,
+   "invalid": 1
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "7da2e5895b3d8085bfcc548276276b8415aad7f0f13290c1abfc1fe6b5478d9b"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/5938/n6/all/v/517,498/p/2021"
+  ],
+  "ok": true
+ },
+ "vab_servicos_pct_2021": {
+  "id": "vab_servicos_pct_2021",
+  "alias": "pibservicos",
+  "theme": "Economia local",
+  "year": 2021,
+  "kind": "varratio",
+  "nonnull": 5569,
+  "expected": 5571,
+  "status": {
+   "ok": 5569,
+   "invalid": 1
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "761d6b40964d4d4aa50cd0adace90e5455d13120c904bcb04ebd9ff996aeca37"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/5938/n6/all/v/6575,498/p/2021"
+  ],
+  "ok": true
+ },
+ "vab_adm_publica_pct_2021": {
+  "id": "vab_adm_publica_pct_2021",
+  "alias": "pibpublico",
+  "theme": "Economia local",
+  "year": 2021,
+  "kind": "varratio",
+  "nonnull": 5569,
+  "expected": 5571,
+  "status": {
+   "ok": 5569,
+   "invalid": 1
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0,
+   "changed_examples": []
+  },
+  "integrity": {},
+  "sha256": [
+   "44c35c911f2b6825e410795390e1bd9cfb78562a83b677bc0477c8afd0cede51"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/5938/n6/all/v/525,498/p/2021"
   ],
   "ok": true
  }
