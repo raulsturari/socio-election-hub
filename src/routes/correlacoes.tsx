@@ -77,7 +77,7 @@ function Correlacoes() {
           <EmptyState title="Dados não importados" description="Sem pares renda/votação para este recorte." />
         ) : (
           <DuelScatter series={series} xLabel="renda domiciliar per capita" yLabel="% dos votos válidos" formatX={fmtBRL} log
-            detail={(c) => <><p className="mb-1 text-muted-foreground">Renda: {income.has(c) ? fmtBRL(income.get(c)!) : "—"}</p><DuelDetail m={muni.get(c)} year={f.ano} /></>} />
+            detail={(c) => <><p className="mb-1 text-muted-foreground">Renda: {fmtIncome(income.get(c))}</p><DuelDetail m={muni.get(c)} year={f.ano} /></>} />
         )}
       </Card>
 
@@ -90,3 +90,4 @@ function Correlacoes() {
     </div>
   );
 }
+const fmtIncome = (v: number | undefined) => (v == null ? "—" : fmtBRL(v));

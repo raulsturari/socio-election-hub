@@ -1,15 +1,14 @@
 import { BottomSheet, Chip } from "@/components/ui-kit";
 import { REGIONS, X_VARIABLES, Y_METRICS, type YMetric } from "@/lib/lab-variables";
-import type { CandidateRow } from "@/lib/data.functions";
 
 interface Props {
   open: "x" | "y" | "reg" | null; onClose: () => void;
-  x: string; y: YMetric; reg: string | null; candNumber: number | null; candidates: CandidateRow[];
+  x: string; y: YMetric; reg: string | null;
   onChange: (patch: { x?: string; y?: YMetric; reg?: string | undefined; cand?: number }) => void;
 }
 
 /** Touch bottom sheets for the lab's variable pickers. */
-export function LabControls({ open, onClose, x, y, reg, candNumber, candidates, onChange }: Props) {
+export function LabControls({ open, onClose, x, y, reg, onChange }: Props) {
   const groups = [...new Set(X_VARIABLES.map((v) => v.group))];
   return (
     <>
@@ -34,18 +33,7 @@ export function LabControls({ open, onClose, x, y, reg, candNumber, candidates, 
           <div className="flex flex-wrap gap-2">
             {Y_METRICS.map((m) => <Chip key={m.id} active={m.id === y} onClick={() => onChange({ y: m.id })}>{m.label}</Chip>)}
           </div>
-          {Y_METRICS.find((m) => m.id === y)?.needsCandidate && (
-            <div>
-              <p className="label-caps mb-2">Candidato</p>
-              <div className="flex flex-wrap gap-2">
-                {candidates.map((c) => (
-                  <Chip key={c.candidate_id} active={c.number === candNumber} onClick={() => { onChange({ cand: c.number }); onClose(); }}>
-                    {c.ballot_name} · {c.number}
-                  </Chip>
-                ))}
-              </div>
-            </div>
-          )}
+          <p className="text-xs text-muted-foreground">O foco (comparar os dois, Bolsonaro ou Lula) é escolhido no seletor acima do gráfico.</p>
         </div>
       </BottomSheet>
       <BottomSheet open={open === "reg"} onClose={onClose} title="Região">
