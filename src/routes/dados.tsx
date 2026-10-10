@@ -3,6 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { provenanceQuery } from "@/services/queries";
 import { fmtDateTime, fmtInt } from "@/lib/format";
 import { Card, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
+import { IndicatorCatalogCard } from "@/components/IndicatorCatalogCard";
 
 export const Route = createFileRoute("/dados")({
   loader: ({ context }) => context.queryClient.ensureQueryData(provenanceQuery()),
@@ -62,16 +63,7 @@ function Dados() {
         )}
       </Card>
 
-      <Card title="Indicadores">
-        <ul className="space-y-3">
-          {data.indicators.map((i) => (
-            <li key={i.id}>
-              <p className="text-sm font-medium">{i.name} <span className="text-muted-foreground">({i.unit})</span></p>
-              <p className="text-xs text-muted-foreground">SIDRA tabela {i.source_table}, variável {i.source_variable}. {i.methodology}</p>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      <IndicatorCatalogCard />
 
       <Card title="Fontes cadastradas">
         <ul className="divide-y">
