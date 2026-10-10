@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { meshQuery, type GeoFeature } from "@/services/queries";
 import { fmtPct } from "@/lib/format";
 import { EmptyState } from "./ui-kit";
+import { Button } from "./ui/button";
+import { Hand, X } from "lucide-react";
 
 interface Props {
   uf: string;
@@ -44,6 +46,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect, diverging = fals
   const mesh = useQuery(meshQuery(uf));
   const geo = useMemo(() => (mesh.data ? project(mesh.data.features) : null), [mesh.data]);
   const { view, handlers, reset } = usePinchZoom();
+  const [interactive, setInteractive] = useState(false);
   const max = fixedMax ?? Math.max(1, ...[...shares.values()].map((v) => Math.abs(v ?? 0)));
 
   if (mesh.isLoading) return <div className="aspect-square skeleton rounded-lg bg-muted" />;
@@ -52,7 +55,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect, diverging = fals
   const sel = selected ? shares.get(selected) : undefined;
   return (
     <div>
-      <div className="relative aspect-square touch-none overflow-hidden rounded-lg bg-muted" {...handlers}>
+      <div className={`relative aspect-square overflow-hidden rounded-lg bg-muted ${interactive ? "touch-none" : "touch-pan-y"}`} {...(interactive ? handlers : {})}>
         <svg viewBox={`0 0 ${geo.width} ${geo.height}`} className="h-full w-full" role="img" aria-label={`Mapa municipal ${uf}${label ? ` · ${label}` : ""}`}>
           <g style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.k})`, transformOrigin: "0 0" }}>
             {geo.paths.map((p) => {
@@ -70,8 +73,12 @@ export function ChoroplethMap({ uf, shares, selected, onSelect, diverging = fals
             })}
           </g>
         </svg>
+        <Button variant="secondary" size="icon" className="absolute right-2 top-2 size-11 rounded-full"
+          aria-label={interactive ? "Encerrar movimentação do mapa" : "Mover e ampliar mapa"} aria-pressed={interactive}
+          title={interactive ? "Encerrar movimentação do mapa" : "Mover e ampliar mapa"}
+          onClick={() => setInteractive((current) => !current)}>{interactive ? <X /> : <Hand />}</Button>
         {view.k !== 1 && (
-          <button onClick={reset} className="absolute right-2 top-2 min-h-9 rounded-full bg-card px-3 text-xs">Redefinir</button>
+          <Button variant="secondary" onClick={reset} className="absolute left-2 top-2 min-h-11 rounded-full px-3 text-xs">Redefinir</Button>
         )}
       </div>
       {diverging ? (
