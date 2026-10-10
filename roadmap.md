@@ -26,7 +26,8 @@
 # Base IBGE ampliada
 - [x] Inventário N6 e manifesto declarativo (87 indicadores, 16 temas) com metadados verificados.
 - [x] Importador por catálogo: lotes ≤50 mil valores, retry/backoff, cache SHA-256, '-' = zero, logs por job.
-- [ ] Importar todos os indicadores e gerar relatório com cobertura e amostras conferidas.
+- [x] Importar todos os indicadores e gerar relatório com cobertura e amostras conferidas (87 carregados, 435 conferências, 0 divergências).
 - [x] Seletor com busca, temas, cobertura; /dados com status; 7 novos presets em Explorar.
 - [x] Leitura usa tema/fonte/ano do indicador; modelo retido em colinearidade.
-- [ ] Verificação no navegador 390/430px e desktop.
+- [x] Verificação no navegador 390/430px e desktop.
+- [x] Atualizar `tests/e2e/explore_mobile.py` para o seletor comparar/Bolsonaro/Lula.

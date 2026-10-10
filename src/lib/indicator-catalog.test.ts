@@ -51,7 +51,7 @@ describe('search', () => {
 describe('editorial topic', () => {
   it('uses the catalog phrase for new indicators', () => {
     const x = X_VARIABLES.find(v => v.id === 'esgoto')!;
-    expect(cityTopic(x.id, x.label, true, x.topic)).toBe('nas cidades com maior presença de domicílios ligados à rede de esgoto');
+    expect(cityTopic(x.id, x.label, true, x.topic)).toBe('nas cidades com maior cobertura de esgoto');
   });
 });
 
