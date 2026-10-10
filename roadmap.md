@@ -17,7 +17,7 @@
 - [x] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
 
 # Conclusão integrada e geometria
-- [ ] Revisão pontual: residual zero/constante/variável, testes focados e exemplos reais agregados de QA.
+- [x] Revisão pontual: residual zero/constante/variável, 52 testes focados aprovados, checagem automática de tipos limpa e exemplos reais agregados de QA salvos.
 - [x] Compartilhar escalas reais e diagnosticar concentração, caudas, cruzamento pareado e abertura por série.
 - [x] Substituir blocos por candidato por uma conclusão única; critérios auditáveis recolhidos.
 - [x] Testar casos geométricos e ajustes; verificar renda/preta, filtros, CSV e screenshots 390/430px.
