@@ -37,7 +37,7 @@ export function ExploreViewer({preset,input,replay,duel}:{preset:Preset;input:In
   const coverage=compare&&preset.id==='vote-map'?muni.size:data.coverage;
   return <div aria-busy={query.isFetching}><div className="flex justify-between items-baseline border-b pb-3 mb-3"><span className="text-xs text-muted-foreground">{query.isPlaceholderData?'ATUALIZANDO · SELEÇÃO ANTERIOR':compare?'OBSERVAÇÕES · DUAS SÉRIES':'OBSERVAÇÕES COMPLETAS'}</span><AnimatedNumber value={coverage} format={integer} className="text-2xl font-semibold"/></div>
     {compare?<CompareBody preset={preset} data={data} dataL={dataL} duel={duel} replay={replay} muni={muni} duelRows={duelData.data?.rows??[]} detail={detail}/>
-      :preset.kind==='map'?<ExploreMap rows={data.rows} unit={preset.unit} replay={replay} detail={detail}/>:preset.kind==='scatter'?<ExploreScatter rows={data.rows} unitX={data.unitX} replay={replay}/>:<ExploreBars bars={data.bars} unit={preset.unit} replay={replay}/>}
+      :preset.kind==='map'?<ExploreMap rows={data.rows} unit={preset.metric==='indicator'?data.unitX:preset.unit} replay={replay} detail={detail}/>:preset.kind==='scatter'?<ExploreScatter rows={data.rows} unitX={data.unitX} replay={replay}/>:<ExploreBars bars={data.bars} unit={preset.unit} replay={replay}/>}
     <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{data.source} · {data.missing.toLocaleString('pt-BR')} observações incompletas, excluídas sem imputação. {data.updated?`Registro eleitoral atualizado em ${new Date(data.updated).toLocaleDateString('pt-BR')}.`:''}</p>
   </div>;
 }
@@ -53,7 +53,7 @@ function CompareBody({preset,data,dataL,duel,replay,muni,duelRows,detail}:{prese
   }
   if(preset.kind==='scatter'){
     const pts=(d:ExploreData|undefined)=>(d?.rows??[]).flatMap(r=>r.x==null||r.y==null?[]:[{code:r.ibge_code,name:r.name,uf:r.uf,x:r.x,y:r.y}]);
-    return <DuelScatter replay={replay} series={[{id:'bolsonaro',label:duel.bName,points:pts(data)},{id:'pt',label:'Lula',points:pts(dataL)}]} xLabel={preset.subtitle.split('×')[0]?.trim()??''} yLabel="% dos votos válidos" formatX={v=>`${v.toLocaleString('pt-BR',{maximumFractionDigits:1})} ${data.unitX}`} detail={c=><DuelDetail m={muni.get(c)} year={duel.year}/>}/>;
+    return <DuelScatter replay={replay} series={[{id:'bolsonaro',label:duel.bName,points:pts(data)},{id:'pt',label:'Lula',points:pts(dataL)}]} xLabel={data.labelX??preset.subtitle.split('×')[0]?.trim()??''} yLabel="% dos votos válidos" formatX={v=>`${v.toLocaleString('pt-BR',{maximumFractionDigits:1})} ${data.unitX}`} detail={c=><DuelDetail m={muni.get(c)} year={duel.year}/>}/>;
   }
   if(preset.id==='income-bands'){
     const lmap=new Map((dataL?.bars??[]).map(b=>[b.key,b]));
