@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { interpretGraph, type ReadingContext } from './graph-reading';
 import type { LabAnalysis } from './lab-analysis';
 import { X_VARIABLES } from './lab-variables';
+import { cityTopic, editorialShape } from './graph-editorial';
 const x=X_VARIABLES[0]; if(!x) throw new Error('Variable missing');
 const c:ReadingContext={x,metric:'share',year:2026,round:1,scope:'Brasil'};
 function analysis(r=.6):LabAnalysis {
@@ -16,6 +17,37 @@ const read=(a:LabAnalysis,ctx=c)=>interpretGraph(ctx,[{name:'Flávio Bolsonaro',
 const text=(a:LabAnalysis,ctx=c)=>read(a,ctx).paragraphs.join(' ');
 const duel=(a:LabAnalysis,b:LabAnalysis)=>interpretGraph(c,[{name:'Flávio Bolsonaro',analysis:a},{name:'Lula',analysis:b}]);
 describe('journalistic integrated reading',()=>{
+ it('uses the indicator theme at both extremes',()=>{
+  expect(cityTopic('renda','Renda',false)).toBe('nas cidades de menor renda');
+  expect(cityTopic('superior','Ensino',false)).toContain('menos moradores têm ensino superior');
+  expect(cityTopic('evangelica','Religião',false)).toContain('menor presença evangélica');
+  const r=duel(analysis(),analysis(-.6));
+  expect(r.paragraphs[0]).toContain('leva vantagem nas cidades de maior renda');
+  expect(r.paragraphs[0]).toContain('se sai melhor nas cidades de menor renda');
+  expect(r.paragraphs[0]).not.toMatch(/essa característica|perfis de cidade|mesma eleição/);
+ });
+ it('crossing prose shares the conservative lead for small or uncertain samples',()=>{
+  for(const small of [false,true]){
+   const a=analysis(),b=analysis(-.6);
+   if(small){a.points.y=a.points.y.slice(0,10);b.points.y=b.points.y.slice(0,10);}
+   else if(a.pearson)a.pearson.ci=[-.2,.8];
+   const r=duel(a,b);
+   expect(r.paragraphs.join(' ')).not.toMatch(/vantagem muda de lado|leva vantagem|se sai melhor/);
+  }
+ });
+ it('concentration uses topic wording only when diagnosed on the display domain',()=>{
+  const g=read(analysis()).geometry;
+  const concentrated={...g,horizontal:{...g.horizontal,concentration:'left' as const,tail:'right' as const}};
+  expect(editorialShape(concentrated,c,false)).toContain('poucas cidades alcançam rendas tão altas');
+  expect(editorialShape({...g,horizontal:{...g.horizontal,concentration:'none' as const}},c,false)).not.toContain('se juntam');
+ });
+ it('nonpartisan reversal keeps the outcome vocabulary',()=>{
+  for(const metric of ['turnout','abstention'] as const){
+   const r=read(adjusted(analysis(),-1,[-2,-.1]),{...c,metric});
+   expect(r.title).toContain(metric==='turnout'?'comparecimento':'abstenção');
+   expect(r.paragraphs.join(' ')).not.toMatch(/votações|votação/);
+  }
+ });
  it('positive performance is not leadership',()=>{const r=read(analysis());expect(r.title).toContain('votação maior');expect(r.title).not.toMatch(/lidera|vantagem/);});
  it('negative performance',()=>expect(read(analysis(-.6)).title).toContain('votação menor'));
  it('opposite signs without observed crossing do not claim leadership',()=>{const a=analysis(),b=analysis(-.6);a.points.y=a.points.x.map((_,i)=>10+i*.1);b.points.y=b.points.x.map((_,i)=>80-i*.1);const r=duel(a,b);expect(r.geometry.crossing).toBe(false);expect(r.title).not.toContain('ganha força');});
