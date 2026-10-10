@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Brasil Data Lab architecture
-- Official data is loaded only by `scripts/ingest/pipeline.py` (service role, run outside the app); the web app is read-only — keeps writes auditable via import_jobs/import_job_logs.
+- Only the external importer writes official data; the app is read-only — keeps imports auditable.
 - An election is exposed in the UI only when `elections.validated = true`, set by the importer after file = zones = municipalities reconciliation — prevents showing unverified numbers.
 - All joins between sources use the 7-digit IBGE code; TSE codes are mapped via `municipalities.tse_code`, validated against the IBGE Localidades API — single harmonization key.
 - Public reads go through `createServerFn` in `src/lib/data.functions.ts` using a publishable-key client (`supabase-public.server.ts`, imported dynamically inside handlers) with paginated, ordered selects — PostgREST caps at 1000 rows.
@@ -30,3 +30,5 @@
 - `graph-editorial` translates existing per-candidate statistical decisions and geometry into headlines and two paragraphs without computing new electoral metrics — keeps journalistic wording separate from analytical evidence.
 - Explore tour time is driven by the pure `TourClock` (`src/lib/tour-clock.ts`): it counts only after the viewer reports the full analysis key ready (all needed queries current + every canvas/bar surface registered via `chart-ready` finished drawing) — prevents advancing while a series, mesh or map is still loading.
 - Explore comparison bands and territory rankings come from pure `src/lib/duel-bands.ts` over `duel_dataset` vote counts (tie-safe quantile bands, ratio of sums); presets carry a `group` and the tour stays inside it — keeps comparison charts exact and social maps out of the electoral sequence.
+
+- Bottom sheets use body portals, modal focus/scroll locking and native scroll bodies without dragging — prevents iPhone gesture conflicts.

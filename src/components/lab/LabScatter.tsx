@@ -37,8 +37,8 @@ export function LabScatter({ points, xv, yLabel, domain }: { domain?: ScatterDom
     <div>
       <div className="relative">
       <PointsCanvas points={pts} width={W} height={H} alpha={0.4} />
-      <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-none select-none" onPointerDown={pick}
-        onPointerMove={(e) => e.buttons && pick(e)} role="img" aria-label={`Dispersão ${xv.label} por ${yLabel}`}>
+      <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-pan-y select-none" onPointerDown={pick}
+        onPointerMove={(e) => e.pointerType === "mouse" && e.buttons && pick(e)} role="img" aria-label={`Dispersão ${xv.label} por ${yLabel}`}>
         {m.y0 < 0 && m.y1 > 0 && <line x1={PAD.l} x2={W - PAD.r} y1={m.sy(0)} y2={m.sy(0)} className="stroke-border" />}
         {[m.y0, (m.y0 + m.y1) / 2, m.y1].map((v, i) => (
           <text key={i} x={PAD.l - 4} y={m.sy(v) + 3} textAnchor="end" className="fill-muted-foreground text-[9px] tabular-nums">{fmtNum(v)}</text>

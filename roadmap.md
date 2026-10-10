@@ -37,3 +37,6 @@
 - [x] "Quem lidera em cada faixa?" por qualquer indicador, votos exatos, CSV, leitura derivada das faixas.
 - [x] Mapa de vantagem entre os primeiros; "Vantagem por estado" único (p.p. e saldo), ranking municipal único.
 - [x] Tour só em "Comparar candidatos"; mapas sociais em "Contexto demográfico".
+
+# Rolagem do app
+- [ ] Corrigir janelas de indicadores/filtros e gestos dos gráficos; verificar toque e retorno à posição da página.
