@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-10-10T19:44:01.984420+00:00",
+  "source": "Rendered Lab with loaded official data; generated text, not handwritten examples.",
+  "filters": {
+    "year": 2026,
+    "round": 1,
+    "scope": "Brasil",
+    "mode": "comparar",
+    "metric": "share"
+  },
+  "residualTolerancePP": 1e-08,
+  "examples": [
+    {
+      "variable": "renda",
+      "title": "A vantagem muda ao longo do indicador",
+      "paragraphs": [
+        "Conforme a renda domiciliar por pessoa aumenta, a vantagem passa de Lula para Flávio Bolsonaro nas faixas observadas. As duas nuvens se cruzam pela sobreposição de tendências opostas nos percentuais dos votos válidos, não por uma divisão em grupos de pessoas.",
+        "A escala logarítmica reduz a compressão pelos valores altos e abre o miolo da nuvem: distâncias iguais representam diferenças proporcionais, não valores absolutos iguais. Mesmo nas faixas de indicador semelhante, os pontos não seguem uma linha fina: há variação dentro das séries, além da distância entre elas.",
+        "A participação de Outros varia nos pares observados: os dois percentuais não são complementos exatos, embora o total compartilhado contribua para o espelhamento. Ao comparar municípios semelhantes em escolaridade, porte municipal, UF, a leitura de ambas permanece."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (log10): 2,5 a 3,6 · Y: 0 a 88,7. Municípios únicos: 5570; pares: 5570. Terço esquerdo: 16,9%; direito: 13,3%. X original: mín. 288,7, mediana 1.182,5, P90 1.841,9, máx. 4.299,9.",
+        "withinSeries": [
+          "Flávio Bolsonaro: base 5,5%, topo 5,9%; mediana Y 47,6; IQR intrafaixa mediano / altura 14,1%.",
+          "Lula: base 2,1%, topo 17,1%; mediana Y 44,8; IQR intrafaixa mediano / altura 13%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: sim. Composição percentual verificada nos pares; residual Outros: mínimo 1,2%, mediana 5,7%, máximo 33,2%. Tolerância de arredondamento: 1e-8 p.p., apenas no residual derivado; shares originais preservados."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    },
+    {
+      "variable": "preta",
+      "title": "A vantagem muda ao longo do indicador",
+      "paragraphs": [
+        "Conforme a parcela de moradores de cor ou raça preta (sem incluir a categoria parda) aumenta, a vantagem passa de Flávio Bolsonaro para Lula nas faixas observadas. As duas nuvens se cruzam pela sobreposição de tendências opostas nos percentuais dos votos válidos, não por uma divisão em grupos de pessoas.",
+        "95% dos municípios ficam no terço esquerdo do eixo: poucos extremos alongam a escala e comprimem o miolo. A mediana é 7,1%; concentração não significa valor zero nem relação forte. Dentro de cada série, municípios com indicador parecido têm resultados muito diferentes. Essa abertura vertical limita quanto a variável isolada distingue os resultados.",
+        "A participação de Outros varia nos pares observados: os dois percentuais não são complementos exatos, embora o total compartilhado contribua para o espelhamento. Ao comparar municípios semelhantes em renda, escolaridade, porte municipal, UF, a leitura de ambas permanece."
+      ],
+      "geometrySummary": {
+        "displayedDomainAndHorizontal": "X (linear): 0,3 a 58,5 · Y: 0 a 88,7. Municípios únicos: 5570; pares: 5570. Terço esquerdo: 95%; direito: 0,4%. X original: mín. 0,3, mediana 7,1, P90 15,8, máx. 58,5.",
+        "withinSeries": [
+          "Flávio Bolsonaro: base 5,5%, topo 5,9%; mediana Y 47,6; IQR intrafaixa mediano / altura 26,8%.",
+          "Lula: base 2,1%, topo 17,1%; mediana Y 44,8; IQR intrafaixa mediano / altura 30,7%."
+        ],
+        "pairedComposition": "Cruzamento conservador sustentado: sim. Composição percentual verificada nos pares; residual Outros: mínimo 1,2%, mediana 5,7%, máximo 33,2%. Tolerância de arredondamento: 1e-8 p.p., apenas no residual derivado; shares originais preservados."
+      },
+      "metricPrecision": "As displayed in statistical details; percentage summaries rounded to one decimal."
+    }
+  ]
+}

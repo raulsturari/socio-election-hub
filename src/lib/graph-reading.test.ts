@@ -19,6 +19,8 @@ describe('one integrated reading',()=>{
  it('positive',()=>expect(text(analysis())).toContain('maior'));
  it('negative',()=>expect(text(analysis(-.6))).toContain('menor'));
  it('near zero',()=>expect(text(analysis(.03))).toContain('Não aparece uma relação linear clara'));
+ it.each([['zero','somam 100%'],['constant','soma dos dois percentuais é constante'],['varying','participação de Outros varia']])('composition wording %s',(kind,phrase)=>{const a=analysis(),b=analysis(-.6);b.points.y=a.points.y.map((y,i)=>100-y-(kind==='zero'?0:kind==='constant'?10:5+i*.1));const r=duel(a,b);expect(r.paragraphs.join(' ')).toContain(phrase);expect(r.paragraphs.join(' ')).not.toContain('impede complementaridade');});
+ it('invalid residual never produces composition wording',()=>{const a=analysis(),b=analysis(-.6);b.points.y=a.points.y.map(()=>100);const r=duel(a,b);expect(r.geometry.composition).toBeNull();expect(r.paragraphs.join(' ')).not.toContain('pares observados');});
  it('conflicting signs',()=>{const a=analysis();if(a.spearman)a.spearman.r=-.5;expect(text(a)).toContain('direção segura');});
  it('adjusted interval crosses zero',()=>expect(text(adjusted(analysis(),1,[-1,2]))).toContain('sem direção clara'));
  it('reversal selects X not intercept',()=>expect(text(adjusted(analysis(),-1,[-2,-.1]))).toContain('muda de direção'));
