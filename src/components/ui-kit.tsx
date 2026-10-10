@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import { Database, X } from "lucide-react";
@@ -55,6 +55,10 @@ export function Chip({ children, onClick, active }: { children: ReactNode; onCli
 }
 
 export function BottomSheet({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children: ReactNode }) {
+  const returnFocus = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    if (open && document.activeElement instanceof HTMLElement) returnFocus.current = document.activeElement;
+  }, [open]);
   return (
     <Dialog.Root open={open} onOpenChange={(next) => { if (!next) onClose(); }}>
       <Dialog.Portal>
@@ -63,7 +67,8 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
             initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: DUR.base } }} />
         </Dialog.Overlay>
         {/* Portal avoids page transforms; native content scrolling must not compete with dragging. */}
-        <Dialog.Content asChild aria-describedby={undefined}>
+        <Dialog.Content asChild aria-describedby={undefined}
+          onCloseAutoFocus={(event) => { event.preventDefault(); returnFocus.current?.focus({ preventScroll: true }); }}>
           <motion.div className="fixed inset-x-0 bottom-0 z-50 mx-auto flex max-h-[85dvh] w-full max-w-md flex-col overflow-hidden rounded-t-xl border-t bg-card outline-none"
             initial={{ y: "100%" }} animate={{ y: 0, transition: { duration: DUR.slow, ease: EASE_OUT } }}>
             <div className="shrink-0 px-4 pt-3">
