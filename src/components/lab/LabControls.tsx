@@ -5,7 +5,7 @@ import type { CandidateRow } from "@/lib/data.functions";
 interface Props {
   open: "x" | "y" | "reg" | null; onClose: () => void;
   x: string; y: YMetric; reg: string | null; candNumber: number | null; candidates: CandidateRow[];
-  onChange: (patch: { x?: string; y?: YMetric; reg?: string; cand?: number }) => void;
+  onChange: (patch: { x?: string; y?: YMetric; reg?: string | undefined; cand?: number }) => void;
 }
 
 /** Touch bottom sheets for the lab's variable pickers. */
@@ -20,7 +20,7 @@ export function LabControls({ open, onClose, x, y, reg, candNumber, candidates, 
               <p className="label-caps mb-2">{g}</p>
               <div className="flex flex-wrap gap-2">
                 {X_VARIABLES.filter((v) => v.group === g).map((v) => (
-                  <Chip key={v.id} active={v.id === x} onClick={v.indicatorId ? () => { onChange({ x: v.id }); onClose(); } : undefined}>
+                  <Chip key={v.id} active={v.id === x} onClick={() => { if (v.indicatorId) { onChange({ x: v.id }); onClose(); } }}>
                     <span className={v.indicatorId ? "" : "text-muted-foreground"}>{v.label}{v.indicatorId ? "" : " · indisponível"}</span>
                   </Chip>
                 ))}

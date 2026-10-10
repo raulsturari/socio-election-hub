@@ -56,7 +56,7 @@ function Laboratorio() {
   const yLabel = metric.needsCandidate ? `${metric.label} · ${candidate?.ballot_name ?? "—"}` : metric.label;
   const scope = f.uf ?? REGIONS.find((r) => r.id === search.reg)?.label ?? "Brasil";
 
-  const patch = (p: { x?: string; y?: YMetric; reg?: string; cand?: number }) =>
+  const patch = (p: { x?: string; y?: YMetric; reg?: string | undefined; cand?: number }) =>
     navigate({ search: (prev) => ({ ...prev, ...p }), replace: true });
 
   return (
