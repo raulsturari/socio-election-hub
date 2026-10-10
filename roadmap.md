@@ -12,6 +12,6 @@
 - [x] Testes unitários, conferência no banco e navegador 390/430px.
 
 # Leitura acessível das análises
-- [ ] Motor determinístico contextual com testes de direção, incerteza, ajustes e séries independentes.
-- [ ] Lab e Correlações: gráfico → leitura → detalhes fechados; fontes e problemas essenciais visíveis.
-- [ ] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
+- [x] Motor determinístico contextual com testes de direção, incerteza, ajustes e séries independentes.
+- [x] Lab e Correlações: gráfico → leitura → detalhes fechados; fontes e problemas essenciais visíveis.
+- [x] Validar filtros, teclado, CSV e screenshots 390/430px, sem alterar dados ou publicação.
