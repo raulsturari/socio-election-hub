@@ -94,7 +94,7 @@ def class_key(rows: list, wanted: set[str]) -> str:
     """The dimension column of the varying classification: several distinct codes, containing the wanted ones."""
     keys = [k for k in rows[0] if k.startswith("D") and k.endswith("C") and k not in ("D1C",)]
     for k in keys:
-        vals = {r.get(k) for r in rows[1:2000]}
+        vals = {r.get(k) for r in rows[1:]}
         if len(vals) > 1 and wanted & vals and not rows[0][k].startswith(("Variável", "Ano")):
             return k
     raise RuntimeError("classificação variável não encontrada na resposta")
