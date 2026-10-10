@@ -23,7 +23,7 @@ describe('displayed scatter geometry',()=>{
  it('invalid composition no residual',()=>expect(run(pts(()=>80),pts(()=>60)).composition).toBeNull());
  it('zero residual across all pairs',()=>expect(run(pts(i=>20+i*.3),pts(i=>80-i*.3)).composition).toMatchObject({kind:'zero',othersMin:0,othersMax:0}));
  it('positive constant residual permits mirroring',()=>expect(run(pts(i=>20+i*.3),pts(i=>70-i*.3)).composition).toMatchObject({kind:'constant',othersMedian:10}));
- it('varying residual retains observed range',()=>expect(run(pts(()=>30),pts(i=>60-i*.1)).composition).toMatchObject({kind:'varying',othersMin:10,othersMax:21.900000000000006}));
+ it('varying residual retains observed range',()=>{const g=run(pts(()=>30),pts(i=>60-i*.1)).composition;expect(g).toMatchObject({kind:'varying',othersMin:10});expect(g?.othersMax).toBeCloseTo(21.9,10);});
  it('rounding tolerance applies only to derived residual',()=>{const a=pts(()=>40), b=pts(()=>60+SHARE_RESIDUAL_TOLERANCE_PP/2);const before=structuredClone(b);expect(run(a,b).composition?.kind).toBe('zero');expect(b).toEqual(before);expect(run(a,pts(()=>60+SHARE_RESIDUAL_TOLERANCE_PP*2)).composition).toBeNull();});
  it('invalid share in one pair invalidates entire residual',()=>{const b=pts(()=>60);b[0]={code:'0',x:1,y:80};expect(run(pts(()=>40),b).composition).toBeNull();});
  it('outlier extends X without changing votes',()=>{const a=pts(()=>50),b=a.map((p,i)=>({...p,x:i===119?100000:p.x}));expect(run(b,b).vertical[0]?.median).toBe(run(a,a).vertical[0]?.median);});
