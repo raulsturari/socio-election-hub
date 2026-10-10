@@ -28,7 +28,7 @@ export function ExploreViewer({preset,input,replay,duel}:{preset:Preset;input:In
   const detail=duelData.data&&preset.metric==='share'?(c:string)=><DuelDetail m={muni.get(c)} year={duel.year}/>:undefined;
   const pending=query.isPending||(needsL&&queryL.isPending)||(compare&&(preset.id==='vote-map'||preset.id==='states')&&duelData.isPending);
   const error=query.error??(needsL?queryL.error:null)??(compare?duelData.error:null);
-  if(pending)return <div className="h-[510px] skeleton rounded-lg bg-muted flex items-center justify-center text-sm text-muted-foreground" role="status">Carregando observações oficiais…</div>;
+  if(pending)return <div className="h-[510px] skeleton rounded-lg bg-muted flex items-center justify-center text-sm text-muted-foreground" role="status" data-debug={JSON.stringify([query.status,query.fetchStatus,needsL,queryL.status,queryL.fetchStatus,duelData.status,duelData.fetchStatus])}>Carregando observações oficiais…</div>;
   if(error)return <div role="alert" className="min-h-[510px] flex flex-col justify-center items-center gap-4 text-center"><p>{error.message}</p><Button onClick={()=>{query.refetch();queryL.refetch();duelData.refetch();}}>Tentar novamente</Button></div>;
   const data=query.data;
   if(!data)return null;
