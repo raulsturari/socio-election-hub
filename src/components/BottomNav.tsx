@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Map, GitCompare, ScatterChart, Database } from "lucide-react";
+import { Map, GitCompare, ScatterChart, Database, FlaskConical } from "lucide-react";
 
 const ITEMS = [
   { to: "/", label: "Atlas", icon: Map },
   { to: "/comparar", label: "Comparar", icon: GitCompare },
-  { to: "/correlacoes", label: "Correlações", icon: ScatterChart },
+  { to: "/correlacoes", label: "Correl.", icon: ScatterChart },
+  { to: "/laboratorio", label: "Lab", icon: FlaskConical },
   { to: "/dados", label: "Dados", icon: Database },
 ] as const;
 
@@ -18,7 +19,7 @@ export function BottomNav() {
             to={to}
             search={true}
             activeOptions={{ exact: to === "/" }}
-            className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] text-muted-foreground transition-colors"
+            className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-[10px] text-muted-foreground transition-colors"
             activeProps={{ className: "bg-secondary text-primary" }}
           >
             <Icon className="size-5" aria-hidden />
