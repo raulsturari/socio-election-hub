@@ -16,6 +16,7 @@ export function BottomNav() {
           <Link
             key={to}
             to={to}
+            search={true}
             activeOptions={{ exact: to === "/" }}
             className="flex min-h-12 flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] text-muted-foreground transition-colors"
             activeProps={{ className: "bg-secondary text-primary" }}
