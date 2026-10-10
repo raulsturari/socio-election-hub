@@ -18,7 +18,7 @@ export interface DataSource {
 
 export const DATA_SOURCES: readonly DataSource[] = [
   { id: "TSE", name: "TSE — Dados Abertos", scope: "Resultados eleitorais por município e zona", url: "https://dadosabertos.tse.jus.br" },
-  { id: "IBGE_SIDRA", name: "IBGE SIDRA", scope: "População, renda, Censo 2022", url: "https://sidra.ibge.gov.br" },
+  { id: "IBGE_SIDRA", name: "IBGE SIDRA", scope: "Censo 2022 (87 indicadores municipais) e PIB dos Municípios 2021", url: "https://sidra.ibge.gov.br" },
   { id: "IPEA", name: "IPEA Data", scope: "Indicadores socioeconômicos municipais", url: "https://www.ipeadata.gov.br" },
   { id: "INEP", name: "INEP", scope: "Educação: IDEB, matrículas", url: "https://www.gov.br/inep" },
   { id: "DATASUS", name: "DATASUS", scope: "Saúde: mortalidade, cobertura", url: "https://datasus.saude.gov.br" },
