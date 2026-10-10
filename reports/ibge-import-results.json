@@ -1,0 +1,241 @@
+{
+ "sem_religiao_pct_2022": {
+  "id": "sem_religiao_pct_2022",
+  "alias": "semreligiao",
+  "theme": "Religião",
+  "year": 2022,
+  "kind": "direct",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5543,
+   "zero": 27
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 1000,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {},
+  "sha256": [
+   "4f37613ae9ccf4e3b3679625a3e3e0f62450f6b1134d4cf2a6800c50260ca63b"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9537/n6/all/v/1000140/p/2022/c133/2836/c2/6794/c58/95253"
+  ],
+  "ok": true
+ },
+ "pop_60mais_pct_2022": {
+  "id": "pop_60mais_pct_2022",
+  "alias": "idosos60",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 1000,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.0
+  },
+  "sha256": [
+   "59516e475a11ff9a5f7a1119d7140c3f2a6def5db518c37ee8501ac4a5994318",
+   "aba45e0a47ddae7cc360e647f5f46dd20c5af5b949f6d7d15af79692fcf13b87",
+   "ebb61aa7b302e9e009f3b198edb3d69d4e83a9335d97595412d0030bbdafabd7"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/6653,49108,49109,60040,60041,93070,93084,93085",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93086,93087,93088,93089,93090,93091,93092,93093",
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c2/6794/c286/113635/c287/93094,93095,93096,93097,93098,100362"
+  ],
+  "ok": true
+ },
+ "mulheres_pct_2022": {
+  "id": "mulheres_pct_2022",
+  "alias": "mulheres",
+  "theme": "Estrutura populacional",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {},
+  "sha256": [
+   "be5c538945acae51146b170d25f9d0944f36e543a239cc9684d5861b68b81837"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9514/n6/all/v/93/p/2022/c287/100362/c286/113635/c2/5,6794"
+  ],
+  "ok": true
+ },
+ "renda_ate_meio_sm_pct_2022": {
+  "id": "renda_ate_meio_sm_pct_2022",
+  "alias": "rendabaixa",
+  "theme": "Renda e desigualdade",
+  "year": 2022,
+  "kind": "ratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {
+   "partition_max_relative_gap": 0.001938
+  },
+  "sha256": [
+   "8c2488dc40b7e9e0d5a49d2283c5af1762f7704d030c01b628b7dcb426a78f65",
+   "2c84ad5a393e322610a38f844c6219ea9d1ba6cf40224aa755b9136bae4f2dfc"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9680,9681,9682,9683,9684,9685,9686,9687",
+   "https://apisidra.ibge.gov.br/values/t/10296/n6/all/v/13604/p/2022/c2/6794/c86/95251/c386/9688,9689,9690,9692"
+  ],
+  "ok": true
+ },
+ "filhos_por_mulher_12mais_2022": {
+  "id": "filhos_por_mulher_12mais_2022",
+  "alias": "filhos",
+  "theme": "Fecundidade",
+  "year": 2022,
+  "kind": "varratio",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {},
+  "sha256": [
+   "c97ebdf81f170d08f447ff54bd2ff34976331839adf86bf7dbfbf8cf449daf29"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/10078/n6/all/v/13316,13315/p/2022/c12232/58896/c1568/120704/c12293/58898"
+  ],
+  "ok": true
+ },
+ "nascidos_outra_uf_pct_2022": {
+  "id": "nascidos_outra_uf_pct_2022",
+  "alias": "migrantes",
+  "theme": "Migração",
+  "year": 2022,
+  "kind": "other_uf",
+  "nonnull": 5570,
+  "expected": 5571,
+  "status": {
+   "ok": 5570
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {},
+  "sha256": [
+   "d7730f33f3ecd72cb8844e8667bfa778c20e0c9b59ef7ce6b95adf1750504b89",
+   "b6040f08646b3e166abadcc4f68b0f53f8bf56a8ea459146578b721a28c6dc3e",
+   "a93f969f1fe4e203a02a12d0afd6e0e281807ed65c53ba7161cce8ac339bbb34",
+   "fb4caf39f8c6a2c22c619d67b6c00e917473800e8565d008c4f7347c1995e523"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/631/n6/all/v/93/p/2022/c2/0/c183/0,3256,3257,3258,3259,3260,3261,3262",
+   "https://apisidra.ibge.gov.br/values/t/631/n6/all/v/93/p/2022/c2/0/c183/3263,3264,3265,3266,3267,3268,3269,3270",
+   "https://apisidra.ibge.gov.br/values/t/631/n6/all/v/93/p/2022/c2/0/c183/3271,3272,3273,3274,3275,3276,3277,3278",
+   "https://apisidra.ibge.gov.br/values/t/631/n6/all/v/93/p/2022/c2/0/c183/3279,3280,3281,3283,3284"
+  ],
+  "ok": true
+ },
+ "favela_pct_2022": {
+  "id": "favela_pct_2022",
+  "alias": "favela",
+  "theme": "Território",
+  "year": 2022,
+  "kind": "xratio",
+  "nonnull": 656,
+  "expected": 5571,
+  "status": {
+   "suppressed": 4914,
+   "ok": 656
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {
+   "num_rows": 656
+  },
+  "sha256": [
+   "0926a67e468e14ea5c869ead0af1d05f7c46ce761533dd8b43a5d9b0d7974970",
+   "ec3c169ff4e6f59641c3ec681aabe2b96b65edf2273e2f319eaa37d565413558"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/9884/n6/all/v/9612/p/2022/c86/95251/c2/6794/c58/95253",
+   "https://apisidra.ibge.gov.br/values/t/4709/n6/all/v/93/p/2022"
+  ],
+  "ok": true
+ },
+ "vab_agropecuaria_pct_2021": {
+  "id": "vab_agropecuaria_pct_2021",
+  "alias": "pibagro",
+  "theme": "Economia local",
+  "year": 2021,
+  "kind": "varratio",
+  "nonnull": 5569,
+  "expected": 5571,
+  "status": {
+   "ok": 5569,
+   "invalid": 1
+  },
+  "absent": 1,
+  "diff": {
+   "rows_before": 0,
+   "rows_after": 5570,
+   "values_changed": 0,
+   "null_to_value": 0
+  },
+  "integrity": {},
+  "sha256": [
+   "e1ceae0e0fbd57c61c4989fa1d7b5c335a8924b79dd9b67a7968c4c59aca30d3"
+  ],
+  "urls": [
+   "https://apisidra.ibge.gov.br/values/t/5938/n6/all/v/513,498/p/2021"
+  ],
+  "ok": true
+ }
+}

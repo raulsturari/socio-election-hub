@@ -214,9 +214,9 @@ def run(only: set[str] | None) -> list[dict]:
         diff = {"rows_before": len(prev), "rows_after": len(rows), "values_changed": changed,
                 "null_to_value": sum(1 for r in rows if prev.get(r["ibge_code"], 0) is None and r["value"] is not None)}
         if bad:
-            job.log("warning", "valores fora do intervalo 0–100 descartados", {"count": len(bad), "examples": bad[:5]})
+            job.log("warn", "valores fora do intervalo 0–100 descartados", {"count": len(bad), "examples": bad[:5]})
         if absent:
-            job.log("warning", "municípios sem linha na resposta SIDRA (ficam ausentes, não zero)", {"count": len(absent), "examples": absent[:5]})
+            job.log("warn", "municípios sem linha na resposta SIDRA (ficam ausentes, não zero)", {"count": len(absent), "examples": absent[:5]})
         ok = nonnull >= 0.95 * len(valid) - 1 or ind["id"] in ("favela_pct_2022",)
         status = dict(counts)
         job.finish(ok, len(values), len(rows), {"year": ind["year"], "municipalities_nonnull": nonnull, "expected": len(valid), "absent": len(absent)},
