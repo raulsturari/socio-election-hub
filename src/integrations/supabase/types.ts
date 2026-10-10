@@ -558,6 +558,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      duel_dataset: {
+        Args: {
+          _b_id: number
+          _election_id: number
+          _l_id: number
+          _uf?: string
+        }
+        Returns: {
+          b_votes: number
+          ibge_code: string
+          l_votes: number
+          name: string
+          uf: string
+          valid_votes: number
+        }[]
+      }
       election_summary: {
         Args: { _election_id: number; _uf?: string }
         Returns: {
