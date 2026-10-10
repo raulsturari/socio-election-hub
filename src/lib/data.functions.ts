@@ -131,3 +131,26 @@ export const getProvenance = createServerFn({ method: "GET" }).handler(async () 
   }));
   return { sources: sources.data ?? [], jobs: jobRows, indicators: indicators.data ?? [] };
 });
+
+export interface TurnoutDTO {
+  eligible: number; turnout: number; abstentions: number; valid_votes: number;
+  blank_votes: number; null_votes: number; municipalities: number;
+}
+
+/** Turnout/abstention/blank/null from TSE detalhe_votacao_munzona; null when not imported. */
+export const getTurnout = createServerFn({ method: "GET" })
+  .inputValidator((d: unknown) => summaryInput.parse(d))
+  .handler(async ({ data }): Promise<TurnoutDTO | null> => {
+    const { publicClient } = await import("./supabase-public.server");
+    const { data: rows, error } = await publicClient().rpc("turnout_summary", {
+      _election_id: data.electionId, ...(data.uf ? { _uf: data.uf } : {}), ...(data.ibge ? { _ibge: data.ibge } : {}),
+    });
+    if (error) throw new Error(error.message);
+    const r = rows?.[0];
+    if (!r || !r.municipalities) return null;
+    return {
+      eligible: Number(r.eligible), turnout: Number(r.turnout), abstentions: Number(r.abstentions),
+      valid_votes: Number(r.valid_votes), blank_votes: Number(r.blank_votes), null_votes: Number(r.null_votes),
+      municipalities: Number(r.municipalities),
+    };
+  });

@@ -9,6 +9,7 @@ import { fmtPct } from "@/lib/format";
 import { Card, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
 import { FilterBar } from "@/components/FilterBar";
 import { NoElection } from "@/components/NoElection";
+import { YearCompare } from "@/components/YearCompare";
 
 export const Route = createFileRoute("/comparar")({
   validateSearch: filtersSchema,
@@ -65,6 +66,7 @@ function Comparar() {
           )}
         </Card>
       )}
+      <YearCompare elections={elections} round={f.turno} uf={f.uf} ibge={f.mun} areaLabel={f.mun ? nameOf(f.mun) : f.uf ?? "Brasil"} />
       <Card title="Disponibilidade histórica">
         <ul className="space-y-1 text-sm">
           {ELECTION_YEARS.map((y) => (
