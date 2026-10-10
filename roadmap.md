@@ -39,4 +39,4 @@
 - [x] Tour só em "Comparar candidatos"; mapas sociais em "Contexto demográfico".
 
 # Rolagem do app
-- [ ] Corrigir janelas de indicadores/filtros e gestos dos gráficos; verificar toque e retorno à posição da página.
+- [x] Corrigir janelas de indicadores/filtros e gestos dos gráficos; toque, posição preservada, seis páginas e mapas conferidos em 390/430px; 15 testes focados aprovados.
