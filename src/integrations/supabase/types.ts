@@ -585,6 +585,15 @@ export type Database = {
           votes: number
         }[]
       }
+      indicator_coverage: {
+        Args: never
+        Returns: {
+          indicator_id: string
+          nonnull: number
+          total: number
+          year: number
+        }[]
+      }
       lab_dataset: {
         Args: {
           _base_election_id?: number

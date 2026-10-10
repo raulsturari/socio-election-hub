@@ -36,6 +36,13 @@
       "when": 1791646641123,
       "tag": "0004_duel_dataset",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791663304711,
+      "tag": "0005_indicator_coverage",
+      "breakpoints": true
     }
   ]
 }
