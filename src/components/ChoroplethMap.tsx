@@ -56,7 +56,7 @@ export function ChoroplethMap({ uf, shares, selected, onSelect }: Props) {
                   key={p.code}
                   d={p.d}
                   onClick={() => onSelect(p.code)}
-                  className={v == null ? "fill-secondary stroke-background" : "fill-primary stroke-background"}
+                  className={`choro-path ${v == null ? "fill-secondary stroke-background" : "fill-primary stroke-background"}`}
                   style={{ fillOpacity: v == null ? 1 : 0.12 + 0.88 * (v / max), strokeWidth: p.code === selected ? 3 / view.k : 0.4 / view.k }}
                 />
               );

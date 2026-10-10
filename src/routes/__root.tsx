@@ -120,10 +120,22 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="mx-auto min-h-screen max-w-md pb-32">
-        <Outlet />
-      </main>
-      <BottomNav />
+      <MotionConfig reducedMotion="user">
+        <main className="mx-auto min-h-screen max-w-md pb-32">
+          <PageFade />
+        </main>
+        <BottomNav />
+      </MotionConfig>
     </QueryClientProvider>
+  );
+}
+
+/** Enter-only fade per route: no exit wait, so navigation never blocks; search changes don't re-trigger it. */
+function PageFade() {
+  const path = useLocation({ select: (l) => l.pathname });
+  return (
+    <motion.div key={path} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: DUR.base, ease: EASE_OUT }}>
+      <Outlet />
+    </motion.div>
   );
 }

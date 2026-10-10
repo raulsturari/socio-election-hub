@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import type { ScatterPoint } from "@/lib/data.functions";
 import { pearson } from "@/lib/stats";
 import { fmtBRL, fmtInt, fmtPct } from "@/lib/format";
+import { PointsCanvas } from "./motion/PointsCanvas";
+import { AnimatedNumber } from "./motion/AnimatedNumber";
 
 const W = 320, H = 240, PAD = { l: 34, r: 8, t: 8, b: 26 };
 
@@ -15,6 +17,8 @@ export function ScatterPlot({ points }: { points: ScatterPoint[] }) {
     const sy = (v: number) => H - PAD.b - (v / 100) * (H - PAD.t - PAD.b);
     return { sx, sy, minX, maxX, r: pearson(lx, points.map((p) => p.share)) };
   }, [points]);
+
+  const pts = useMemo(() => points.map((p) => ({ key: p.ibge_code, x: m.sx(p.income), y: m.sy(p.share) })), [points, m]);
 
   const pick = (e: React.PointerEvent<SVGSVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -30,10 +34,12 @@ export function ScatterPlot({ points }: { points: ScatterPoint[] }) {
   return (
     <div>
       <div className="mb-3 grid grid-cols-2 gap-3">
-        <Stat label="Municípios" value={fmtInt(points.length)} />
+        <Stat label="Municípios" value={<AnimatedNumber value={points.length} format={fmtInt} />} />
         <Stat label="r de Pearson (log renda)" value={m.r == null ? "—" : m.r.toFixed(2).replace(".", ",")} />
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full touch-none" onPointerDown={pick} onPointerMove={(e) => e.buttons && pick(e)} role="img" aria-label="Dispersão renda por votação">
+      <div className="relative">
+      <PointsCanvas points={pts} width={W} height={H} alpha={0.45} />
+      <svg viewBox={`0 0 ${W} ${H}`} className="relative w-full touch-none" onPointerDown={pick} onPointerMove={(e) => e.buttons && pick(e)} role="img" aria-label="Dispersão renda por votação">
         {[0, 50, 100].map((v) => (
           <text key={v} x={PAD.l - 4} y={m.sy(v) + 3} textAnchor="end" className="fill-muted-foreground text-[9px]">{v}%</text>
         ))}
@@ -42,11 +48,9 @@ export function ScatterPlot({ points }: { points: ScatterPoint[] }) {
             {fmtBRL(10 ** lv)}
           </text>
         ))}
-        {points.map((p) => (
-          <circle key={p.ibge_code} cx={m.sx(p.income)} cy={m.sy(p.share)} r={1.6} className="fill-primary" fillOpacity={0.45} />
-        ))}
         {active && <circle cx={m.sx(active.income)} cy={m.sy(active.share)} r={4} className="fill-none stroke-foreground" strokeWidth={1.5} />}
       </svg>
+      </div>
       <p className="mt-2 min-h-5 text-xs text-muted-foreground">
         {active ? `${active.name}/${active.uf} · ${fmtBRL(active.income)} · ${fmtPct(active.share)}` : "Toque em um ponto para ver o município."}
       </p>
@@ -54,7 +58,7 @@ export function ScatterPlot({ points }: { points: ScatterPoint[] }) {
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <div className="rounded-lg bg-muted p-3">
       <p className="label-caps">{label}</p>
