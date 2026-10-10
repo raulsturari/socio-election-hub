@@ -47,7 +47,7 @@ async def main():
    await page.goto('http://localhost:8080/explorar?preset=elderly-map'); await page.get_by_text('Onde vivem mais idosos').wait_for(timeout=60000)
    await page.goto('http://localhost:8080/dados'); await page.get_by_text('Catálogo de indicadores municipais').wait_for(timeout=60000)
    await page.get_by_text(re.compile(r'^87 de 87 indicadores disponíveis no app')).wait_for(timeout=30000)
-   await page.get_by_text('Saneamento',exact=True).click()
+   await page.locator('summary').filter(has_text='Saneamento').first.click()
    assert await page.get_by_text('Não publicado para município').count()>=1
    await page.screenshot(path=str(OUT/f'dados-{w}.png'))
    assert await page.evaluate('document.documentElement.scrollWidth <= window.innerWidth'),'overflow dados'
