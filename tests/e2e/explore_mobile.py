@@ -36,9 +36,10 @@ async def main():
   await expect(page.get_by_role('status').first).to_contain_text('·')
   await page.get_by_role('status').first.scroll_into_view_if_needed()
   await page.screenshot(path=str(OUT/'03-scatter.png'))
+  await page.locator('select[aria-label="Tempo por gráfico"]').select_option('5')
   await page.get_by_role('button',name='Iniciar tour').click();await page.wait_for_timeout(1700)
   assert int(await page.get_by_role('progressbar').get_attribute('aria-valuenow'))>0
-  await page.wait_for_timeout(4300);assert 'education-scatter' in page.url
+  await page.wait_for_url('**preset=education-scatter**',timeout=15000)
   await page.get_by_role('button',name='Pausar tour').click();paused=page.url;await page.wait_for_timeout(5300);assert page.url==paused
   await page.get_by_role('button',name='Repetir animação').click()
   await page.wait_for_timeout(1400)

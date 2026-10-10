@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useReadyAfter } from "@/components/explore/chart-ready";
 
 export interface DuelBar { key: string; label: string; b: number | null; l: number | null; o: number | null; count: number }
 
@@ -9,6 +10,7 @@ const fmt = (v: number | null) => (v == null ? "—" : `${v.toLocaleString("pt-B
 export function DuelBars({ bars, bName, outros, replay }: { bars: DuelBar[]; bName: string; outros: boolean; replay: number }) {
   const reduce = useReducedMotion();
   const [sel, setSel] = useState<string | null>(null);
+  useReadyAfter(reduce ? 0 : 1100, [bars, replay, reduce, outros]);
   const max = Math.max(1, ...bars.flatMap((b) => [b.b ?? 0, b.l ?? 0, outros ? b.o ?? 0 : 0]));
   const segs = (b: DuelBar) => [
     { s: "bolsonaro", label: bName, v: b.b },

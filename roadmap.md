@@ -31,3 +31,4 @@
 - [x] Leitura usa tema/fonte/ano do indicador; modelo retido em colinearidade.
 - [x] Verificação no navegador 390/430px e desktop.
 - [x] Atualizar `tests/e2e/explore_mobile.py` para o seletor comparar/Bolsonaro/Lula.
+- [x] Tour Explorar: tempo por gráfico (5–60 s, padrão 15) e avanço só com gráfico inteiro pronto.
