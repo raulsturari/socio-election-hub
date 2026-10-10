@@ -50,7 +50,8 @@ function conclusion(c: ReadingContext, series: readonly ReadingSeries[], g: Scat
   if (b && (da || db)) return `${subject}, aparece uma direção mais definida para ${da ? a.name : b.name}, com ${outcome(c.metric)} ${(da || db) > 0 ? 'maiores' : 'menores'}; para ${da ? b.name : a.name}, a direção não fica clara neste recorte. As duas nuvens não devem ser tratadas como inversos automáticos.`;
   if (b) return `Não aparece uma relação linear clara e consistente entre ${indicator(c.x)} e os ${outcome(c.metric)} de ${a.name} e ${b.name}. A posição ou a concentração dos pontos, isoladamente, não indica uma associação forte.`;
   if (!da) return `Não aparece uma relação linear clara entre ${indicator(c.x)} e ${outcome(c.metric)}${c.metric.startsWith('share') ? ` de ${a.name}` : ''}. A incerteza, sinais divergentes ou pouca variação impedem destacar uma direção segura.`;
-  return `${subject}, o ${outcome(c.metric)}${c.metric.startsWith('share') ? ` de ${a.name}` : ''} tende a ser ${da > 0 ? 'maior' : 'menor'}. Esse padrão municipal não é uma regra para todas as cidades.`;
+  const target = outcome(c.metric).replace('percentuais', 'percentual').replace('variações', 'variação');
+  return `${subject}, ${target}${c.metric.startsWith('share') ? ` de ${a.name}` : ''} tende a ser ${da > 0 ? 'maior' : 'menor'}. Esse padrão municipal não é uma regra para todas as cidades.`;
 }
 function geometryText(c: ReadingContext, g: ScatterGeometry): string {
   const h = g.horizontal, text: string[] = [];

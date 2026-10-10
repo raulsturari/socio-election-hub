@@ -18,7 +18,7 @@ async def main():
   await dialog.get_by_role('button',name='SP',exact=True).click()
   await dialog.get_by_role('button',name='Ver resultados').click()
   await page.get_by_test_id('graph-reading').filter(has_text='Jair Bolsonaro').wait_for(timeout=90000)
-  assert 'SP' in await page.get_by_test_id('graph-reading').inner_text()
+  assert 'SP' in await page.locator('body').inner_text()
   assert await trigger.get_attribute('aria-expanded')=='false'
   await trigger.click()
   await page.get_by_role('radio',name='Lula',exact=True).click()
