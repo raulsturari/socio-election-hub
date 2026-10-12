@@ -53,6 +53,7 @@
   --candidate-pt: #EF4444;
   --candidate-outros: #9CA3AF;
   --data-missing: oklch(0.43 0 0);
+  --winner-tie: oklch(0.82 0.12 85);
   --series-color: var(--primary);
   --series-label: var(--foreground);
   --series-negative: var(--negative);
@@ -100,3 +101,9 @@
 .explore-legend { background: linear-gradient(90deg, var(--secondary), var(--series-color)); }
 .duel-legend { background: linear-gradient(90deg, var(--candidate-pt), var(--secondary), var(--candidate-bolsonaro)); }
 .explore-legend-signed { background: linear-gradient(90deg, var(--series-negative), var(--secondary), var(--series-color)); }
+.winner-swatch { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.winner-bolsonaro { background: var(--candidate-bolsonaro); }
+.winner-pt { background: var(--candidate-pt); }
+.winner-outros { background: var(--candidate-outros); }
+.winner-tie { background: var(--winner-tie); }
+.winner-missing { background: var(--data-missing); }
