@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useChartReady } from "@/components/explore/chart-ready";
 import { DUR, easeOutCubic, prefersReducedMotion } from "@/lib/motion";
 
 export interface CanvasPoint { key: string; x: number; y: number }
