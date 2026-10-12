@@ -51,7 +51,9 @@ export function MunicipalWinnerMap({ electionId, year, uf, selected, onSelect }:
           if (!element || !context) return;
           const rect = element.getBoundingClientRect();
           const point = mapPoint(event.clientX - rect.left, event.clientY - rect.top, rect.width, rect.height, geo, zoom);
+          context.save(); context.resetTransform();
           const hit = paths.current.find((row) => context.isPointInPath(row.path, point.x, point.y));
+          context.restore();
           if (hit) onSelect(hit.code);
         }} />
       <div className="absolute right-2 top-2 flex gap-1">
