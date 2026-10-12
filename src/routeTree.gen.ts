@@ -10,10 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CompararRouteImport } from './routes/comparar'
-import { Route as CorrelacoesRouteImport } from './routes/correlacoes'
 import { Route as DadosRouteImport } from './routes/dados'
-import { Route as ExplorarRouteImport } from './routes/explorar'
 import { Route as LaboratorioRouteImport } from './routes/laboratorio'
 
 const IndexRoute = IndexRouteImport.update({
@@ -21,24 +18,9 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CompararRoute = CompararRouteImport.update({
-  id: '/comparar',
-  path: '/comparar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CorrelacoesRoute = CorrelacoesRouteImport.update({
-  id: '/correlacoes',
-  path: '/correlacoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DadosRoute = DadosRouteImport.update({
   id: '/dados',
   path: '/dados',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ExplorarRoute = ExplorarRouteImport.update({
-  id: '/explorar',
-  path: '/explorar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LaboratorioRoute = LaboratorioRouteImport.update({
@@ -49,52 +31,31 @@ const LaboratorioRoute = LaboratorioRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/comparar': typeof CompararRoute
-  '/correlacoes': typeof CorrelacoesRoute
   '/dados': typeof DadosRoute
-  '/explorar': typeof ExplorarRoute
   '/laboratorio': typeof LaboratorioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/comparar': typeof CompararRoute
-  '/correlacoes': typeof CorrelacoesRoute
   '/dados': typeof DadosRoute
-  '/explorar': typeof ExplorarRoute
   '/laboratorio': typeof LaboratorioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/comparar': typeof CompararRoute
-  '/correlacoes': typeof CorrelacoesRoute
   '/dados': typeof DadosRoute
-  '/explorar': typeof ExplorarRoute
   '/laboratorio': typeof LaboratorioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    '/' | '/comparar' | '/correlacoes' | '/dados' | '/explorar' | '/laboratorio'
+  fullPaths: '/' | '/dados' | '/laboratorio'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    '/' | '/comparar' | '/correlacoes' | '/dados' | '/explorar' | '/laboratorio'
-  id:
-    | '__root__'
-    | '/'
-    | '/comparar'
-    | '/correlacoes'
-    | '/dados'
-    | '/explorar'
-    | '/laboratorio'
+  to: '/' | '/dados' | '/laboratorio'
+  id: '__root__' | '/' | '/dados' | '/laboratorio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CompararRoute: typeof CompararRoute
-  CorrelacoesRoute: typeof CorrelacoesRoute
   DadosRoute: typeof DadosRoute
-  ExplorarRoute: typeof ExplorarRoute
   LaboratorioRoute: typeof LaboratorioRoute
 }
 
@@ -107,32 +68,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/comparar': {
-      id: '/comparar'
-      path: '/comparar'
-      fullPath: '/comparar'
-      preLoaderRoute: typeof CompararRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/correlacoes': {
-      id: '/correlacoes'
-      path: '/correlacoes'
-      fullPath: '/correlacoes'
-      preLoaderRoute: typeof CorrelacoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dados': {
       id: '/dados'
       path: '/dados'
       fullPath: '/dados'
       preLoaderRoute: typeof DadosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/explorar': {
-      id: '/explorar'
-      path: '/explorar'
-      fullPath: '/explorar'
-      preLoaderRoute: typeof ExplorarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/laboratorio': {
@@ -147,10 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CompararRoute: CompararRoute,
-  CorrelacoesRoute: CorrelacoesRoute,
   DadosRoute: DadosRoute,
-  ExplorarRoute: ExplorarRoute,
   LaboratorioRoute: LaboratorioRoute,
 }
 export const routeTree = rootRouteImport
