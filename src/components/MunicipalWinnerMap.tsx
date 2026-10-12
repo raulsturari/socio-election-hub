@@ -18,25 +18,27 @@ export function MunicipalWinnerMap({ electionId, year, uf, selected, onSelect }:
   const results = useQuery(winnersQuery(electionId, uf));
   const canvas = useRef<HTMLCanvasElement>(null);
   const [zoom, setZoom] = useState(1);
+  const [tapped, setTapped] = useState<string | null>(null);
   const winners = useMemo(() => new Map((results.data ?? []).map((row) => [row.ibge_code, row])), [results.data]);
   const geo = useMemo(() => mesh.data ? projectMunicipalities(mesh.data.features) : null, [mesh.data]);
   // Path2D is browser-only and instantiated after hydration, never during SSR.
   const paths = useRef<{ code: string; path: Path2D }[]>([]);
-  useEffect(() => { setZoom(1); }, [uf, electionId]);
+  useEffect(() => { setZoom(1); setTapped(null); }, [uf, electionId]);
   useEffect(() => {
     const element = canvas.current;
     if (!element || !geo || !results.data) return;
     paths.current = geo.paths.map((row) => ({ code: row.code, path: new Path2D(row.path) }));
-    const draw = () => drawMap(element, geo, paths.current, winners, selected, zoom);
+    const draw = () => drawMap(element, geo, paths.current, winners, tapped ?? selected, zoom);
     const observer = new ResizeObserver(draw);
     observer.observe(element); draw();
     return () => observer.disconnect();
-  }, [geo, results.data, winners, selected, zoom]);
+  }, [geo, results.data, winners, selected, tapped, zoom]);
 
   if (mesh.isLoading || results.isLoading) return <div aria-label="Carregando mapa de vencedores" className="aspect-square skeleton rounded-lg bg-muted" />;
   if (mesh.error || results.error || !geo) return <EmptyState title="Mapa indisponível" description="Não foi possível carregar os resultados ou a malha municipal." action={<Button variant="secondary" onClick={() => { void mesh.refetch(); void results.refetch(); }}>Tentar de novo</Button>} />;
   if (!results.data?.length) return <EmptyState title="Sem resultados" description="Não há votos validados para esta eleição e região." />;
-  const selectedWinner = selected ? winners.get(selected) : undefined;
+  const active = tapped ?? selected;
+  const selectedWinner = active ? winners.get(active) : undefined;
   const covered = geo.paths.filter((row) => winners.has(row.code)).length;
   const withoutMesh = [...winners.keys()].filter((code) => !geo.paths.some((row) => row.code === code)).length;
   const legend = [
@@ -54,7 +56,7 @@ export function MunicipalWinnerMap({ electionId, year, uf, selected, onSelect }:
           context.save(); context.resetTransform();
           const hit = paths.current.find((row) => context.isPointInPath(row.path, point.x, point.y));
           context.restore();
-          if (hit) onSelect(hit.code);
+          if (hit) { setTapped(hit.code); if (uf) onSelect(hit.code); }
         }} />
       <div className="absolute right-2 top-2 flex gap-1">
         <Button variant="secondary" size="icon" className="size-11 rounded-full" aria-label="Ampliar mapa" title="Ampliar mapa" disabled={zoom >= 4} onClick={() => setZoom((value) => Math.min(4, value + .5))}><Plus /></Button>
@@ -66,7 +68,7 @@ export function MunicipalWinnerMap({ electionId, year, uf, selected, onSelect }:
       {legend.map((item) => <li key={item.key} className="flex items-center gap-2"><span className={`winner-swatch winner-${item.key}`} aria-hidden />{item.label}</li>)}
     </ul>
     <p className="mt-3 text-xs tabular-nums text-muted-foreground">{fmtInt(covered)} de {fmtInt(geo.paths.length)} municípios da malha com resultados.{withoutMesh > 0 ? ` ${fmtInt(withoutMesh)} município com resultados ainda sem geometria nesta malha do IBGE.` : ""}</p>
-    {selected && <WinnerDetail winner={selectedWinner} year={year} />}
+    {active && <WinnerDetail winner={selectedWinner} year={year} />}
   </div>;
 }
 
