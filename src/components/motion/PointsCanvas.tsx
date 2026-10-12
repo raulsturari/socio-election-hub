@@ -15,14 +15,11 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   const shown = useRef(new Map<string, Drawn>());
-  const [drawn, setDrawn] = useState(false);
-  useChartReady(drawn);
 
   useEffect(() => {
     const cv = ref.current;
     const ctx = cv?.getContext("2d");
     if (!cv || !ctx) return;
-    setDrawn(false);
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = width * dpr; cv.height = height * dpr;
     const color = getComputedStyle(cv).color;
