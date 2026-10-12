@@ -27,13 +27,13 @@ export const provenanceQuery = () =>
   queryOptions({ queryKey: ["provenance"], queryFn: () => getProvenance(), staleTime: 60_000 });
 
 /** Official municipal mesh (IBGE Malhas API v3), fetched directly from IBGE. */
-export const meshQuery = (uf: string) =>
+export const meshQuery = (uf: string | null) =>
   queryOptions({
     queryKey: ["mesh", uf],
     staleTime: Infinity,
     queryFn: async () => {
       const res = await fetch(
-        `https://servicodados.ibge.gov.br/api/v3/malhas/estados/${uf}?formato=application/vnd.geo%2Bjson&qualidade=minima&intrarregiao=municipio`,
+        `https://servicodados.ibge.gov.br/api/v3/malhas/${uf ? `estados/${uf}` : "paises/BR"}?formato=application/vnd.geo%2Bjson&qualidade=minima&intrarregiao=municipio`,
       );
       if (!res.ok) throw new Error(`Malha IBGE indisponível (${res.status})`);
       return (await res.json()) as GeoCollection;
