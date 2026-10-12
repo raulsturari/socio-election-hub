@@ -4,7 +4,7 @@ import { ModeSelector } from "@/components/duel/ModeSelector";
 import { DuelResults, DuelLegend } from "@/components/duel/DuelResults";
 import { DuelDetail } from "@/components/duel/DuelDetail";
 import { displayName, duelMunicipality, duelTitle, groupSummary } from "@/lib/duel";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { filtersSchema } from "@/lib/filters";
 import { duelQuery, electionsQuery } from "@/services/queries";
