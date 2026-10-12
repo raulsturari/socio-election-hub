@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { DUR, easeOutCubic, prefersReducedMotion } from "@/lib/motion";
 
 export interface CanvasPoint { key: string; x: number; y: number }
@@ -49,13 +49,13 @@ export function PointsCanvas({ points, width, height, alpha = 0.45, radius = 1.6
       shown.current = next;
     };
 
-    if (prefersReducedMotion()) { draw(1); setDrawn(true); return; }
+    if (prefersReducedMotion()) { draw(1); return; }
     let raf = 0;
     const start = performance.now();
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / (duration * 1000));
       draw(easeOutCubic(t));
-      if (t < 1) raf = requestAnimationFrame(tick); else setDrawn(true);
+      if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
