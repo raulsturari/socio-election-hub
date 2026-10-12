@@ -1,18 +1,14 @@
-import { useState } from "react";
-import { SeriesScope } from "@/components/SeriesScope";
 import { ModeSelector } from "@/components/duel/ModeSelector";
-import { DuelResults, DuelLegend } from "@/components/duel/DuelResults";
-import { DuelDetail } from "@/components/duel/DuelDetail";
-import { displayName, duelMunicipality, duelTitle, groupSummary } from "@/lib/duel";
+import { DuelResults } from "@/components/duel/DuelResults";
+import { duelTitle, groupSummary } from "@/lib/duel";
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
 import { filtersSchema } from "@/lib/filters";
-import { duelQuery, electionsQuery } from "@/services/queries";
+import { electionsQuery } from "@/services/queries";
 import { useFilters } from "@/hooks/use-filters";
 import { fmtInt } from "@/lib/format";
 import { Card, EmptyState, PageHeader, SourceNote } from "@/components/ui-kit";
 import { FilterBar } from "@/components/FilterBar";
-import { ChoroplethMap } from "@/components/ChoroplethMap";
+import { MunicipalWinnerMap } from "@/components/MunicipalWinnerMap";
 import { NoElection } from "@/components/NoElection";
 import { TurnoutCard } from "@/components/TurnoutCard";
 import { YearCompare } from "@/components/YearCompare";
@@ -38,15 +34,7 @@ export const Route = createFileRoute("/")({
 function Atlas() {
   const ctx = useFilters();
   const { f, election, elections, summary, duel, mode, set } = ctx;
-  const [layout, setLayout] = useState<"vantagem" | "lado">("vantagem");
-  const duelData = useQuery({ ...duelQuery(election?.id ?? 0, f.uf), enabled: !!election && !!f.uf });
-  const muni = new Map((duelData.data?.rows ?? []).map((r) => [r.ibge_code, duelMunicipality(r)]));
-  const pick = (k: "b" | "l" | "adv") => new Map([...muni].map(([c, m]) => [c, k === "adv" ? m.advantage : k === "b" ? m.b.share : m.l.share]));
   const grouped = groupSummary(summary.data ?? []);
-  const sharedMax = Math.max(1, ...[...muni.values()].flatMap((m) => [m.b.share ?? 0, m.l.share ?? 0]));
-  const detail = (c: string) => <DuelDetail m={muni.get(c)} year={f.ano} />;
-  const single = mode !== "comparar";
-  const focus = mode === "lula" ? duel.lula : duel.bolsonaro;
 
   return (
     <div className="space-y-4 px-4">
@@ -58,6 +46,10 @@ function Atlas() {
         <NoElection year={f.ano} round={f.turno} />
       ) : (
         <>
+          <Card title={`Vencedor por município · ${f.uf ?? "Brasil"}`} footer="Mais votado entre todas as candidaturas reais. Empate e ausência de dados são apresentados separadamente; a soma Outros não determina um vencedor.">
+            <MunicipalWinnerMap electionId={election.id} year={f.ano} uf={f.uf} selected={f.mun} onSelect={(mun) => set({ mun })} />
+          </Card>
+
           <Card title={f.mun ? "Resultado no município" : `Resultado · ${f.uf ?? "Brasil"}`} footer={`Votos nominais válidos (todas as candidaturas): ${fmtInt(grouped?.valid ?? 0)}${f.uf ? "" : " · exclui votos no exterior"}. Brancos, nulos e abstenção ficam fora de Outros.`}>
             {summary.isLoading ? <Skeleton /> : summary.error ? (
               <EmptyState title="Erro ao carregar" description={summary.error.message} />
@@ -68,38 +60,7 @@ function Atlas() {
 
           <TurnoutCard electionId={election.id} uf={f.uf} ibge={f.mun} />
 
-          <Card title={single ? `Mapa · ${displayName(mode === "lula" ? "pt" : "bolsonaro", f.ano, focus)}` : `Mapa · ${duelTitle(f.ano)}`} footer="Malha municipal IBGE · use dois dedos para zoom · toque para ver os dois e Outros">
-            {!f.uf ? (
-              <EmptyState title="Escolha uma UF" description="O mapa municipal é exibido por UF para manter o desempenho no celular." />
-            ) : duelData.isLoading ? <Skeleton /> : duelData.error ? (
-              <EmptyState title="Erro ao carregar" description={duelData.error.message} action={<button className="min-h-11 rounded-full bg-secondary px-4 text-sm" onClick={() => duelData.refetch()}>Tentar de novo</button>} />
-            ) : single ? (
-              <SeriesScope candidate={focus}><ChoroplethMap uf={f.uf} shares={pick(mode === "lula" ? "l" : "b")} selected={f.mun} onSelect={(mun) => set({ mun })} detail={detail} /></SeriesScope>
-            ) : (
-              <>
-                <div role="radiogroup" aria-label="Tipo de mapa" className="mb-3 grid grid-cols-2 gap-1 rounded-full border p-1">
-                  {(["vantagem", "lado"] as const).map((l) => (
-                    <button key={l} role="radio" aria-checked={layout === l} onClick={() => setLayout(l)} className={`min-h-11 rounded-full text-xs ${layout === l ? "bg-secondary text-foreground" : "text-muted-foreground"}`}>
-                      {l === "vantagem" ? "Vantagem B − L" : "Lado a lado"}
-                    </button>
-                  ))}
-                </div>
-                {layout === "vantagem" ? (
-                  <ChoroplethMap uf={f.uf} diverging shares={pick("adv")} selected={f.mun} onSelect={(mun) => set({ mun })} detail={detail} label="vantagem" />
-                ) : (
-                  <div className="space-y-4">
-                    <DuelLegend year={f.ano} />
-                    {(["b", "l"] as const).map((k) => (
-                      <div key={k} data-series={k === "b" ? "bolsonaro" : "pt"}>
-                        <p className="label-caps mb-1">{k === "b" ? displayName("bolsonaro", f.ano, duel.bolsonaro) : "Lula"} · mesma escala</p>
-                        <ChoroplethMap uf={f.uf ?? ""} shares={pick(k)} max={sharedMax} selected={f.mun} onSelect={(mun) => set({ mun })} detail={k === "l" ? detail : undefined} label={k} />
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </Card>
+
         </>
       )}
 
