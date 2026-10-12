@@ -1,0 +1,34 @@
+# Como contribuir
+
+Obrigado pelo interesse no Brasil Data Lab, de Raul Sturari.
+
+## Relatar problemas
+
+Abra uma issue com a página, filtros e URL do recorte, passos para reproduzir, comportamento esperado e observado. Para divergências de dados, inclua fonte oficial, tabela, ano, código IBGE, valor esperado e data da consulta. Capturas não devem expor informações pessoais.
+
+## Propor melhorias
+
+Explique qual problema a proposta resolve e quem se beneficia. Consulte `roadmap.md` para distinguir funcionalidades existentes e pendentes.
+
+## Alterações no código
+
+Leia `AGENTS.md`. Faça alterações focadas e preserve o histórico publicado, pois o projeto é sincronizado com Lovable. Descreva no pull request o problema, a alteração e a validação. Para mudanças de código, execute os checks pertinentes: `bun run lint`, `bun run test` e `bun run build`; registre limitações se algum não puder ser executado.
+
+## Qualidade analítica
+
+Use fontes verificáveis, códigos IBGE e proveniência explícita. Não invente números, não preencha ausências com zero e não apresente correlação como causalidade ou inferência individual. Alterações em métricas devem explicar universos, denominadores, anos e cobertura.
+
+## Direitos
+
+O repositório não possui licença de reutilização definida. A abertura de uma contribuição não altera automaticamente essa condição; esclareça os direitos aplicáveis com o mantenedor quando necessário.
+
+A partir desta publicação, o projeto passa a ser distribuído sob a licença MIT, descrita em `LICENSE`.
+
+## Fluxo recomendado
+
+1. Verifique se a ideia ou o problema já existe em issues.
+2. Crie uma branch temática.
+3. Faça alterações focadas.
+4. Rode os checks relevantes do projeto.
+5. Abra um pull request com descrição clara do problema, solução e validação.
+
