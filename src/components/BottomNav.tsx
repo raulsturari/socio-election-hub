@@ -1,13 +1,10 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { motion } from "motion/react";
 import { DUR, EASE_OUT } from "@/lib/motion";
-import { Map, GitCompare, ScatterChart, Database, FlaskConical, Compass } from "lucide-react";
+import { Map, Database, FlaskConical } from "lucide-react";
 
 const ITEMS = [
-  { to: "/explorar", label: "Explorar", icon: Compass },
   { to: "/", label: "Atlas", icon: Map },
-  { to: "/comparar", label: "Comparar", icon: GitCompare },
-  { to: "/correlacoes", label: "Correl.", icon: ScatterChart },
   { to: "/laboratorio", label: "Lab", icon: FlaskConical },
   { to: "/dados", label: "Dados", icon: Database },
 ] as const;
